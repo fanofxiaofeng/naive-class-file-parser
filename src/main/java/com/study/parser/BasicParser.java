@@ -15,6 +15,9 @@ public class BasicParser {
     private U2 majorVersion;
     private U2 constantPoolCount;
     private AbstractConstant[] constantPool;
+    private U2 accessFlags;
+    private U2 thisClass;
+    private U2 superClass;
 
     public BasicParser(BasicInputStream basicInputStream) {
         this.basicInputStream = basicInputStream;
@@ -23,7 +26,8 @@ public class BasicParser {
     public BasicParser build() {
         return fillMagic().
                 fillMinorVersion().fillMajorVersion().
-                fillConstantPoolCount().fillConstantPool();
+                fillConstantPoolCount().fillConstantPool().
+                fillAccessFlags().fillThisClass().fillSuperClass();
     }
 
     private BasicParser fillMagic() {
@@ -55,6 +59,22 @@ public class BasicParser {
             System.out.println(i + " " + constant.desc());
             this.constantPool[i] = constant;
         }
+        return this;
+    }
+
+    private BasicParser fillAccessFlags() {
+        this.accessFlags = basicInputStream.readU2();
+        return this;
+    }
+
+
+    private BasicParser fillThisClass() {
+        this.thisClass = basicInputStream.readU2();
+        return this;
+    }
+
+    private BasicParser fillSuperClass() {
+        this.superClass = basicInputStream.readU2();
         return this;
     }
 
@@ -93,5 +113,8 @@ public class BasicParser {
 
         System.out.println(String.format("Version: %s.%s", majorVersion.toString(10), minorVersion.toString(10)));
         System.out.println("constant pool count: " + constantPoolCount.toString(10));
+        System.out.println("access flags: " + accessFlags.toString());
+        System.out.println("this class: " + thisClass.toString());
+        System.out.println("super class: " + superClass.toString());
     }
 }

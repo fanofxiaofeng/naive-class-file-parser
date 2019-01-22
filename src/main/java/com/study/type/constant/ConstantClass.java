@@ -1,7 +1,6 @@
 package com.study.type.constant;
 
 import com.study.type.U2;
-import com.study.type.constant.AbstractConstant;
 
 public class ConstantClass extends AbstractConstant {
     private U2 nameIndex;
