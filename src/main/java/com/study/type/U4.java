@@ -2,10 +2,7 @@ package com.study.type;
 
 import java.math.BigInteger;
 
-public class U4 {
-    private final BigInteger bigInteger;
-
-    private final BigInteger _256 = new BigInteger("256");
+public class U4 extends AbstractU {
 
     public U4(int a, int b, int c, int d) {
         BigInteger temp = new BigInteger("" + a);
@@ -15,8 +12,8 @@ public class U4 {
         bigInteger = temp;
     }
 
-    public void show() {
-        System.out.println(bigInteger.toString(16));
+    @Override
+    public String toString() {
+        return String.format("0x%s", bigInteger.toString(16).toUpperCase());
     }
-
 }

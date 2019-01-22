@@ -1,5 +1,7 @@
 package com.study.io;
 
+import com.study.type.U1;
+import com.study.type.U2;
 import com.study.type.U4;
 
 import java.io.IOException;
@@ -13,15 +15,32 @@ public class BasicInputStream extends InputStream {
     }
 
     @Override
-    public int read() throws IOException {
-        return 0;
+    public int read() {
+        try {
+            int r = inputStream.read();
+            return r;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("IOException");
+        }
     }
 
-    public U4 readU4() throws IOException {
-        int a = inputStream.read();
-        int b = inputStream.read();
-        int c = inputStream.read();
-        int d = inputStream.read();
+    public U4 readU4() {
+        int a = read();
+        int b = read();
+        int c = read();
+        int d = read();
         return new U4(a, b, c, d);
+    }
+
+    public U2 readU2() {
+        int a = read();
+        int b = read();
+        return new U2(a, b);
+    }
+
+    public U1 readU1() {
+        int a = read();
+        return new U1(a);
     }
 }
