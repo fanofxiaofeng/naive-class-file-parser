@@ -12,9 +12,17 @@ public class AbstractU {
 
     public int toInt() {
         if (getClass() == U1.class || getClass() == U2.class) {
+            // safe
+            return Integer.parseInt(toString(10));
+        } else if (getClass() == U4.class) {
+            // not safe (overflow is possible)
             return Integer.parseInt(toString(10));
         } else {
             throw new RuntimeException("Unsupported type!");
         }
+    }
+
+    public boolean isX(int x) {
+        return (toInt() & x) > 0;
     }
 }

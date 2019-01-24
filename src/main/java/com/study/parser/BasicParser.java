@@ -5,6 +5,7 @@ import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.U4;
 import com.study.type.constant.*;
+import com.study.type.info.FieldInfo;
 
 public class BasicParser {
 
@@ -21,6 +22,7 @@ public class BasicParser {
     private U2 interfacesCount;
     private U2[] interfaces;
     private U2 fieldsCount;
+    private FieldInfo[] fields;
 
     public BasicParser(BasicInputStream basicInputStream) {
         this.basicInputStream = basicInputStream;
@@ -32,7 +34,7 @@ public class BasicParser {
                 fillConstantPoolCount().fillConstantPool().
                 fillAccessFlags().fillThisClass().fillSuperClass().
                 fillInterfacesCount().fillInterfaces().
-                fillFieldsCount();
+                fillFieldsCount().fillFields();
     }
 
     private BasicParser fillMagic() {
@@ -102,6 +104,15 @@ public class BasicParser {
         return this;
     }
 
+    private BasicParser fillFields() {
+        int count = fieldsCount.toInt();
+        this.fields = new FieldInfo[count];
+        for (int i = 0; i < count; i++) {
+            this.fields[i] = FieldInfo.build(basicInputStream);
+        }
+        return this;
+    }
+
 
     private AbstractConstant build(int type) {
 //        System.out.println(type);
@@ -144,6 +155,7 @@ public class BasicParser {
         System.out.println("this class: " + thisClass.toString());
         System.out.println("super class: " + superClass.toString());
         showConstantPool();
+        showFields();
     }
 
     private void showConstantPool() {
@@ -151,6 +163,13 @@ public class BasicParser {
         int count = this.constantPoolCount.toInt();
         for (int i = 1; i < count; i++) {
             System.out.println(String.format("   #%s = %s         ", i, this.constantPool[i].desc()));
+        }
+    }
+
+    private void showFields() {
+        int count = this.fieldsCount.toInt();
+        for (int i = 0;i < count;i++) {
+            System.out.println(fields[i]);
         }
     }
 }
