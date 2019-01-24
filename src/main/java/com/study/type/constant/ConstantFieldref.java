@@ -13,6 +13,11 @@ public class ConstantFieldref extends AbstractConstant {
 
     @Override
     public String desc() {
+        return desc(classIndex, nameAndTypeIndex);
+    }
+
+    @Override
+    protected String type() {
         return "Fieldref";
     }
 }

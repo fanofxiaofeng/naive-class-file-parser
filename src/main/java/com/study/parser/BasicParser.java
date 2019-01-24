@@ -18,6 +18,9 @@ public class BasicParser {
     private U2 accessFlags;
     private U2 thisClass;
     private U2 superClass;
+    private U2 interfacesCount;
+    private U2[] interfaces;
+    private U2 fieldsCount;
 
     public BasicParser(BasicInputStream basicInputStream) {
         this.basicInputStream = basicInputStream;
@@ -27,7 +30,9 @@ public class BasicParser {
         return fillMagic().
                 fillMinorVersion().fillMajorVersion().
                 fillConstantPoolCount().fillConstantPool().
-                fillAccessFlags().fillThisClass().fillSuperClass();
+                fillAccessFlags().fillThisClass().fillSuperClass().
+                fillInterfacesCount().fillInterfaces().
+                fillFieldsCount();
     }
 
     private BasicParser fillMagic() {
@@ -56,7 +61,7 @@ public class BasicParser {
         for (int i = 1; i < count; i++) {
             int type = basicInputStream.readU1().toInt();
             AbstractConstant constant = build(type);
-            System.out.println(i + " " + constant.desc());
+//            System.out.println(i + " " + constant.desc());
             this.constantPool[i] = constant;
         }
         return this;
@@ -78,6 +83,26 @@ public class BasicParser {
         return this;
     }
 
+    private BasicParser fillInterfacesCount() {
+        this.interfacesCount = basicInputStream.readU2();
+        return this;
+    }
+
+    private BasicParser fillInterfaces() {
+        int size = interfacesCount.toInt();
+        this.interfaces = new U2[size];
+        for (int i = 0; i < size; i++) {
+            this.interfaces[i] = basicInputStream.readU2();
+        }
+        return this;
+    }
+
+    private BasicParser fillFieldsCount() {
+        this.fieldsCount = basicInputStream.readU2();
+        return this;
+    }
+
+
     private AbstractConstant build(int type) {
 //        System.out.println(type);
         switch (type) {
@@ -94,6 +119,8 @@ public class BasicParser {
                 return new ConstantInteger(basicInputStream.readU4());
             case 7:
                 return new ConstantClass(basicInputStream.readU2());
+            case 8:
+                return new ConstantString(basicInputStream.readU2());
             case 9:
                 return new ConstantFieldref(basicInputStream.readU2(), basicInputStream.readU2());
             case 10:
@@ -116,5 +143,14 @@ public class BasicParser {
         System.out.println("access flags: " + accessFlags.toString());
         System.out.println("this class: " + thisClass.toString());
         System.out.println("super class: " + superClass.toString());
+        showConstantPool();
+    }
+
+    private void showConstantPool() {
+        System.out.println("Constant pool:");
+        int count = this.constantPoolCount.toInt();
+        for (int i = 1; i < count; i++) {
+            System.out.println(String.format("   #%s = %s         ", i, this.constantPool[i].desc()));
+        }
     }
 }

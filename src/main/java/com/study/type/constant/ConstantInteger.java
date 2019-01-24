@@ -1,7 +1,6 @@
 package com.study.type.constant;
 
 import com.study.type.U4;
-import com.study.type.constant.AbstractConstant;
 
 public class ConstantInteger extends AbstractConstant {
 
@@ -17,5 +16,13 @@ public class ConstantInteger extends AbstractConstant {
             throw new RuntimeException("bad");
         }
         return null;
+    }
+
+    @Override
+    protected String type() {
+        if (Math.random() < 10) {
+            throw new RuntimeException("Unsupported yet!");
+        }
+        return "";
     }
 }

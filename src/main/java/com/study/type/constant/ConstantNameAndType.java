@@ -15,4 +15,9 @@ public class ConstantNameAndType extends AbstractConstant {
     public String desc() {
         return "NameAndType";
     }
+
+    @Override
+    protected String type() {
+        return "NameAndType";
+    }
 }

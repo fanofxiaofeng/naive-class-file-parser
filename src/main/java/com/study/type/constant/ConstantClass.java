@@ -11,6 +11,11 @@ public class ConstantClass extends AbstractConstant {
 
     @Override
     public String desc() {
+        return desc(nameIndex);
+    }
+
+    @Override
+    protected String type() {
         return "Class";
     }
 }
