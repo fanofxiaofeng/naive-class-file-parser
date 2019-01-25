@@ -42,4 +42,9 @@ public abstract class AbstractConstant {
         stringBuilder.append(new String(chars));
         return stringBuilder.toString();
     }
+
+    public String detail(AbstractConstant[] constantPool) {
+        System.out.println(this.getClass().getName());
+        throw new RuntimeException("Unsupported yet!");
+    }
 }

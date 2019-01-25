@@ -42,4 +42,9 @@ public class BasicInputStream {
         int a = _read();
         return new U1(a);
     }
+
+    public boolean justFinished() {
+        int temp = _read();
+        return temp == -1;
+    }
 }

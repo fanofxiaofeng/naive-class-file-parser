@@ -20,4 +20,12 @@ public class ConstantFieldref extends AbstractConstant {
     protected String type() {
         return "Fieldref";
     }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        return String.format("%s.%s",
+                constantPool[classIndex.toInt()].detail(constantPool),
+                constantPool[nameAndTypeIndex.toInt()].detail(constantPool)
+        );
+    }
 }

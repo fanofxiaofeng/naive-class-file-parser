@@ -18,4 +18,9 @@ public class ConstantClass extends AbstractConstant {
     protected String type() {
         return "Class";
     }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        return constantPool[nameIndex.toInt()].detail(constantPool).replaceAll("\\.", "/");
+    }
 }

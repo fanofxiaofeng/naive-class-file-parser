@@ -13,11 +13,22 @@ public class ConstantNameAndType extends AbstractConstant {
 
     @Override
     public String desc() {
-        return "NameAndType";
+        return desc(nameIndex, descriptorIndex);
     }
 
     @Override
     protected String type() {
         return "NameAndType";
+    }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        String part1 = constantPool[nameIndex.toInt()].detail(constantPool);
+        String part2 = constantPool[descriptorIndex.toInt()].detail(constantPool);
+        if (part2.contains("(")) {
+            // 说明是个函数
+            return String.format("\"%s\":%s", part1, part2);
+        }
+        return String.format("%s:%s", part1, part2);
     }
 }

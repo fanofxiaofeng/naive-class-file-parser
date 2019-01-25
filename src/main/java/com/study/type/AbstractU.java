@@ -23,6 +23,9 @@ public class AbstractU {
     }
 
     public boolean isX(int x) {
+        if (x <= 0) {
+            throw new RuntimeException("x should be greater than 0!");
+        }
         return (toInt() & x) > 0;
     }
 }

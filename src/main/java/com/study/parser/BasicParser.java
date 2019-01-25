@@ -5,7 +5,9 @@ import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.U4;
 import com.study.type.constant.*;
+import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
+import com.study.type.info.MethodInfo;
 
 public class BasicParser {
 
@@ -23,6 +25,10 @@ public class BasicParser {
     private U2[] interfaces;
     private U2 fieldsCount;
     private FieldInfo[] fields;
+    private U2 methodsCount;
+    private MethodInfo[] methods;
+    private U2 attributesCount;
+    private AttributeInfo[] attributes;
 
     public BasicParser(BasicInputStream basicInputStream) {
         this.basicInputStream = basicInputStream;
@@ -34,7 +40,9 @@ public class BasicParser {
                 fillConstantPoolCount().fillConstantPool().
                 fillAccessFlags().fillThisClass().fillSuperClass().
                 fillInterfacesCount().fillInterfaces().
-                fillFieldsCount().fillFields();
+                fillFieldsCount().fillFields().
+                fillMethodsCount().fillMethods().
+                fillAttributesCount().fillAttributes().makeSure();
     }
 
     private BasicParser fillMagic() {
@@ -113,9 +121,35 @@ public class BasicParser {
         return this;
     }
 
+    private BasicParser fillMethodsCount() {
+        this.methodsCount = basicInputStream.readU2();
+        return this;
+    }
+
+    private BasicParser fillMethods() {
+        int count = this.methodsCount.toInt();
+        this.methods = new MethodInfo[count];
+        for (int i = 0; i < count; i++) {
+            this.methods[i] = MethodInfo.build(basicInputStream);
+        }
+        return this;
+    }
+
+    private BasicParser fillAttributesCount() {
+        this.attributesCount = basicInputStream.readU2();
+        return this;
+    }
+
+    private BasicParser fillAttributes() {
+        int count = this.attributesCount.toInt();
+        this.attributes = new AttributeInfo[count];
+        for (int i = 0; i < count; i++) {
+            this.attributes[i] = AttributeInfo.build(basicInputStream);
+        }
+        return this;
+    }
 
     private AbstractConstant build(int type) {
-//        System.out.println(type);
         switch (type) {
             case 1: {
                 U2 length = basicInputStream.readU2();
@@ -145,31 +179,98 @@ public class BasicParser {
 
     }
 
+    private BasicParser makeSure() {
+        assert basicInputStream.justFinished();
+        return this;
+    }
 
     public void show() {
         System.out.println("Magic: " + magic.toString());
 
-        System.out.println(String.format("Version: %s.%s", majorVersion.toString(10), minorVersion.toString(10)));
-        System.out.println("constant pool count: " + constantPoolCount.toString(10));
+        showMinorVersion();
+        showMajorVersion();
+        showAccessFlags();
+        showThisClass();
+        showSuperClass();
+        showCount();
+
+        showConstantPool();
         System.out.println("access flags: " + accessFlags.toString());
         System.out.println("this class: " + thisClass.toString());
         System.out.println("super class: " + superClass.toString());
-        showConstantPool();
         showFields();
+    }
+
+    private void showMinorVersion() {
+        System.out.println(String.format("  minor version: %s", minorVersion.toInt()));
+    }
+
+    private void showMajorVersion() {
+        System.out.println(String.format("  major version: %s", majorVersion.toInt()));
+    }
+
+    private void showAccessFlags() {
+        // todo 输出内容不够
+        System.out.println(String.format("  flags: (0x%04x) ...", accessFlags.toInt()));
+    }
+
+    private void showThisClass() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("  this_class: #%d", thisClass.toInt()));
+        extendTo(stringBuilder, 42, ' ');
+        stringBuilder.append("// ");
+        stringBuilder.append(constantPool[thisClass.toInt()].detail(constantPool));
+        System.out.println(stringBuilder.toString());
+    }
+
+    private void showSuperClass() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("  super_class: #%d", superClass.toInt()));
+        extendTo(stringBuilder, 42, ' ');
+        stringBuilder.append("// ");
+        stringBuilder.append(constantPool[superClass.toInt()].detail(constantPool));
+        System.out.println(stringBuilder.toString());
+    }
+
+    private void showCount() {
+        System.out.println(String.format("  interfaces: %d, fields: %d, methods: %d, attributes: %d",
+                interfacesCount.toInt(), fieldsCount.toInt(), methodsCount.toInt(), attributesCount.toInt()));
     }
 
     private void showConstantPool() {
         System.out.println("Constant pool:");
         int count = this.constantPoolCount.toInt();
         for (int i = 1; i < count; i++) {
-            System.out.println(String.format("   #%s = %s         ", i, this.constantPool[i].desc()));
+            String s = String.format("%5s", "#" + i);
+            StringBuilder stringBuilder = new StringBuilder(String.format("%s = %s", s, this.constantPool[i].desc()));
+            if (hasDetail(constantPool[i])) {
+                extendTo(stringBuilder, 42, ' ');
+                stringBuilder.append("// ");
+                stringBuilder.append(constantPool[i].detail(constantPool));
+            }
+            System.out.println(stringBuilder.toString());
         }
+    }
+
+    // todo 类型可能有遗漏
+    private boolean hasDetail(AbstractConstant constant) {
+        return
+                (ConstantMethodref.class.isInstance(constant)) ||
+                        (ConstantFieldref.class.isInstance(constant)) ||
+                        (ConstantNameAndType.class.isInstance(constant)) ||
+                        (ConstantString.class.isInstance(constant)) ||
+                        (ConstantClass.class.isInstance(constant))
+                ;
     }
 
     private void showFields() {
         int count = this.fieldsCount.toInt();
-        for (int i = 0;i < count;i++) {
-            System.out.println(fields[i]);
+        for (int i = 0; i < count; i++) {
+            System.out.println(fields[i].desc(constantPool));
+        }
+    }
+
+    private void extendTo(StringBuilder stringBuilder, int expectedLength, char given) {
+        while (stringBuilder.length() < expectedLength) {
+            stringBuilder.append(given);
         }
     }
 }

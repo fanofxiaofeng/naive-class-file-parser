@@ -4,6 +4,8 @@ import com.study.io.BasicInputStream;
 import com.study.type.U2;
 import com.study.type.constant.AbstractConstant;
 
+import java.lang.reflect.Modifier;
+
 public class FieldInfo extends AbstractInfo {
 
     private U2 accessFlags;
@@ -30,10 +32,20 @@ public class FieldInfo extends AbstractInfo {
 
     @Override
     public String desc(AbstractConstant[] constantPool) {
+        int mod = accessFlags.toInt();
         StringBuilder stringBuilder = new StringBuilder();
-        if (accessFlags.isX(0x01)) {
-            stringBuilder.append("public");
-        }
-        return null;
+        // todo 没有处理 ACC_SYNTHETIC, ACC_ENUM
+        stringBuilder.append(Modifier.toString(mod));
+        stringBuilder.append(' ');
+        stringBuilder.append(constantPool[nameIndex.toInt()].desc());
+        stringBuilder.append("\n    descriptor:");
+        stringBuilder.append(constantPool[descriptorIndex.toInt()].desc());
+        stringBuilder.append("\n    flags: ");
+        stringBuilder.append(String.format("(0x%04x)", mod));
+        return stringBuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Modifier.toString(0x00DF));
     }
 }

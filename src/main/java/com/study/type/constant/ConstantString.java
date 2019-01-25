@@ -19,4 +19,9 @@ public class ConstantString extends AbstractConstant {
     protected String type() {
         return "String";
     }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        return constantPool[stringIndex.toInt()].detail(constantPool);
+    }
 }

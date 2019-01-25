@@ -20,4 +20,12 @@ public class ConstantMethodref extends AbstractConstant {
     protected String type() {
         return "Methodref";
     }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        return String.format("%s.%s",
+                constantPool[classIndex.toInt()].detail(constantPool),
+                constantPool[nameAndTypeIndex.toInt()].detail(constantPool)
+        );
+    }
 }

@@ -4,7 +4,6 @@ import com.study.type.U1;
 import com.study.type.U2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ConstantUtf8 extends AbstractConstant {
@@ -58,7 +57,7 @@ public class ConstantUtf8 extends AbstractConstant {
         for (int i = 0; i < this.content.length; i++) {
             this.content[i] = chars.get(i);
         }
-        System.out.println(Arrays.toString(content));
+//        System.out.println(Arrays.toString(content));
     }
 
     private void fillCodePoints(int codePoint, List<Character> characterList) {
@@ -82,5 +81,10 @@ public class ConstantUtf8 extends AbstractConstant {
     @Override
     protected String type() {
         return "Utf8";
+    }
+
+    @Override
+    public String detail(AbstractConstant[] constantPool) {
+        return new String(content);
     }
 }

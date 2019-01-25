@@ -14,6 +14,7 @@ public class AttributeInfo extends AbstractInfo {
     private AttributeInfo(BasicInputStream basicInputStream) {
         attributeNameIndex = basicInputStream.readU2();
         attributeLength = basicInputStream.readU4();
+
         int count = attributeLength.toInt();
         info = new U1[count];
         for (int i = 0; i < count; i++) {
