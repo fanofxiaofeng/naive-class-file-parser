@@ -9,6 +9,8 @@ import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
 
+import java.io.PrintStream;
+
 public class BasicParser {
 
     private BasicInputStream basicInputStream;
@@ -29,9 +31,11 @@ public class BasicParser {
     private MethodInfo[] methods;
     private U2 attributesCount;
     private AttributeInfo[] attributes;
+    private PrintStream printStream = System.out;
 
-    public BasicParser(BasicInputStream basicInputStream) {
+    public BasicParser(BasicInputStream basicInputStream, PrintStream printStream) {
         this.basicInputStream = basicInputStream;
+        this.printStream = printStream;
     }
 
     public BasicParser build() {
@@ -71,7 +75,6 @@ public class BasicParser {
         for (int i = 1; i < count; i++) {
             int type = basicInputStream.readU1().toInt();
             AbstractConstant constant = build(type);
-//            System.out.println(i + " " + constant.desc());
             this.constantPool[i] = constant;
         }
         return this;
@@ -173,10 +176,8 @@ public class BasicParser {
             case 12:
                 return new ConstantNameAndType(basicInputStream.readU2(), basicInputStream.readU2());
             default:
-                System.out.println("Not supported yet!");
+                throw new RuntimeException("Not supported yet!");
         }
-        return null;
-
     }
 
     private BasicParser makeSure() {
@@ -185,7 +186,7 @@ public class BasicParser {
     }
 
     public void show() {
-        System.out.println("Magic: " + magic.toString());
+        printStream.println("Magic: " + magic.toString());
 
         showMinorVersion();
         showMajorVersion();
@@ -195,23 +196,23 @@ public class BasicParser {
         showCount();
 
         showConstantPool();
-        System.out.println("access flags: " + accessFlags.toString());
-        System.out.println("this class: " + thisClass.toString());
-        System.out.println("super class: " + superClass.toString());
+        printStream.println("access flags: " + accessFlags.toString());
+        printStream.println("this class: " + thisClass.toString());
+        printStream.println("super class: " + superClass.toString());
         showFields();
     }
 
     private void showMinorVersion() {
-        System.out.println(String.format("  minor version: %s", minorVersion.toInt()));
+        printStream.println(String.format("  minor version: %s", minorVersion.toInt()));
     }
 
     private void showMajorVersion() {
-        System.out.println(String.format("  major version: %s", majorVersion.toInt()));
+        printStream.println(String.format("  major version: %s", majorVersion.toInt()));
     }
 
     private void showAccessFlags() {
         // todo 输出内容不够
-        System.out.println(String.format("  flags: (0x%04x) ...", accessFlags.toInt()));
+        printStream.println(String.format("  flags: (0x%04x) ...", accessFlags.toInt()));
     }
 
     private void showThisClass() {
@@ -219,7 +220,7 @@ public class BasicParser {
         extendTo(stringBuilder, 42, ' ');
         stringBuilder.append("// ");
         stringBuilder.append(constantPool[thisClass.toInt()].detail(constantPool));
-        System.out.println(stringBuilder.toString());
+        printStream.println(stringBuilder.toString());
     }
 
     private void showSuperClass() {
@@ -227,26 +228,30 @@ public class BasicParser {
         extendTo(stringBuilder, 42, ' ');
         stringBuilder.append("// ");
         stringBuilder.append(constantPool[superClass.toInt()].detail(constantPool));
-        System.out.println(stringBuilder.toString());
+        printStream.println(stringBuilder.toString());
     }
 
     private void showCount() {
-        System.out.println(String.format("  interfaces: %d, fields: %d, methods: %d, attributes: %d",
+        printStream.println(String.format("  interfaces: %d, fields: %d, methods: %d, attributes: %d",
                 interfacesCount.toInt(), fieldsCount.toInt(), methodsCount.toInt(), attributesCount.toInt()));
     }
 
     private void showConstantPool() {
-        System.out.println("Constant pool:");
+        printStream.println("Constant pool:");
         int count = this.constantPoolCount.toInt();
         for (int i = 1; i < count; i++) {
             String s = String.format("%5s", "#" + i);
             StringBuilder stringBuilder = new StringBuilder(String.format("%s = %s", s, this.constantPool[i].desc()));
+            String detail = constantPool[i].detail(constantPool);
             if (hasDetail(constantPool[i])) {
                 extendTo(stringBuilder, 42, ' ');
-                stringBuilder.append("// ");
-                stringBuilder.append(constantPool[i].detail(constantPool));
+                stringBuilder.append("//");
+                if (detail.length() > 0) {
+                    stringBuilder.append(' ');
+                    stringBuilder.append(constantPool[i].detail(constantPool));
+                }
             }
-            System.out.println(stringBuilder.toString());
+            printStream.println(stringBuilder.toString());
         }
     }
 
@@ -264,7 +269,7 @@ public class BasicParser {
     private void showFields() {
         int count = this.fieldsCount.toInt();
         for (int i = 0; i < count; i++) {
-            System.out.println(fields[i].desc(constantPool));
+            printStream.println(fields[i].desc(constantPool));
         }
     }
 

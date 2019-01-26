@@ -32,7 +32,12 @@ public abstract class AbstractConstant {
         StringBuilder stringBuilder = common();
         stringBuilder.append('#');
         stringBuilder.append(u1.toInt());
-        stringBuilder.append('.').append('#');
+        if (ConstantNameAndType.class.isInstance(this)) {
+            stringBuilder.append(':');
+        } else {
+            stringBuilder.append('.');
+        }
+        stringBuilder.append('#');
         stringBuilder.append(u2.toInt());
         return stringBuilder.toString();
     }
@@ -40,6 +45,9 @@ public abstract class AbstractConstant {
     String desc(char[] chars) {
         StringBuilder stringBuilder = common();
         stringBuilder.append(new String(chars));
+        if (chars.length == 0) {
+            return common().toString().trim();
+        }
         return stringBuilder.toString();
     }
 

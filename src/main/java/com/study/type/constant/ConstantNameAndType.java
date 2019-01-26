@@ -25,8 +25,7 @@ public class ConstantNameAndType extends AbstractConstant {
     public String detail(AbstractConstant[] constantPool) {
         String part1 = constantPool[nameIndex.toInt()].detail(constantPool);
         String part2 = constantPool[descriptorIndex.toInt()].detail(constantPool);
-        if (part2.contains("(")) {
-            // 说明是个函数
+        if (part1.equals("<init>")) {
             return String.format("\"%s\":%s", part1, part2);
         }
         return String.format("%s:%s", part1, part2);
