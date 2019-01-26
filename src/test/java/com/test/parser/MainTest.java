@@ -7,7 +7,7 @@ public class MainTest {
 
     @Test
     public void test() throws Exception {
-        String[] args = new String[]{"target/classes/com/study/parser/Toy.class"};
+        String[] args = new String[]{"target/classes/com/study/parser/BasicParser.class"};
         Main.main(args);
     }
 }

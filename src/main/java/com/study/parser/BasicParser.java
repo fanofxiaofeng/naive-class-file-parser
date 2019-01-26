@@ -13,7 +13,15 @@ import java.io.PrintStream;
 
 public class BasicParser {
 
+    /**
+     * 通过它来读取 class 文件
+     */
     private BasicInputStream basicInputStream;
+
+    /**
+     * 输出结果
+     */
+    private PrintStream printStream;
 
     private U4 magic;
     private U2 minorVersion;
@@ -31,11 +39,15 @@ public class BasicParser {
     private MethodInfo[] methods;
     private U2 attributesCount;
     private AttributeInfo[] attributes;
-    private PrintStream printStream = System.out;
 
     public BasicParser(BasicInputStream basicInputStream, PrintStream printStream) {
         this.basicInputStream = basicInputStream;
         this.printStream = printStream;
+    }
+
+    public BasicParser(BasicInputStream basicInputStream) {
+        this.basicInputStream = basicInputStream;
+        this.printStream = System.out;
     }
 
     public BasicParser build() {
@@ -73,9 +85,8 @@ public class BasicParser {
         int count = constantPoolCount.toInt();
         this.constantPool = new AbstractConstant[count];
         for (int i = 1; i < count; i++) {
-            int type = basicInputStream.readU1().toInt();
-            AbstractConstant constant = build(type);
-            this.constantPool[i] = constant;
+            int tag = basicInputStream.readU1().toInt();
+            this.constantPool[i] = build(tag);
         }
         return this;
     }
@@ -152,8 +163,8 @@ public class BasicParser {
         return this;
     }
 
-    private AbstractConstant build(int type) {
-        switch (type) {
+    private AbstractConstant build(int tag) {
+        switch (tag) {
             case 1: {
                 U2 length = basicInputStream.readU2();
                 int size = length.toInt();
@@ -239,20 +250,36 @@ public class BasicParser {
     private void showConstantPool() {
         printStream.println("Constant pool:");
         int count = this.constantPoolCount.toInt();
-        for (int i = 1; i < count; i++) {
-            String s = String.format("%5s", "#" + i);
+        int width = ("" + count).length() + 3;
+        String widthControl = String.format("%%%ds", width);
+        for (int i = 1; i < count; ) {
+            String s = String.format(widthControl, "#" + i);
             StringBuilder stringBuilder = new StringBuilder(String.format("%s = %s", s, this.constantPool[i].desc()));
-            String detail = constantPool[i].detail(constantPool);
+            AbstractConstant constant = constantPool[i];
+            String detail = constant.detail(constantPool);
             if (hasDetail(constantPool[i])) {
-                extendTo(stringBuilder, 42, ' ');
+                extendTo(stringBuilder, 36 + width, ' ');
                 stringBuilder.append("//");
                 if (detail.length() > 0) {
                     stringBuilder.append(' ');
-                    stringBuilder.append(constantPool[i].detail(constantPool));
+                    stringBuilder.append(constant.detail(constantPool));
                 }
             }
+            while (stringBuilder.charAt(stringBuilder.length() - 1) == ' '){
+                stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
             printStream.println(stringBuilder.toString());
+            if (occupyOneSlot(constant)) {
+                i++;
+            } else {
+                i += 2;
+            }
         }
+    }
+
+    private boolean occupyOneSlot(AbstractConstant constant) {
+        return !ConstantDouble.class.isInstance(constant) &&
+                !ConstantLong.class.isInstance(constant);
     }
 
     // todo 类型可能有遗漏

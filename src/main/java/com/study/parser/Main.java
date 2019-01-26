@@ -8,7 +8,6 @@ import java.io.PrintStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-//        System.out.println(Arrays.tolString(args));
         FileInputStream inputStream = new FileInputStream(args[0]);
         PrintStream printStream = new PrintStream(new File("/Users/jinyang/Desktop/output.txt"));
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);

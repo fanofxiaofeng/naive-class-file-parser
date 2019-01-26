@@ -21,6 +21,11 @@ public class ConstantClass extends AbstractConstant {
 
     @Override
     public String detail(AbstractConstant[] constantPool) {
-        return constantPool[nameIndex.toInt()].detail(constantPool).replaceAll("\\.", "/");
+        String detail = constantPool[nameIndex.toInt()].detail(constantPool).replaceAll("\\.", "/");
+        if (detail.startsWith("[")) {
+            return String.format("\"%s\"", detail);
+        } else {
+            return detail;
+        }
     }
 }
