@@ -12,7 +12,6 @@ import com.study.type.info.MethodInfo;
 import java.io.PrintStream;
 
 public class BasicParser {
-
     /**
      * 通过它来读取 class 文件
      */
@@ -206,10 +205,7 @@ public class BasicParser {
         showSuperClass();
         showCount();
 
-        showConstantPool();
-        printStream.println("access flags: " + accessFlags.toString());
-        printStream.println("this class: " + thisClass.toString());
-        printStream.println("super class: " + superClass.toString());
+//        showConstantPool();
         showFields();
     }
 
@@ -265,7 +261,7 @@ public class BasicParser {
                     stringBuilder.append(constant.detail(constantPool));
                 }
             }
-            while (stringBuilder.charAt(stringBuilder.length() - 1) == ' '){
+            while (stringBuilder.charAt(stringBuilder.length() - 1) == ' ') {
                 stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             }
             printStream.println(stringBuilder.toString());
@@ -297,6 +293,7 @@ public class BasicParser {
         int count = this.fieldsCount.toInt();
         for (int i = 0; i < count; i++) {
             printStream.println(fields[i].desc(constantPool));
+            printStream.println();
         }
     }
 
