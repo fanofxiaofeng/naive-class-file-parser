@@ -61,10 +61,20 @@ public class FieldInfo extends AbstractInfo {
         stringBuilder.append(';');
         stringBuilder.append("\n    descriptor: ");
         stringBuilder.append(descriptor.detail(constantPool));
-        stringBuilder.append("\n    flags: ");
-        stringBuilder.append(String.format("(0x%04x)", mod));
+        stringBuilder.append(String.format("\n    %s", descAccessFlags()));
+        return stringBuilder.toString();
+    }
+
+    /**
+     * @return 描述 accessFlags 的字符串. 返回值的内容举例如下
+     * "flags: (0x0002) ACC_PRIVATE"
+     * "flags: (0x1018) ACC_STATIC, ACC_FINAL, ACC_SYNTHETIC"
+     */
+    private String descAccessFlags() {
+        int mod = this.accessFlags.toInt();
 
         StringJoiner joiner = new StringJoiner(", ");
+
         // 0x0001
         if (Modifier.isPublic(mod)) {
             joiner.add("ACC_PUBLIC");
@@ -100,22 +110,19 @@ public class FieldInfo extends AbstractInfo {
             joiner.add("ACC_TRANSIENT");
         }
 
-        // todo 又没有优雅的写法
+        // todo 有没有优雅的写法
         // 0x1000
         if ((mod & 0x1000) == 0x1000) {
             joiner.add("ACC_SYNTHETIC");
         }
 
-        // todo 又没有优雅的写法
+        // todo 有没有优雅的写法
         // 0x4000
         if ((mod & 0x4000) == 0x4000) {
             joiner.add("ACC_ENUM");
         }
 
-        stringBuilder.append(' ');
-        stringBuilder.append(joiner.toString());
-
-        return stringBuilder.toString();
+        return String.format("flags: (0x%04x) %s", mod, joiner.toString());
     }
 
     private String toHumanReadable(String description) {
