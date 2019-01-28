@@ -13,6 +13,7 @@ public class ConstantUtf8 extends AbstractConstant {
     private char[] content;
 
     public ConstantUtf8(U2 length, U1[] bytes) {
+        this.tag = new U1(1);
         this.length = length;
         this.bytes = bytes;
         fillContent();

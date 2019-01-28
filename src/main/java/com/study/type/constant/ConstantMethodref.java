@@ -1,5 +1,6 @@
 package com.study.type.constant;
 
+import com.study.type.U1;
 import com.study.type.U2;
 
 public class ConstantMethodref extends AbstractConstant {
@@ -7,6 +8,7 @@ public class ConstantMethodref extends AbstractConstant {
     private U2 nameAndTypeIndex;
 
     public ConstantMethodref(U2 classIndex, U2 nameAndTypeIndex) {
+        this.tag = new U1(10);
         this.classIndex = classIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }

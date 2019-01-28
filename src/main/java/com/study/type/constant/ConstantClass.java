@@ -1,11 +1,13 @@
 package com.study.type.constant;
 
+import com.study.type.U1;
 import com.study.type.U2;
 
 public class ConstantClass extends AbstractConstant {
     private U2 nameIndex;
 
     public ConstantClass(U2 nameIndex) {
+        this.tag = new U1(7);
         this.nameIndex = nameIndex;
     }
 

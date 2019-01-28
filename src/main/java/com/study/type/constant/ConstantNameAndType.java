@@ -1,5 +1,6 @@
 package com.study.type.constant;
 
+import com.study.type.U1;
 import com.study.type.U2;
 
 public class ConstantNameAndType extends AbstractConstant {
@@ -7,6 +8,7 @@ public class ConstantNameAndType extends AbstractConstant {
     private U2 descriptorIndex;
 
     public ConstantNameAndType(U2 nameIndex, U2 descriptorIndex) {
+        this.tag = new U1(12);
         this.nameIndex = nameIndex;
         this.descriptorIndex = descriptorIndex;
     }

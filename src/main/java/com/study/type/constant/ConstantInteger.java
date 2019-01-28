@@ -1,5 +1,6 @@
 package com.study.type.constant;
 
+import com.study.type.U1;
 import com.study.type.U4;
 
 public class ConstantInteger extends AbstractConstant {
@@ -7,6 +8,7 @@ public class ConstantInteger extends AbstractConstant {
     private U4 bytes;
 
     public ConstantInteger(U4 bytes) {
+        this.tag = new U1(3);
         this.bytes = bytes;
     }
 
