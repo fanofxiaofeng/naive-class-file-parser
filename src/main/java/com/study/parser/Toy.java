@@ -1,10 +1,28 @@
 package com.study.parser;
 
-public class Toy {
-    private int a = 42;
-    private String name = "0123一\ud83d\ude02人a";
+import com.study.type.info.CodeAttribute;
 
-    public static void main(String[] args) {
-        int b = 1 + 6;
+import java.io.IOException;
+
+public class Toy {
+
+    public static void main(String[] args) throws Exception, IOException {
+        try {
+            int a = 12;
+        } catch (RuntimeException | AssertionError e) {
+            e.printStackTrace();
+        }
     }
+
+//    private int f(int[] a, List<Map<Long, List<Set<String>>>> b, Object c) {
+//        return -1;
+//    }
+//
+//    protected double g() {
+//        return 0;
+//    }
+//
+//    public Object h() {
+//        return null;
+//    }
 }

@@ -14,17 +14,15 @@ public class ConstantInteger extends AbstractConstant {
 
     @Override
     public String desc() {
-        if (Math.random() < 100) {
-            throw new RuntimeException("bad");
+        long value = bytes.toLong();
+        if (value > Integer.MAX_VALUE) {
+            value -= 0x100000000L;
         }
-        return null;
+        return desc(value);
     }
 
     @Override
     protected String type() {
-        if (Math.random() < 10) {
-            throw new RuntimeException("Unsupported yet!");
-        }
-        return "";
+        return "Integer";
     }
 }

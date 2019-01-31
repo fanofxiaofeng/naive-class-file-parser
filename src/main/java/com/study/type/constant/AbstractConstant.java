@@ -19,6 +19,33 @@ public abstract class AbstractConstant {
         return stringBuilder.toString();
     }
 
+    String desc(int value) {
+        StringBuilder stringBuilder = common();
+        stringBuilder.append(value);
+        return stringBuilder.toString();
+    }
+
+    String desc(float value) {
+        StringBuilder stringBuilder = common();
+        stringBuilder.append(value);
+        stringBuilder.append('f');
+        return stringBuilder.toString();
+    }
+
+    String desc(long value) {
+        StringBuilder stringBuilder = common();
+        stringBuilder.append(value);
+        stringBuilder.append('l');
+        return stringBuilder.toString();
+    }
+
+    String desc(double value) {
+        StringBuilder stringBuilder = common();
+        stringBuilder.append(value);
+        stringBuilder.append('d');
+        return stringBuilder.toString();
+    }
+
     private StringBuilder common() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(type());

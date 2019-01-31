@@ -28,10 +28,6 @@ public class FieldInfo extends AbstractInfo {
         }
     }
 
-    private String[] basicTypes = {
-            "byte", "char", "double", "float", "int", "long", "short", "boolean"
-    };
-
     public static FieldInfo build(BasicInputStream basicInputStream) {
         return new FieldInfo(basicInputStream);
     }
@@ -45,6 +41,8 @@ public class FieldInfo extends AbstractInfo {
 //        System.out.println(nameIndex.toInt());
 //        System.out.println(descriptorIndex.toInt());
         // todo 没有处理 ACC_SYNTHETIC, ACC_ENUM
+        System.out.println(Integer.toHexString(mod));
+        System.out.println(Modifier.toString(mod));
         stringBuilder.append(Modifier.toString(mod));
         stringBuilder.append(' ');
         AbstractConstant name = constantPool[nameIndex.toInt()];
@@ -87,7 +85,7 @@ public class FieldInfo extends AbstractInfo {
 
         // 0x0004
         if (Modifier.isProtected(mod)) {
-            joiner.add("ACC_PRIVATE");
+            joiner.add("ACC_PROTECTED");
         }
 
         // 0x0008
@@ -123,34 +121,5 @@ public class FieldInfo extends AbstractInfo {
         }
 
         return String.format("flags: (0x%04x) %s", mod, joiner.toString());
-    }
-
-    private String toHumanReadable(String description) {
-        StringBuilder result = new StringBuilder();
-        int arrayCount = 0;
-        while (description.charAt(arrayCount) == '[') {
-            arrayCount++;
-        }
-        for (int i = arrayCount; i < description.length(); i++) {
-            char current = description.charAt(i);
-            if ("BCDFIJSZ".indexOf(current) >= 0) {
-                result.append(basicTypes["BCDFIJSZ".indexOf(current)]);
-            } else if (current == 'L') {
-                int indexOfSemicolon = description.indexOf(';', i);
-                String raw = description.substring(i + 1, indexOfSemicolon);
-                result.append(raw.replaceAll("/", "."));
-                i = indexOfSemicolon;
-            }
-        }
-
-        for (int i = 0; i < arrayCount; i++) {
-            result.append("[]");
-        }
-        return result.toString();
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println(Modifier.toString(0x00DF));
     }
 }

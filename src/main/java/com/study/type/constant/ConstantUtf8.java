@@ -58,17 +58,11 @@ public class ConstantUtf8 extends AbstractConstant {
         for (int i = 0; i < this.content.length; i++) {
             this.content[i] = chars.get(i);
         }
-//        System.out.println(Arrays.toString(content));
     }
 
     private void fillCodePoints(int codePoint, List<Character> characterList) {
         String s = new String(new int[]{codePoint}, 0, 1);
-//        System.out.println(s);
-//        System.out.println(Integer.toHexString(codePoint));
         char[] temp = s.toCharArray();
-//        System.out.println("~~~~");
-//        System.out.println(Arrays.toString(temp));
-//        System.out.println(destPos);
         for (char item : temp) {
             characterList.add(item);
         }

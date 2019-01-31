@@ -10,6 +10,7 @@ import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
 
 import java.io.PrintStream;
+import java.util.StringJoiner;
 
 public class BasicParser {
     /**
@@ -86,6 +87,10 @@ public class BasicParser {
         for (int i = 1; i < count; i++) {
             int tag = basicInputStream.readU1().toInt();
             this.constantPool[i] = build(tag);
+
+            if (!occupyOneSlot(this.constantPool[i])) {
+                i++;
+            }
         }
         return this;
     }
@@ -113,10 +118,7 @@ public class BasicParser {
 
     private BasicParser fillInterfaces() {
         int size = interfacesCount.toInt();
-        this.interfaces = new U2[size];
-        for (int i = 0; i < size; i++) {
-            this.interfaces[i] = basicInputStream.readU2();
-        }
+        this.interfaces = basicInputStream.readU2Array(size);
         return this;
     }
 
@@ -166,15 +168,17 @@ public class BasicParser {
         switch (tag) {
             case 1: {
                 U2 length = basicInputStream.readU2();
-                int size = length.toInt();
-                U1[] bytes = new U1[size];
-                for (int i = 0; i < size; i++) {
-                    bytes[i] = basicInputStream.readU1();
-                }
+                U1[] bytes = basicInputStream.readU1Array(length.toInt());
                 return new ConstantUtf8(length, bytes);
             }
             case 3:
                 return new ConstantInteger(basicInputStream.readU4());
+            case 4:
+                return new ConstantFloat(basicInputStream.readU4());
+            case 5:
+                return new ConstantLong(basicInputStream.readU4(), basicInputStream.readU4());
+            case 6:
+                return new ConstantDouble(basicInputStream.readU4(), basicInputStream.readU4());
             case 7:
                 return new ConstantClass(basicInputStream.readU2());
             case 8:
@@ -186,27 +190,36 @@ public class BasicParser {
             case 12:
                 return new ConstantNameAndType(basicInputStream.readU2(), basicInputStream.readU2());
             default:
-                throw new RuntimeException("Not supported yet!");
+                throw new RuntimeException(String.format("Tag %s is not supported yet!", tag));
         }
     }
 
     private BasicParser makeSure() {
-        assert basicInputStream.justFinished();
+        if (!basicInputStream.justFinished()) {
+            throw new AssertionError();
+        }
         return this;
     }
 
     public void show() {
-        printStream.println("Magic: " + magic.toString());
+        if (!magic.toString().equals("0xCAFEBABE")) {
+            throw new AssertionError();
+        }
 
         showMinorVersion();
         showMajorVersion();
+
         showAccessFlags();
         showThisClass();
         showSuperClass();
         showCount();
 
-//        showConstantPool();
+        showConstantPool();
         showFields();
+        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
+            printStream.println();
+        }
+        showMethods();
     }
 
     private void showMinorVersion() {
@@ -218,13 +231,43 @@ public class BasicParser {
     }
 
     private void showAccessFlags() {
-        // todo 输出内容不够
-        printStream.println(String.format("  flags: (0x%04x) ...", accessFlags.toInt()));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("  flags: (0x%04x)", accessFlags.toInt()));
+        StringJoiner joiner = new StringJoiner(", ");
+        if (accessFlags.isOn(0x0001)) {
+            joiner.add("ACC_PUBLIC");
+        }
+        if (accessFlags.isOn(0x0010)) {
+            joiner.add("ACC_FINAL");
+        }
+        if (accessFlags.isOn(0x0020)) {
+            joiner.add("ACC_SUPER");
+        }
+        if (accessFlags.isOn(0x0200)) {
+            joiner.add("ACC_INTERFACE");
+        }
+        if (accessFlags.isOn(0x0400)) {
+            joiner.add("ACC_ABSTRACT");
+        }
+        if (accessFlags.isOn(0x1000)) {
+            joiner.add("ACC_SYNTHETIC");
+        }
+        if (accessFlags.isOn(0x2000)) {
+            joiner.add("ACC_ANNOTATION");
+        }
+        if (accessFlags.isOn(0x4000)) {
+            joiner.add("ACC_ENUM");
+        }
+        if (joiner.length() > 0) {
+            stringBuilder.append(' ');
+            stringBuilder.append(joiner.toString());
+        }
+        printStream.println(stringBuilder.toString());
     }
 
     private void showThisClass() {
         StringBuilder stringBuilder = new StringBuilder(String.format("  this_class: #%d", thisClass.toInt()));
-        extendTo(stringBuilder, 42, ' ');
+        extendTo(stringBuilder, 42);
         stringBuilder.append("// ");
         stringBuilder.append(constantPool[thisClass.toInt()].detail(constantPool));
         printStream.println(stringBuilder.toString());
@@ -232,7 +275,7 @@ public class BasicParser {
 
     private void showSuperClass() {
         StringBuilder stringBuilder = new StringBuilder(String.format("  super_class: #%d", superClass.toInt()));
-        extendTo(stringBuilder, 42, ' ');
+        extendTo(stringBuilder, 42);
         stringBuilder.append("// ");
         stringBuilder.append(constantPool[superClass.toInt()].detail(constantPool));
         printStream.println(stringBuilder.toString());
@@ -245,31 +288,48 @@ public class BasicParser {
 
     private void showConstantPool() {
         printStream.println("Constant pool:");
+
         int count = this.constantPoolCount.toInt();
-        int width = ("" + count).length() + 3;
+        int width = String.format("  #%d", count).length();
         String widthControl = String.format("%%%ds", width);
-        for (int i = 1; i < count; ) {
-            String s = String.format(widthControl, "#" + i);
-            StringBuilder stringBuilder = new StringBuilder(String.format("%s = %s", s, this.constantPool[i].desc()));
-            AbstractConstant constant = constantPool[i];
-            String detail = constant.detail(constantPool);
-            if (hasDetail(constantPool[i])) {
-                extendTo(stringBuilder, 36 + width, ' ');
+
+        int index = 1;
+        while (index < count) {
+            // "  #42" 这种格式的字符串(leading whitespace 的数量是计算出来的)
+            String number = String.format(widthControl, "#" + index);
+            AbstractConstant constant = constantPool[index];
+            StringBuilder stringBuilder = new StringBuilder(String.format("%s = %s", number, constant.desc()));
+
+            if (hasDetail(constant)) {
+                extendTo(stringBuilder, Math.max(36 + width, 42));
+
                 stringBuilder.append("//");
+                String detail = constant.detail(constantPool);
                 if (detail.length() > 0) {
                     stringBuilder.append(' ');
                     stringBuilder.append(constant.detail(constantPool));
                 }
             }
-            while (stringBuilder.charAt(stringBuilder.length() - 1) == ' ') {
-                stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-            }
+
+            rightTrim(stringBuilder);
+
             printStream.println(stringBuilder.toString());
             if (occupyOneSlot(constant)) {
-                i++;
+                index++;
             } else {
-                i += 2;
+                index += 2;
             }
+        }
+    }
+
+    /**
+     * 删除右边的 whitespace, 逻辑参考了 {@link String#trim()}
+     *
+     * @param stringBuilder 要对它进行操作
+     */
+    private void rightTrim(StringBuilder stringBuilder) {
+        while (stringBuilder.charAt(stringBuilder.length() - 1) <= ' ') {
+            stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
     }
 
@@ -290,14 +350,28 @@ public class BasicParser {
     }
 
     private void showFields() {
+        printStream.println('{');
         int count = this.fieldsCount.toInt();
         for (int i = 0; i < count; i++) {
             printStream.println(fields[i].desc(constantPool));
-            printStream.println();
+            if (i + 1 < count) {
+                printStream.println();
+            }
         }
     }
 
-    private void extendTo(StringBuilder stringBuilder, int expectedLength, char given) {
+    private void showMethods() {
+        int count = this.methodsCount.toInt();
+        for (int i = 0; i < count; i++) {
+            printStream.println(methods[i].desc(constantPool));
+            if (i + 1 < count) {
+                printStream.println();
+            }
+        }
+    }
+
+    private void extendTo(StringBuilder stringBuilder, int expectedLength) {
+        final char given = ' ';
         while (stringBuilder.length() < expectedLength) {
             stringBuilder.append(given);
         }
