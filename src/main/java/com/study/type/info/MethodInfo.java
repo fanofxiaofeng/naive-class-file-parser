@@ -48,20 +48,28 @@ public class MethodInfo extends AbstractInfo {
         if (!ConstantUtf8.class.isInstance(descriptor)) {
             throw new AssertionError();
         }
-        stringBuilder.append(toHumanReadable(descriptor.detail(constantPool)));
+        stringBuilder.append(toHumanReadable(descriptor.detail()));
         stringBuilder.append(' ');
-        stringBuilder.append(name.detail(constantPool));
+        stringBuilder.append(name.detail());
         stringBuilder.append(';');
         stringBuilder.append("\n    descriptor: ");
-        stringBuilder.append(descriptor.detail(constantPool));
+        stringBuilder.append(descriptor.detail());
         stringBuilder.append(String.format("\n    %s", descAccessFlags()));
         if (attributesCount.toInt() > 0) {
             for (AttributeInfo attributeInfo : attributes) {
                 String info = attributeInfo.desc(constantPool);
+                attributeInfo.describe(1);
+                stringBuilder.append(info);
                 System.out.println(info);
             }
         }
         return stringBuilder.toString();
+    }
+
+    // todo
+    @Override
+    public String describe(int level) {
+        return null;
     }
 
     /**

@@ -19,7 +19,7 @@ public class ConstantFloat extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Float";
     }
 }

@@ -18,12 +18,12 @@ public class ConstantString extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "String";
     }
 
     @Override
-    public String detail(AbstractConstant[] constantPool) {
-        return constantPool[stringIndex.toInt()].detail(constantPool);
+    public String detail() {
+        return constantPool[stringIndex.toInt()].detail();
     }
 }

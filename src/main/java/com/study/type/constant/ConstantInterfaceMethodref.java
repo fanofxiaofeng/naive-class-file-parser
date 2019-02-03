@@ -1,5 +1,6 @@
 package com.study.type.constant;
 
+import com.study.type.U1;
 import com.study.type.U2;
 
 public class ConstantInterfaceMethodref extends AbstractConstant {
@@ -9,17 +10,18 @@ public class ConstantInterfaceMethodref extends AbstractConstant {
     private U2 nameAndTypeIndex;
 
     public ConstantInterfaceMethodref(U2 classIndex, U2 nameAndTypeIndex) {
+        this.tag = new U1(11);
         this.classIndex = classIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
 
     @Override
     public String desc() {
-        return null;
+        return desc(classIndex, nameAndTypeIndex);
     }
 
     @Override
-    protected String type() {
-        return null;
+    public String type() {
+        return "InterfaceMethodref";
     }
 }

@@ -42,7 +42,7 @@
                 <configuration>
                     <mainClass>com.study.parser.Main</mainClass>
                     <arguments>
-                        <argument>target/classes/com/study/parser/BasicParser.class</argument>
+                        <argument>${thePath}</argument>
                     </arguments>
                 </configuration>
             </plugin>

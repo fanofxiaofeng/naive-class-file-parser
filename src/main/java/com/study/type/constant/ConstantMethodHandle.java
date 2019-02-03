@@ -19,7 +19,7 @@ public class ConstantMethodHandle extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return null;
     }
 }

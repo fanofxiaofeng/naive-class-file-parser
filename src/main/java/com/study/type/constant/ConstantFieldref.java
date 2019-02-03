@@ -19,15 +19,15 @@ public class ConstantFieldref extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Fieldref";
     }
 
     @Override
-    public String detail(AbstractConstant[] constantPool) {
+    public String detail() {
         return String.format("%s.%s",
-                constantPool[classIndex.toInt()].detail(constantPool),
-                constantPool[nameAndTypeIndex.toInt()].detail(constantPool)
+                constantPool[classIndex.toInt()].detail(),
+                constantPool[nameAndTypeIndex.toInt()].detail()
         );
     }
 }

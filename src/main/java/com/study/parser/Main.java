@@ -12,6 +12,8 @@ public class Main {
         PrintStream printStream = new PrintStream(new File("scripts/result/output.txt"));
 //        PrintStream printStream = new PrintStream(new File("/Users/jinyang/Desktop/output.txt"));
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
-        new BasicParser(basicInputStream, printStream).build().show();
+        ParseResult parseResult = new BasicParser(basicInputStream).build();
+
+        parseResult.show(printStream);
     }
 }

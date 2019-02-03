@@ -33,6 +33,9 @@ public class CodeAttribute {
         this.maxStack = u1InputStream.readU2();
         this.maxLocals = u1InputStream.readU2();
         this.codeLength = u1InputStream.readU4();
+        System.out.println("~" + maxStack.toLong());
+        System.out.println("=" + maxLocals.toLong());
+        System.out.println("@" + codeLength.toLong());
 
         this.code = u1InputStream.readU1Array(this.codeLength.toInt());
 
@@ -71,7 +74,7 @@ public class CodeAttribute {
                         exceptionTable.startPc.toInt(),
                         exceptionTable.endPc.toInt(),
                         exceptionTable.handlerPc.toInt(),
-                        constantPool[exceptionTable.catchType.toInt()].detail(constantPool)
+                        constantPool[exceptionTable.catchType.toInt()].detail()
                 ));
             }
         }

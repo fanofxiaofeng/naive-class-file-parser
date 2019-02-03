@@ -18,11 +18,11 @@ public class ConstantInteger extends AbstractConstant {
         if (value > Integer.MAX_VALUE) {
             value -= 0x100000000L;
         }
-        return desc(value);
+        return desc((int) value);
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Integer";
     }
 }

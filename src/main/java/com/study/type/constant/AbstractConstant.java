@@ -4,59 +4,46 @@ import com.study.type.AbstractU;
 import com.study.type.U1;
 
 public abstract class AbstractConstant {
+
+    /**
+     * 常量池
+     */
+    protected static AbstractConstant[] constantPool;
+
     protected U1 tag;
 
 //    protected U1[] info;
 
     public abstract String desc();
 
-    protected abstract String type();
+    public abstract String type();
+
+    public static void setConstantPool(AbstractConstant[] constantPool) {
+        AbstractConstant.constantPool = constantPool;
+    }
 
     String desc(AbstractU u) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append('#');
-        stringBuilder.append(u.toInt());
-        return stringBuilder.toString();
+        return "#" + u.toInt();
     }
 
     String desc(int value) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append(value);
-        return stringBuilder.toString();
+        return "" + value;
     }
 
     String desc(float value) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append(value);
-        stringBuilder.append('f');
-        return stringBuilder.toString();
+        return String.valueOf(value) + 'f';
     }
 
     String desc(long value) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append(value);
-        stringBuilder.append('l');
-        return stringBuilder.toString();
+        return String.valueOf(value) + 'l';
     }
 
     String desc(double value) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append(value);
-        stringBuilder.append('d');
-        return stringBuilder.toString();
-    }
-
-    private StringBuilder common() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(type());
-        while (stringBuilder.length() < 19) {
-            stringBuilder.append(' ');
-        }
-        return stringBuilder;
+        return String.valueOf(value) + 'd';
     }
 
     String desc(AbstractU u1, AbstractU u2) {
-        StringBuilder stringBuilder = common();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('#');
         stringBuilder.append(u1.toInt());
         if (ConstantNameAndType.class.isInstance(this)) {
@@ -70,15 +57,10 @@ public abstract class AbstractConstant {
     }
 
     String desc(char[] chars) {
-        StringBuilder stringBuilder = common();
-        stringBuilder.append(new String(chars));
-        if (chars.length == 0) {
-            return common().toString().trim();
-        }
-        return stringBuilder.toString();
+        return new String(chars);
     }
 
-    public String detail(AbstractConstant[] constantPool) {
+    public String detail() {
         System.out.println(this.getClass().getName());
         throw new RuntimeException("Unsupported yet!");
     }

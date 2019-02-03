@@ -3,6 +3,7 @@ package com.study.io;
 import com.study.type.U1;
 import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.AbstractCmd;
+import com.study.util.Extend;
 
 /**
  * Please refer to https://docs.oracle.com/javase/specs/jvms/se10/html/jvms-7.html
@@ -272,8 +273,16 @@ public class CodeInputStream {
         while (canRead()) {
             int current = index;
             AbstractCmd abstractCmd = AbstractCmd.build(this);
-            System.out.println(abstractCmd.desc(current, constantPool));
-            stringBuilder.append(String.format("%10s: %s\n", current, abstractCmd.desc(current, constantPool)));
+//            System.out.println(abstractCmd.desc(current, constantPool));
+            StringBuilder oneLine = new StringBuilder();
+            oneLine.append(String.format("%10s: %s", current, abstractCmd.desc(current, constantPool)));
+            if (abstractCmd.hasDetail()) {
+                Extend.extentTo(oneLine, 46);
+                oneLine.append("// ");
+                oneLine.append(abstractCmd.detail(constantPool));
+            }
+            oneLine.append('\n');
+            stringBuilder.append(oneLine.toString());
 //                index += abstractCmd.size();
         }
         return stringBuilder.toString();

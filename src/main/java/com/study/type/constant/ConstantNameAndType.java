@@ -19,14 +19,14 @@ public class ConstantNameAndType extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "NameAndType";
     }
 
     @Override
-    public String detail(AbstractConstant[] constantPool) {
-        String part1 = constantPool[nameIndex.toInt()].detail(constantPool);
-        String part2 = constantPool[descriptorIndex.toInt()].detail(constantPool);
+    public String detail() {
+        String part1 = constantPool[nameIndex.toInt()].detail();
+        String part2 = constantPool[descriptorIndex.toInt()].detail();
         if (part1.equals("<init>")) {
             return String.format("\"%s\":%s", part1, part2);
         }

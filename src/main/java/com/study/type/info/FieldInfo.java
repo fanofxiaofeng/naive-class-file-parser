@@ -53,14 +53,19 @@ public class FieldInfo extends AbstractInfo {
         if (!ConstantUtf8.class.isInstance(descriptor)) {
             throw new AssertionError();
         }
-        stringBuilder.append(toHumanReadable(descriptor.detail(constantPool)));
+        stringBuilder.append(toHumanReadable(descriptor.detail()));
         stringBuilder.append(' ');
-        stringBuilder.append(name.detail(constantPool));
+        stringBuilder.append(name.detail());
         stringBuilder.append(';');
         stringBuilder.append("\n    descriptor: ");
-        stringBuilder.append(descriptor.detail(constantPool));
+        stringBuilder.append(descriptor.detail());
         stringBuilder.append(String.format("\n    %s", descAccessFlags()));
         return stringBuilder.toString();
+    }
+
+    @Override
+    public String describe(int level) {
+        return null;
     }
 
     /**

@@ -1,28 +1,20 @@
 package com.study.parser;
 
-import com.study.type.info.CodeAttribute;
-
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Map;
 
-public class Toy {
+public class Toy implements Serializable {
 
-    public static void main(String[] args) throws Exception, IOException {
-        try {
-            int a = 12;
-        } catch (RuntimeException | AssertionError e) {
-            e.printStackTrace();
+    private Map<String, Integer> map;
+
+    public static void main(String[] args) throws Exception, IOException, ArithmeticException {
+        int start = 1;
+        int end = 100;
+        int sum = 0;
+        for (int i = start; i <= end; i++) {
+            sum += i;
         }
+        System.out.println(sum);
     }
-
-//    private int f(int[] a, List<Map<Long, List<Set<String>>>> b, Object c) {
-//        return -1;
-//    }
-//
-//    protected double g() {
-//        return 0;
-//    }
-//
-//    public Object h() {
-//        return null;
-//    }
 }

@@ -29,4 +29,9 @@ public class CmdIfCond extends AbstractCmd {
         stringBuilder.append(String.format("%d", index + offset));
         return stringBuilder.toString();
     }
+
+    @Override
+    public int size() {
+        return 3;
+    }
 }

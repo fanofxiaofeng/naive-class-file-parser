@@ -74,12 +74,12 @@ public class ConstantUtf8 extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Utf8";
     }
 
     @Override
-    public String detail(AbstractConstant[] constantPool) {
+    public String detail() {
         return new String(content);
     }
 }

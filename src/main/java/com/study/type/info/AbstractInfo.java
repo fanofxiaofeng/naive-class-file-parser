@@ -3,6 +3,9 @@ package com.study.type.info;
 import com.study.type.constant.AbstractConstant;
 
 public abstract class AbstractInfo {
+
+    protected static AbstractConstant[] constantPool;
+
     /**
      * 8 个基本类型
      */
@@ -11,6 +14,10 @@ public abstract class AbstractInfo {
     };
 
     public abstract String desc(AbstractConstant[] constantPool);
+
+    public static void setConstantPool(AbstractConstant[] constantPool) {
+        AbstractInfo.constantPool = constantPool;
+    }
 
     String toHumanReadable(String description) {
         if (description.contains("(")) {
@@ -39,4 +46,6 @@ public abstract class AbstractInfo {
         }
         return result.toString();
     }
+
+    public abstract String describe(int level);
 }

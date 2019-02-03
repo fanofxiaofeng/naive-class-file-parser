@@ -23,7 +23,7 @@ public class ConstantLong extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Long";
     }
 }

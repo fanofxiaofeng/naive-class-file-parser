@@ -17,13 +17,13 @@ public class ConstantClass extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Class";
     }
 
     @Override
-    public String detail(AbstractConstant[] constantPool) {
-        String detail = constantPool[nameIndex.toInt()].detail(constantPool).replaceAll("\\.", "/");
+    public String detail() {
+        String detail = constantPool[nameIndex.toInt()].detail().replaceAll("\\.", "/");
         if (detail.startsWith("[")) {
             return String.format("\"%s\"", detail);
         } else {

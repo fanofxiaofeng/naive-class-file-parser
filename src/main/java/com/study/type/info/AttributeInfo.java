@@ -7,10 +7,18 @@ import com.study.type.U2;
 import com.study.type.U4;
 import com.study.type.constant.AbstractConstant;
 
+import java.io.PrintStream;
+
 public class AttributeInfo extends AbstractInfo {
     private U2 attributeNameIndex;
     private U4 attributeLength;
-    private U1[] info;
+    U1[] info;
+
+    protected static PrintStream printStream;
+
+    public static void setPrintStream(PrintStream printStream) {
+        AttributeInfo.printStream = printStream;
+    }
 
     private AttributeInfo(BasicInputStream basicInputStream) {
         attributeNameIndex = basicInputStream.readU2();
@@ -32,14 +40,27 @@ public class AttributeInfo extends AbstractInfo {
     public String desc(AbstractConstant[] constantPool) {
         int index = attributeNameIndex.toInt();
         AbstractConstant constant = constantPool[index];
-        if ("Code".equals(constant.detail(constantPool))) {
+        if ("Code".equals(constant.detail())) {
             CodeAttribute codeAttribute = new CodeAttribute(attributeNameIndex, attributeLength, info);
-            System.out.println("^^^");
             System.out.println(codeAttribute.toString());
-            System.out.println("$$$");
             System.out.println(codeAttribute.desc(constantPool));
+            return codeAttribute.desc(constantPool);
         }
 
         return null;
+    }
+
+    // todo
+    @Override
+    public String describe(int level) {
+        return null;
+    }
+
+    protected String basic(int level) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < level; i++) {
+            stringBuilder.append(' ').append(' ');
+        }
+        return stringBuilder.toString();
     }
 }

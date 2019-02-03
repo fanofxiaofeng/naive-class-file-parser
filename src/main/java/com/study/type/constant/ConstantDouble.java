@@ -23,7 +23,7 @@ public class ConstantDouble extends AbstractConstant {
     }
 
     @Override
-    protected String type() {
+    public String type() {
         return "Double";
     }
 }
