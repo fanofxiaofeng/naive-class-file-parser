@@ -51,6 +51,8 @@ public class ParseResult {
             printStream.println();
         }
         showMethods();
+        AttributeInfo.setPrintStream(printStream);
+        printStream.println(AttributeInfo.displayAttributes(attributes, 1));
     }
 
     private void showMinorVersion() {
@@ -200,7 +202,7 @@ public class ParseResult {
         printStream.println('{');
         int count = this.fieldsCount.toInt();
         for (int i = 0; i < count; i++) {
-            printStream.println(fields[i].desc(constantPool));
+            printStream.println(fields[i].desc());
             if (i + 1 < count) {
                 printStream.println();
             }
@@ -210,7 +212,7 @@ public class ParseResult {
     private void showMethods() {
         int count = this.methodsCount.toInt();
         for (int i = 0; i < count; i++) {
-            printStream.println(methods[i].desc(constantPool));
+            printStream.println(methods[i].desc());
             if (i + 1 < count) {
                 printStream.println();
             }

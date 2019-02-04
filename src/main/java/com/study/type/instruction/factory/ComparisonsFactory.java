@@ -2,7 +2,6 @@ package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.FakeCmd;
 import com.study.type.instruction.ThreeByteCmd;
@@ -24,8 +23,8 @@ public class ComparisonsFactory implements CmdFactory {
             case 0xa3:
                 return new ThreeByteCmd(ordinal, "if_icmpgt", codeInputStream) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+                    public String desc(int index) {
+                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
                         extentTo(stringBuilder);
                         stringBuilder.append(combine().toInt() + index);
                         return stringBuilder.toString();

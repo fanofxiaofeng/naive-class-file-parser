@@ -28,8 +28,8 @@ public class ReferencesFactory implements CmdFactory {
                 U1 b2 = codeInputStream.readU1();
                 return new ThreeByteCmd(ordinal, "getstatic", b1, b2) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+                    public String desc(int index) {
+                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
                         extentTo(stringBuilder);
                         stringBuilder.append('#');
                         stringBuilder.append(combine().toInt());
@@ -71,8 +71,8 @@ public class ReferencesFactory implements CmdFactory {
             case 0xb6: {
                 return new ThreeByteCmd(ordinal, "invokevirtual", codeInputStream) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+                    public String desc(int index) {
+                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
                         extentTo(stringBuilder);
                         stringBuilder.append(String.format("#%s", combine().toInt()));
                         return stringBuilder.toString();
@@ -93,8 +93,8 @@ public class ReferencesFactory implements CmdFactory {
             case 0xb7: {
                 return new ThreeByteCmd(ordinal, "invokespecial", codeInputStream) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        return super.desc(index, constantPool) + String.format(" #%s", combine().toInt());
+                    public String desc(int index) {
+                        return super.desc(index) + String.format(" #%s", combine().toInt());
                     }
 
                     @Override

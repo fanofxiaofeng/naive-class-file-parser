@@ -58,7 +58,7 @@ public class ConstantsFactory implements CmdFactory {
                 U1 _byte = codeInputStream.readU1();
                 return new TwoByteCmd(ordinal, "bipush", _byte) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
+                    public String desc(int index) {
                         StringBuilder stringBuilder = new StringBuilder(this.name);
                         extentTo(stringBuilder);
                         // todo 逻辑有待确认
@@ -74,8 +74,8 @@ public class ConstantsFactory implements CmdFactory {
             case 0x13:
                 return new AbstractCmd(ordinal) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        return super.desc(index, constantPool);
+                    public String desc(int index) {
+                        return super.desc(index);
                     }
 
                     @Override

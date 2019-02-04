@@ -1,7 +1,6 @@
 package com.study.type.instruction;
 
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 
 public class TwoByteCmd extends AbstractCmd {
     protected U1 _byte;
@@ -18,8 +17,8 @@ public class TwoByteCmd extends AbstractCmd {
     }
 
     @Override
-    public String desc(int index, AbstractConstant[] constantPool) {
-        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+    public String desc(int index) {
+        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
         extentTo(stringBuilder);
         stringBuilder.append(this._byte.toInt());
         return stringBuilder.toString();

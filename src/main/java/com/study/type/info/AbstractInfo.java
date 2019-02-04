@@ -1,10 +1,8 @@
 package com.study.type.info;
 
-import com.study.type.constant.AbstractConstant;
+import com.study.parser.ConstantPoolHolder;
 
-public abstract class AbstractInfo {
-
-    protected static AbstractConstant[] constantPool;
+public abstract class AbstractInfo extends ConstantPoolHolder {
 
     /**
      * 8 个基本类型
@@ -13,11 +11,7 @@ public abstract class AbstractInfo {
             "byte", "char", "double", "float", "int", "long", "short", "boolean"
     };
 
-    public abstract String desc(AbstractConstant[] constantPool);
-
-    public static void setConstantPool(AbstractConstant[] constantPool) {
-        AbstractInfo.constantPool = constantPool;
-    }
+    public abstract String desc();
 
     String toHumanReadable(String description) {
         if (description.contains("(")) {

@@ -17,8 +17,8 @@ public class CmdSiPush extends AbstractCmd {
     }
 
     @Override
-    public String desc(int index, AbstractConstant[] constantPool) {
-        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+    public String desc(int index) {
+        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
         extentTo(stringBuilder);
         // todo 这里的计算可能有问题
         stringBuilder.append((short) new U2(byte1, byte2).toInt());

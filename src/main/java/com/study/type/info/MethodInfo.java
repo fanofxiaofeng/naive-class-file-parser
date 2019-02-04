@@ -33,7 +33,7 @@ public class MethodInfo extends AbstractInfo {
     }
 
     @Override
-    public String desc(AbstractConstant[] constantPool) {
+    public String desc() {
         int mod = accessFlags.toInt();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("  ");
@@ -54,14 +54,9 @@ public class MethodInfo extends AbstractInfo {
         stringBuilder.append(';');
         stringBuilder.append("\n    descriptor: ");
         stringBuilder.append(descriptor.detail());
-        stringBuilder.append(String.format("\n    %s", descAccessFlags()));
+        stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));
         if (attributesCount.toInt() > 0) {
-            for (AttributeInfo attributeInfo : attributes) {
-                String info = attributeInfo.desc(constantPool);
-                attributeInfo.describe(1);
-                stringBuilder.append(info);
-                System.out.println(info);
-            }
+            stringBuilder.append(AttributeInfo.displayAttributes(attributes, 1));
         }
         return stringBuilder.toString();
     }

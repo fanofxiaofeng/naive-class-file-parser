@@ -29,9 +29,9 @@ public class MathFactory implements CmdFactory {
             case 0x84:
                 return new ThreeByteCmd(ordinal, "iinc", codeInputStream) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
+                    public String desc(int index) {
                         // todo 逻辑有待确认
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
                         extentTo(stringBuilder);
                         stringBuilder.append(this.b1.toInt());
                         stringBuilder.append(", ");

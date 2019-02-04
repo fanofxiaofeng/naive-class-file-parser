@@ -33,13 +33,10 @@ public class FieldInfo extends AbstractInfo {
     }
 
     @Override
-    public String desc(AbstractConstant[] constantPool) {
+    public String desc() {
         int mod = accessFlags.toInt();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("  ");
-//        System.out.println("~~~");
-//        System.out.println(nameIndex.toInt());
-//        System.out.println(descriptorIndex.toInt());
         // todo 没有处理 ACC_SYNTHETIC, ACC_ENUM
         System.out.println(Integer.toHexString(mod));
         System.out.println(Modifier.toString(mod));
@@ -59,7 +56,8 @@ public class FieldInfo extends AbstractInfo {
         stringBuilder.append(';');
         stringBuilder.append("\n    descriptor: ");
         stringBuilder.append(descriptor.detail());
-        stringBuilder.append(String.format("\n    %s", descAccessFlags()));
+        stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));
+        stringBuilder.append(AttributeInfo.displayAttributes(attributes, 1));
         return stringBuilder.toString();
     }
 

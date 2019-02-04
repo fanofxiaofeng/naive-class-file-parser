@@ -10,8 +10,8 @@ import com.study.type.constant.AbstractConstant;
 import java.io.PrintStream;
 
 public class AttributeInfo extends AbstractInfo {
-    private U2 attributeNameIndex;
-    private U4 attributeLength;
+    protected U2 attributeNameIndex;
+    protected U4 attributeLength;
     U1[] info;
 
     protected static PrintStream printStream;
@@ -26,18 +26,37 @@ public class AttributeInfo extends AbstractInfo {
         info = basicInputStream.readU1Array(attributeLength.toInt());
     }
 
+    protected AttributeInfo(U2 attributeNameIndex, U4 attributeLength, U1[] info) {
+        this.attributeNameIndex = attributeNameIndex;
+        this.attributeLength = attributeLength;
+        this.info = info;
+    }
+
+    public static AttributeInfo build(BasicInputStream basicInputStream) {
+        U2 attributeNameIndex = basicInputStream.readU2();
+        U4 attributeLength = basicInputStream.readU4();
+        U1[] info = basicInputStream.readU1Array(attributeLength.toInt());
+        AttributeInfo raw = new AttributeInfo(attributeNameIndex, attributeLength, info);
+        String name = constantPool[attributeNameIndex.toInt()].desc();
+        switch (name) {
+            case "InnerClasses":
+                return new InnerClassesAttribute(raw);
+        }
+        return raw;
+    }
+
+    public String attributeName() {
+        return constantPool[attributeNameIndex.toInt()].desc();
+    }
+
     public AttributeInfo(U1InputStream u1InputStream) {
         attributeNameIndex = u1InputStream.readU2();
         attributeLength = u1InputStream.readU4();
         info = u1InputStream.readU1Array(attributeLength.toInt());
     }
 
-    public static AttributeInfo build(BasicInputStream basicInputStream) {
-        return new AttributeInfo(basicInputStream);
-    }
-
     @Override
-    public String desc(AbstractConstant[] constantPool) {
+    public String desc() {
         int index = attributeNameIndex.toInt();
         AbstractConstant constant = constantPool[index];
         if ("Code".equals(constant.detail())) {
@@ -53,7 +72,7 @@ public class AttributeInfo extends AbstractInfo {
     // todo
     @Override
     public String describe(int level) {
-        return null;
+        return constantPool[attributeNameIndex.toInt()].desc();
     }
 
     protected String basic(int level) {
@@ -62,5 +81,15 @@ public class AttributeInfo extends AbstractInfo {
             stringBuilder.append(' ').append(' ');
         }
         return stringBuilder.toString();
+
+    }
+
+    public static String displayAttributes(AttributeInfo[] attributes, int level) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (AttributeInfo attribute : attributes) {
+            stringBuilder.append(attribute.describe(level));
+        }
+        return stringBuilder.toString();
     }
 }
+

@@ -14,7 +14,7 @@ public class ConstantValue extends AttributeInfo {
     }
 
     @Override
-    public String desc(AbstractConstant[] constantPool) {
+    public String desc() {
         StringBuilder stringBuilder = new StringBuilder("ConstantValue: ");
         int index = constantvalueIndex.toInt();
         AbstractConstant constant = constantPool[index];

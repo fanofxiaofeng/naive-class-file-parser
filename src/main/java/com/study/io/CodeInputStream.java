@@ -275,7 +275,7 @@ public class CodeInputStream {
             AbstractCmd abstractCmd = AbstractCmd.build(this);
 //            System.out.println(abstractCmd.desc(current, constantPool));
             StringBuilder oneLine = new StringBuilder();
-            oneLine.append(String.format("%10s: %s", current, abstractCmd.desc(current, constantPool)));
+            oneLine.append(String.format("%10s: %s", current, abstractCmd.desc(current)));
             if (abstractCmd.hasDetail()) {
                 Extend.extentTo(oneLine, 46);
                 oneLine.append("// ");

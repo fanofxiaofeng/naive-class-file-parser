@@ -1,14 +1,11 @@
 package com.study.type.constant;
 
+import com.study.parser.ConstantPoolHolder;
 import com.study.type.AbstractU;
 import com.study.type.U1;
 
-public abstract class AbstractConstant {
+public abstract class AbstractConstant extends ConstantPoolHolder {
 
-    /**
-     * 常量池
-     */
-    protected static AbstractConstant[] constantPool;
 
     protected U1 tag;
 
@@ -17,10 +14,6 @@ public abstract class AbstractConstant {
     public abstract String desc();
 
     public abstract String type();
-
-    public static void setConstantPool(AbstractConstant[] constantPool) {
-        AbstractConstant.constantPool = constantPool;
-    }
 
     String desc(AbstractU u) {
         return "#" + u.toInt();

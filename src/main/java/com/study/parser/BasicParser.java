@@ -8,18 +8,29 @@ import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
 
+/**
+ * (基本的)解析器
+ */
 public class BasicParser {
     /**
      * 通过它来读取 class 文件
      */
     private BasicInputStream basicInputStream;
 
+    /**
+     * 解析结果
+     */
     private ParseResult parseResult;
 
     public BasicParser(BasicInputStream basicInputStream) {
         this.basicInputStream = basicInputStream;
     }
 
+    /**
+     * 构建
+     *
+     * @return 构建结果
+     */
     public ParseResult build() {
         this.parseResult = new ParseResult();
 
@@ -79,7 +90,7 @@ public class BasicParser {
                 i++;
             }
         }
-        AbstractConstant.setConstantPool(constantPool);
+        ConstantPoolHolder.setConstantPool(constantPool);
         this.parseResult.setConstantPool(constantPool);
     }
 

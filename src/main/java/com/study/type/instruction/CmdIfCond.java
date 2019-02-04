@@ -21,9 +21,9 @@ public class CmdIfCond extends AbstractCmd {
     }
 
     @Override
-    public String desc(int index, AbstractConstant[] constantPool) {
+    public String desc(int index) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(super.desc(index, constantPool));
+        stringBuilder.append(super.desc(index));
         extentTo(stringBuilder);
         int offset = new U2(branchByte1, branchByte2).toInt();
         stringBuilder.append(String.format("%d", index + offset));

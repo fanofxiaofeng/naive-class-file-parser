@@ -30,8 +30,8 @@ public class ControlFactory implements CmdFactory {
                 U1 b2 = codeInputStream.readU1();
                 return new ThreeByteCmd(ordinal, "goto", b1, b2) {
                     @Override
-                    public String desc(int index, AbstractConstant[] constantPool) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index, constantPool));
+                    public String desc(int index) {
+                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
                         extentTo(stringBuilder);
                         stringBuilder.append(combine().toInt());
                         return stringBuilder.toString();

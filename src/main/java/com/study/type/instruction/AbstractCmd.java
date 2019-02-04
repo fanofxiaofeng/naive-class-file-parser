@@ -1,11 +1,12 @@
 package com.study.type.instruction;
 
 import com.study.io.CodeInputStream;
+import com.study.parser.ConstantPoolHolder;
 import com.study.type.U1;
 import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.factory.*;
 
-public abstract class AbstractCmd {
+public abstract class AbstractCmd extends ConstantPoolHolder {
     private U1 ordinal;
     protected String name;
 
@@ -74,7 +75,7 @@ public abstract class AbstractCmd {
         }
     }
 
-    public String desc(int index, AbstractConstant[] constantPool) {
+    public String desc(int index) {
         return name;
     }
 
