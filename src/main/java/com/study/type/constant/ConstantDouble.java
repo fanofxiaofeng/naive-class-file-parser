@@ -26,4 +26,11 @@ public class ConstantDouble extends AbstractConstant {
     public String type() {
         return "Double";
     }
+
+    @Override
+    public void validate() {
+        if (this.tag.toInt() != 6) {
+            throw new AssertionError();
+        }
+    }
 }

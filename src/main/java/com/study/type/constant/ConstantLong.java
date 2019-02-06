@@ -26,4 +26,11 @@ public class ConstantLong extends AbstractConstant {
     public String type() {
         return "Long";
     }
+
+    @Override
+    public void validate() {
+        if (this.tag.toInt() != 5) {
+            throw new AssertionError();
+        }
+    }
 }

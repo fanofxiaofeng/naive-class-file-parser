@@ -27,6 +27,11 @@ public class ThreeByteCmd extends AbstractCmd {
     }
 
     @Override
+    public String desc(int index) {
+        return String.format("%10s: %-14s%s", index, name, combine().toInt());
+    }
+
+    @Override
     public int size() {
         return 3;
     }

@@ -24,4 +24,19 @@ public class ConstantInterfaceMethodref extends AbstractConstant {
     public String type() {
         return "InterfaceMethodref";
     }
+
+    @Override
+    public void validate() {
+        if (this.tag.toInt() != 11) {
+            throw new AssertionError();
+        }
+
+        if (!ConstantClass.class.isInstance(constantPool[classIndex.toInt()])) {
+            throw new AssertionError();
+        }
+
+        if (!ConstantNameAndType.class.isInstance(constantPool[nameAndTypeIndex.toInt()])) {
+            throw new AssertionError();
+        }
+    }
 }

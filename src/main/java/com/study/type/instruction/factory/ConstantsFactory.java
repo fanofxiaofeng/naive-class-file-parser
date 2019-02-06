@@ -3,6 +3,8 @@ package com.study.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.ConstantInteger;
+import com.study.type.constant.ConstantLong;
 import com.study.type.instruction.*;
 
 public class ConstantsFactory implements CmdFactory {
@@ -57,20 +59,32 @@ public class ConstantsFactory implements CmdFactory {
             case 0x10: {
                 U1 _byte = codeInputStream.readU1();
                 return new TwoByteCmd(ordinal, "bipush", _byte) {
-                    @Override
-                    public String desc(int index) {
-                        StringBuilder stringBuilder = new StringBuilder(this.name);
-                        extentTo(stringBuilder);
-                        // todo 逻辑有待确认
-                        stringBuilder.append((byte) _byte.toInt());
-                        return stringBuilder.toString();
-                    }
+                    // todo 逻辑有待确认
                 };
             }
             case 0x11:
                 return new CmdSiPush(ordinal, codeInputStream);
             case 0x12:
-                return new Cmd0x12(ordinal, codeInputStream);
+//                return new Cmd0x12(ordinal, codeInputStream);
+            {
+                U1 _byte = codeInputStream.readU1();
+                return new TwoByteCmd(ordinal, "ldc", _byte) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s#%s", index, name, _byte.toInt());
+                    }
+                    @Override
+                    public boolean hasDetail() {
+                        return true;
+                    }
+
+                    @Override
+                    public String detail() {
+                        return String.format("int %s", constantPool[_byte.toInt()].desc());
+                    }
+
+                };
+            }
             case 0x13:
                 return new AbstractCmd(ordinal) {
                     @Override
@@ -83,8 +97,28 @@ public class ConstantsFactory implements CmdFactory {
                         return 3;
                     }
                 };
-            case 0x14:
-                return new ThreeByteCmd(ordinal, "ldc2_w", codeInputStream);
+            case 0x14: {
+                return new ThreeByteCmd(ordinal, "ldc2_w", codeInputStream) {
+                    @Override
+                    public String desc(int index) {
+                        int constantIndex = combine().toInt();
+                        String line = String.format("%10s: %-14s#%-19s", index, name, constantIndex);
+                        AbstractConstant constant = constantPool[constantIndex];
+                        if (ConstantLong.class.isInstance(constant)) {
+                            return String.format("%s// long %s", line, constant.desc());
+                        }
+                        if (ConstantInteger.class.isInstance(constant)) {
+                            return String.format("%s// int %s", line, constant.desc());
+                        }
+                        throw new RuntimeException("unsupported yet!");
+                    }
+
+                    @Override
+                    public String detail() {
+                        return null;
+                    }
+                };
+            }
             default:
                 System.out.println(ordinal.toInt());
                 throw new RuntimeException("not supported yet!");

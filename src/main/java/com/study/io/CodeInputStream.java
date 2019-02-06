@@ -1,7 +1,7 @@
 package com.study.io;
 
+import com.study.parser.ConstantPoolHolder;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.AbstractCmd;
 import com.study.util.Extend;
 
@@ -249,15 +249,13 @@ import com.study.util.Extend;
  * stack, math, conversions,
  * comparisons, conversions, control, references, extended, reserved]
  */
-public class CodeInputStream {
+public class CodeInputStream extends ConstantPoolHolder {
 
     private int index = 0;
     private U1[] code;
-    private AbstractConstant[] constantPool;
 
-    public CodeInputStream(U1[] code, AbstractConstant[] constantPool) {
+    public CodeInputStream(U1[] code) {
         this.code = code;
-        this.constantPool = constantPool;
     }
 
     public U1 readU1() {
@@ -275,11 +273,11 @@ public class CodeInputStream {
             AbstractCmd abstractCmd = AbstractCmd.build(this);
 //            System.out.println(abstractCmd.desc(current, constantPool));
             StringBuilder oneLine = new StringBuilder();
-            oneLine.append(String.format("%10s: %s", current, abstractCmd.desc(current)));
+            oneLine.append(abstractCmd.desc(current));
             if (abstractCmd.hasDetail()) {
                 Extend.extentTo(oneLine, 46);
                 oneLine.append("// ");
-                oneLine.append(abstractCmd.detail(constantPool));
+                oneLine.append(abstractCmd.detail());
             }
             oneLine.append('\n');
             stringBuilder.append(oneLine.toString());

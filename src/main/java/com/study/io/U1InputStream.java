@@ -50,4 +50,15 @@ public class U1InputStream {
         }
         return u2s;
     }
+
+    public int length() {
+        if (index != 0) {
+            throw new AssertionError("index must be 0!");
+        }
+        return data.length;
+    }
+
+    public boolean justFinished() {
+        return data.length == index;
+    }
 }

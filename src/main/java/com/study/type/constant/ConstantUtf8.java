@@ -6,6 +6,11 @@ import com.study.type.U2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 格式参考
+ * <p>
+ * #19 = Utf8               Lcom/study/parser/Naive;
+ */
 public class ConstantUtf8 extends AbstractConstant {
     private U2 length;
     private U1[] bytes;
@@ -79,7 +84,9 @@ public class ConstantUtf8 extends AbstractConstant {
     }
 
     @Override
-    public String detail() {
-        return new String(content);
+    public void validate() {
+        if (this.tag.toInt() != 1) {
+            throw new AssertionError();
+        }
     }
 }

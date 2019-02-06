@@ -7,7 +7,7 @@ public abstract class AbstractInfo extends ConstantPoolHolder {
     /**
      * 8 个基本类型
      */
-    private String[] basicTypes = {
+    private static String[] basicTypes = {
             "byte", "char", "double", "float", "int", "long", "short", "boolean"
     };
 
@@ -40,6 +40,4 @@ public abstract class AbstractInfo extends ConstantPoolHolder {
         }
         return result.toString();
     }
-
-    public abstract String describe(int level);
 }

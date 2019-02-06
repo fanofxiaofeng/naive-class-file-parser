@@ -2,7 +2,6 @@ package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.FakeCmd;
 import com.study.type.instruction.OneByteCmd;
@@ -31,13 +30,12 @@ public class ControlFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "goto", b1, b2) {
                     @Override
                     public String desc(int index) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
-                        extentTo(stringBuilder);
-                        stringBuilder.append(combine().toInt());
-                        return stringBuilder.toString();
+                        return String.format("%10s: %-14s%s", index, name, index + combine().toInt());
                     }
                 };
             }
+            case 0xac:
+                return new OneByteCmd(ordinal, "ireturn");
             // 0xaf
             case dreturn: {
                 return new OneByteCmd(ordinal, "dreturn");

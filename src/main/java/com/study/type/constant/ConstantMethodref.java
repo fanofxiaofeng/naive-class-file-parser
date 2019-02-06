@@ -24,6 +24,21 @@ public class ConstantMethodref extends AbstractConstant {
     }
 
     @Override
+    public void validate() {
+        if (this.tag.toInt() != 10) {
+            throw new AssertionError();
+        }
+
+        if (!ConstantClass.class.isInstance(constantPool[classIndex.toInt()])) {
+            throw new AssertionError();
+        }
+
+        if (!ConstantNameAndType.class.isInstance(constantPool[nameAndTypeIndex.toInt()])) {
+            throw new AssertionError();
+        }
+    }
+
+    @Override
     public String detail() {
         return String.format("%s.%s",
                 constantPool[classIndex.toInt()].detail(),

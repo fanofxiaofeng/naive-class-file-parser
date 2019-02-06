@@ -60,7 +60,7 @@ public class BasicInputStream extends InputStream {
 
     public U2[] readU2Array(int length) {
         U2[] u2s = new U2[length];
-        for (int i = 0;i < length;i++) {
+        for (int i = 0; i < length; i++) {
             u2s[i] = readU2();
         }
         return u2s;

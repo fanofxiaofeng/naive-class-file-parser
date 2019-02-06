@@ -3,7 +3,6 @@ package com.study.type.instruction;
 import com.study.io.CodeInputStream;
 import com.study.parser.ConstantPoolHolder;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.factory.*;
 
 public abstract class AbstractCmd extends ConstantPoolHolder {
@@ -20,30 +19,6 @@ public abstract class AbstractCmd extends ConstantPoolHolder {
         AbstractCmd abstractCmd = cmdFactory.build(ordinal, codeInputStream);
 //        if (abstractCmd != null) {
         return abstractCmd;
-//        }
-        // return abstractCmd;
-//        switch (ordinal.toInt()) {
-//            case 0x3b:
-//            case 0x3c:
-//            case 0x3d:
-//            case 0x3e: {
-//                return new CmdIStore(ordinal);
-//            }
-//            case 0x4b:
-//            case 0x4c:
-//            case 0x4d:
-//            case 0x4e:
-//                return new CmdAStore(ordinal);
-//            case 0x99:
-//            case 0x9a:
-//            case 0x9b:
-//            case 0x9c:
-//            case 0x9d:
-//            case 0x9e:
-//                return new CmdIfCond(ordinal, codeInputStream);
-//            default:
-//                return new FakeCmd(ordinal);
-//        }
     }
 
 
@@ -76,14 +51,14 @@ public abstract class AbstractCmd extends ConstantPoolHolder {
     }
 
     public String desc(int index) {
-        return name;
+        return String.format("%10s: %s", index, name);
     }
 
     public boolean hasDetail() {
         return false;
     }
 
-    public String detail(AbstractConstant[] constantPool) {
+    public String detail() {
         return null;
     }
 

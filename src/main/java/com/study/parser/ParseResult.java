@@ -6,6 +6,7 @@ import com.study.type.constant.*;
 import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
+import com.study.util.Extend;
 
 import java.io.PrintStream;
 import java.util.StringJoiner;
@@ -46,13 +47,18 @@ public class ParseResult {
         showCount();
 
         showConstantPool();
+
+        printStream.println('{');
+
         showFields();
+
         if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
             printStream.println();
         }
+
         showMethods();
-        AttributeInfo.setPrintStream(printStream);
-        printStream.println(AttributeInfo.displayAttributes(attributes, 1));
+
+        showAttributes();
     }
 
     private void showMinorVersion() {
@@ -128,15 +134,16 @@ public class ParseResult {
         while (index < count) {
             // "  #42" 这种格式的字符串(leading whitespace 的数量是计算出来的)
             AbstractConstant constant = constantPool[index];
+            constant.validate();
 
             StringBuilder stringBuilder = new StringBuilder();
+            String format = withThreeWidthControl();
+            stringBuilder.append(String.format(format, "#" + index, constant.type(), constant.desc()));
             if (hasDetail(constant)) {
-                String format = withFourWidthControl();
-                stringBuilder.append(String.format(format, "#" + index, constant.type(), constant.desc(), constant.detail()));
-            } else {
-                String format = withThreeWidthControl();
-                stringBuilder.append(String.format(format, "#" + index, constant.type(), constant.desc()));
+                Extend.extentTo(stringBuilder, 42);
+                stringBuilder.append("// ").append(constant.detail());
             }
+
             rightTrim(stringBuilder);
             printStream.println(stringBuilder.toString());
 
@@ -146,18 +153,6 @@ public class ParseResult {
                 index += 2;
             }
         }
-    }
-
-    private String withFourWidthControl() {
-        int count = this.constantPoolCount.toInt();
-        int width = String.format("  #%d", count).length();
-
-        // partOneControl 是类似于 "%5s" 这样的字符串
-        String partOneControl = String.format("%%%ds", width);
-        String partTwoControl = "%-19s";
-        String partThreeControl = "%-14s";
-        String partFourControl = "%s";
-        return String.format("%s = %s%s// %s", partOneControl, partTwoControl, partThreeControl, partFourControl);
     }
 
     private String withThreeWidthControl() {
@@ -199,14 +194,12 @@ public class ParseResult {
     }
 
     private void showFields() {
-        printStream.println('{');
         int count = this.fieldsCount.toInt();
+        StringJoiner joiner = new StringJoiner("\n");
         for (int i = 0; i < count; i++) {
-            printStream.println(fields[i].desc());
-            if (i + 1 < count) {
-                printStream.println();
-            }
+            joiner.add(fields[i].desc());
         }
+        printStream.print(joiner.toString());
     }
 
     private void showMethods() {
@@ -217,6 +210,14 @@ public class ParseResult {
                 printStream.println();
             }
         }
+    }
+
+    private void showAttributes() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (AttributeInfo attribute : attributes) {
+            stringBuilder.append(attribute.describe(0));
+        }
+        printStream.println(stringBuilder.toString());
     }
 
     private void extendTo(StringBuilder stringBuilder, int expectedLength) {

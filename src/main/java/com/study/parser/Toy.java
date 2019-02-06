@@ -3,10 +3,17 @@ package com.study.parser;
 import java.io.IOException;
 import java.io.Serializable;
 
+@Deprecated
 public class Toy implements Serializable {
 
-    private static int count = 0;
+    @Deprecated
+    private static int count = 424242;
+    private final static int a = 2;
+    private final static long b = 2L;
+    private final static float c = 3.3f;
+    private final static double d = 3.1415;
 
+    @Deprecated
     public static void main(String[] args) throws Exception, IOException, ArithmeticException {
         Runnable r = new Runnable() {
             @Override
@@ -30,9 +37,24 @@ public class Toy implements Serializable {
             threads[i] = new Thread(r);
             threads[i].start();
         }
-        for (Thread thread : threads) {
-            thread.join();
+        try {
+            for (Thread thread : threads) {
+                thread.join();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         System.out.println("count: " + count);
+    }
+
+    private void f() {
+        int a = 1;
+        try {
+            a++;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int b = a * a;
+        System.out.println(b);
     }
 }

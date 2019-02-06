@@ -20,14 +20,15 @@ public class ComparisonsFactory implements CmdFactory {
     @Override
     public AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
+            case 0xa2:
+                return new ThreeByteCmd(ordinal, "if_icmpge", codeInputStream) {
+
+                };
             case 0xa3:
                 return new ThreeByteCmd(ordinal, "if_icmpgt", codeInputStream) {
                     @Override
                     public String desc(int index) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
-                        extentTo(stringBuilder);
-                        stringBuilder.append(combine().toInt() + index);
-                        return stringBuilder.toString();
+                        return String.format("%10s: %-14s%s", index, name, index + combine().toInt());
                     }
                 };
         }

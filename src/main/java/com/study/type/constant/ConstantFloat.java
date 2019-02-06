@@ -22,4 +22,12 @@ public class ConstantFloat extends AbstractConstant {
     public String type() {
         return "Float";
     }
+
+    @Override
+    public void validate() {
+        if (this.tag.toInt() != 4) {
+            throw new AssertionError();
+        }
+
+    }
 }

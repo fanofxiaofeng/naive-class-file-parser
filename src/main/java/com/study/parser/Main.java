@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.PrintStream;
 
 public class Main {
+
+    private int a = 42;
+
     public static void main(String[] args) throws Exception {
         FileInputStream inputStream = new FileInputStream(args[0]);
         PrintStream printStream = new PrintStream(new File("scripts/result/output.txt"));

@@ -53,6 +53,8 @@ public abstract class AbstractConstant extends ConstantPoolHolder {
         return new String(chars);
     }
 
+    public abstract void validate();
+
     public String detail() {
         System.out.println(this.getClass().getName());
         throw new RuntimeException("Unsupported yet!");

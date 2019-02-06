@@ -30,6 +30,8 @@ public class LoadsFactory implements CmdFactory {
                 return new TwoByteCmd(ordinal, "fload", codeInputStream.readU1());
             case 0x18:
                 return new TwoByteCmd(ordinal, "dload", codeInputStream.readU1());
+            case 0x19:
+                return new TwoByteCmd(ordinal, "aload", codeInputStream.readU1());
 
             case 0x1a:
             case 0x1b:
@@ -37,6 +39,14 @@ public class LoadsFactory implements CmdFactory {
             case 0x1d: {
                 String[] names = {"iload_0", "iload_1", "iload_2", "iload_3"};
                 String name = names[ordinal.toInt() - 0x1a];
+                return new OneByteCmd(ordinal, name);
+            }
+            case 0x1e:
+            case 0x1f:
+            case 0x20:
+            case 0x21: {
+                String[] names = {"lload_0", "lload_1", "lload_2", "lload_3"};
+                String name = names[ordinal.toInt() - 0x1e];
                 return new OneByteCmd(ordinal, name);
             }
 
@@ -48,6 +58,8 @@ public class LoadsFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x2a];
                 return new OneByteCmd(ordinal, name);
             }
+            case 0x32:
+                return new OneByteCmd(ordinal, "aaload");
         }
         return new FakeCmd(ordinal, "xx loads");
     }

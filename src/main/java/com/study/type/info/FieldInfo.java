@@ -35,35 +35,28 @@ public class FieldInfo extends AbstractInfo {
     @Override
     public String desc() {
         int mod = accessFlags.toInt();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("  ");
-        // todo 没有处理 ACC_SYNTHETIC, ACC_ENUM
-        System.out.println(Integer.toHexString(mod));
-        System.out.println(Modifier.toString(mod));
-        stringBuilder.append(Modifier.toString(mod));
-        stringBuilder.append(' ');
-        AbstractConstant name = constantPool[nameIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(name)) {
-            throw new AssertionError();
-        }
         AbstractConstant descriptor = constantPool[descriptorIndex.toInt()];
         if (!ConstantUtf8.class.isInstance(descriptor)) {
             throw new AssertionError();
         }
-        stringBuilder.append(toHumanReadable(descriptor.detail()));
-        stringBuilder.append(' ');
-        stringBuilder.append(name.detail());
-        stringBuilder.append(';');
-        stringBuilder.append("\n    descriptor: ");
-        stringBuilder.append(descriptor.detail());
-        stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));
-        stringBuilder.append(AttributeInfo.displayAttributes(attributes, 1));
-        return stringBuilder.toString();
-    }
+        AbstractConstant name = constantPool[nameIndex.toInt()];
+        if (!ConstantUtf8.class.isInstance(name)) {
+            throw new AssertionError();
+        }
 
-    @Override
-    public String describe(int level) {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("  %s %s %s;\n",
+                // todo 没有处理 ACC_SYNTHETIC, ACC_ENUM
+                Modifier.toString(mod),
+                toHumanReadable(descriptor.desc()),
+                name.desc()
+        ));
+        stringBuilder.append(String.format("    descriptor: %s\n", descriptor.desc()));
+        stringBuilder.append(String.format("    %s\n", descAccessFlags()));
+        for (AttributeInfo attribute : attributes) {
+            stringBuilder.append(attribute.describe(4));
+        }
+        return stringBuilder.toString();
     }
 
     /**

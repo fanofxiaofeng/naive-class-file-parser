@@ -33,6 +33,14 @@ public class StoresFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x3b];
                 return new OneByteCmd(ordinal, name);
             }
+            case 0x3f:
+            case 0x40:
+            case 0x41:
+            case 0x42: {
+                String[] names = {"lstore_0", "lstore_1", "lstore_2", "lstore_3"};
+                String name = names[ordinal.toInt() - 0x3f];
+                return new OneByteCmd(ordinal, name);
+            }
             case 0x4b:
             case 0x4c:
             case 0x4d:

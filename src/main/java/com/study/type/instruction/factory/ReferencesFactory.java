@@ -2,9 +2,9 @@ package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.FakeCmd;
+import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.ThreeByteCmd;
 
 import static com.sun.tools.javac.jvm.ByteCodes.new_;
@@ -29,11 +29,7 @@ public class ReferencesFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "getstatic", b1, b2) {
                     @Override
                     public String desc(int index) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
-                        extentTo(stringBuilder);
-                        stringBuilder.append('#');
-                        stringBuilder.append(combine().toInt());
-                        return stringBuilder.toString();
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
                     }
 
                     @Override
@@ -42,7 +38,7 @@ public class ReferencesFactory implements CmdFactory {
                     }
 
                     @Override
-                    public String detail(AbstractConstant[] constantPool) {
+                    public String detail() {
                         return String.format("Field %s", constantPool[combine().toInt()].detail());
                     }
                 };
@@ -51,7 +47,20 @@ public class ReferencesFactory implements CmdFactory {
                 U1 b1 = codeInputStream.readU1();
                 U1 b2 = codeInputStream.readU1();
                 return new ThreeByteCmd(ordinal, "putstatic", b1, b2) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
+                    }
 
+                    @Override
+                    public boolean hasDetail() {
+                        return true;
+                    }
+
+                    @Override
+                    public String detail() {
+                        return String.format("Field %s", constantPool[combine().toInt()].detail());
+                    }
                 };
             }
             case 0xb4: {
@@ -65,6 +74,10 @@ public class ReferencesFactory implements CmdFactory {
                 U1 b1 = codeInputStream.readU1();
                 U1 b2 = codeInputStream.readU1();
                 return new ThreeByteCmd(ordinal, "putfield", b1, b2) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
+                    }
 
                 };
             }
@@ -72,10 +85,7 @@ public class ReferencesFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "invokevirtual", codeInputStream) {
                     @Override
                     public String desc(int index) {
-                        StringBuilder stringBuilder = new StringBuilder(super.desc(index));
-                        extentTo(stringBuilder);
-                        stringBuilder.append(String.format("#%s", combine().toInt()));
-                        return stringBuilder.toString();
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
                     }
 
                     @Override
@@ -84,8 +94,7 @@ public class ReferencesFactory implements CmdFactory {
                     }
 
                     @Override
-                    public String detail(AbstractConstant[] constantPool) {
-                        System.out.println("====" + combine().toInt());
+                    public String detail() {
                         return String.format("Method %s", constantPool[combine().toInt()].detail());
                     }
                 };
@@ -94,7 +103,7 @@ public class ReferencesFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "invokespecial", codeInputStream) {
                     @Override
                     public String desc(int index) {
-                        return super.desc(index) + String.format(" #%s", combine().toInt());
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
                     }
 
                     @Override
@@ -103,7 +112,7 @@ public class ReferencesFactory implements CmdFactory {
                     }
 
                     @Override
-                    public String detail(AbstractConstant[] constantPool) {
+                    public String detail() {
                         return String.format("Method %s", constantPool[combine().toInt()].detail());
                     }
                 };
@@ -111,8 +120,44 @@ public class ReferencesFactory implements CmdFactory {
             // 0xbb
             case new_: {
                 return new ThreeByteCmd(ordinal, "new", codeInputStream) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
+                    }
+
+                    @Override
+                    public boolean hasDetail() {
+                        return true;
+                    }
+
+                    @Override
+                    public String detail() {
+                        return String.format("class %s", constantPool[combine().toInt()].detail());
+                    }
+
 
                 };
+            }
+            case 0xbd: {
+                return new ThreeByteCmd(ordinal, "anewarray", codeInputStream) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s#%s", index, name, combine().toInt());
+                    }
+
+                    @Override
+                    public boolean hasDetail() {
+                        return true;
+                    }
+
+                    @Override
+                    public String detail() {
+                        return String.format("class %s", constantPool[combine().toInt()].detail());
+                    }
+                };
+            }
+            case 0xbe: {
+                return new OneByteCmd(ordinal, "arraylength");
             }
         }
         return new FakeCmd(ordinal, "xx reference");

@@ -17,7 +17,7 @@ public class ConstantsFactoryTest {
         constantPool = new AbstractConstant[1];
         code = new U1[1];
         code[0] = new U1(value);
-        CodeInputStream stream = new CodeInputStream(code, constantPool);
+        CodeInputStream stream = new CodeInputStream(code);
         U1 ordinal = stream.readU1();
         return factory.build(ordinal, stream);
     }
@@ -82,7 +82,7 @@ public class ConstantsFactoryTest {
         code = new U1[2];
         code[0] = new U1(0x10);
         code[1] = new U1(0x42);
-        CodeInputStream stream = new CodeInputStream(code, constantPool);
+        CodeInputStream stream = new CodeInputStream(code);
         U1 ordinal = stream.readU1();
         AbstractCmd cmd = factory.build(ordinal, stream);
         String desc = cmd.desc(0);
