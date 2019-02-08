@@ -5,7 +5,10 @@ import com.study.type.U1;
 import com.study.type.constant.AbstractConstant;
 import com.study.type.constant.ConstantInteger;
 import com.study.type.constant.ConstantLong;
-import com.study.type.instruction.*;
+import com.study.type.instruction.AbstractCmd;
+import com.study.type.instruction.OneByteCmd;
+import com.study.type.instruction.ThreeByteCmd;
+import com.study.type.instruction.TwoByteCmd;
 
 public class ConstantsFactory implements CmdFactory {
     private static ConstantsFactory instance = new ConstantsFactory();
@@ -62,17 +65,17 @@ public class ConstantsFactory implements CmdFactory {
                     // todo 逻辑有待确认
                 };
             }
-            case 0x11:
-                return new CmdSiPush(ordinal, codeInputStream);
-            case 0x12:
-//                return new Cmd0x12(ordinal, codeInputStream);
-            {
+            case 0x11: {
+                return new ThreeByteCmd(ordinal, "sipush", codeInputStream);
+            }
+            case 0x12: {
                 U1 _byte = codeInputStream.readU1();
                 return new TwoByteCmd(ordinal, "ldc", _byte) {
                     @Override
                     public String desc(int index) {
                         return String.format("%10s: %-14s#%s", index, name, _byte.toInt());
                     }
+
                     @Override
                     public boolean hasDetail() {
                         return true;
@@ -87,6 +90,12 @@ public class ConstantsFactory implements CmdFactory {
             }
             case 0x13:
                 return new AbstractCmd(ordinal) {
+                    {
+                        name = "ldc_w";
+                        U1 indexByte1 = codeInputStream.readU1();
+                        U1 indexByte2 = codeInputStream.readU1();
+                    }
+
                     @Override
                     public String desc(int index) {
                         return super.desc(index);
@@ -103,6 +112,8 @@ public class ConstantsFactory implements CmdFactory {
                     public String desc(int index) {
                         int constantIndex = combine().toInt();
                         String line = String.format("%10s: %-14s#%-19s", index, name, constantIndex);
+                        System.out.println("b1: " + b1.toInt());
+                        System.out.println("b2: " + b2.toInt());
                         AbstractConstant constant = constantPool[constantIndex];
                         if (ConstantLong.class.isInstance(constant)) {
                             return String.format("%s// long %s", line, constant.desc());
@@ -112,16 +123,10 @@ public class ConstantsFactory implements CmdFactory {
                         }
                         throw new RuntimeException("unsupported yet!");
                     }
-
-                    @Override
-                    public String detail() {
-                        return null;
-                    }
                 };
             }
             default:
-                System.out.println(ordinal.toInt());
-                throw new RuntimeException("not supported yet!");
+                throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }
     }
 }

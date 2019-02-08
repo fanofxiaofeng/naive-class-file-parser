@@ -30,9 +30,9 @@ public class CodeAttribute extends AttributeInfo {
         this.maxStack = infoStream.readU2();
         this.maxLocals = infoStream.readU2();
         this.codeLength = infoStream.readU4();
-        System.out.println("maxStack: " + maxStack.toInt());
-        System.out.println("maxLocals: " + maxLocals.toInt());
-        System.out.println("codeLength: " + codeLength.toLong());
+//        System.out.println("maxStack: " + maxStack.toInt());
+//        System.out.println("maxLocals: " + maxLocals.toInt());
+//        System.out.println("codeLength: " + codeLength.toLong());
 
         this.code = infoStream.readU1Array(this.codeLength.toInt());
 

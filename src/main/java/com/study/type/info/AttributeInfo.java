@@ -35,7 +35,7 @@ public class AttributeInfo extends ConstantPoolHolder {
         this.infoStream = new U1InputStream(info);
     }
 
-    public static AttributeInfo convert(AttributeInfo that) {
+    private static AttributeInfo convert(AttributeInfo that) {
         U2 attributeNameIndex = that.attributeNameIndex;
         String name = constantPool[attributeNameIndex.toInt()].desc();
 
@@ -59,6 +59,8 @@ public class AttributeInfo extends ConstantPoolHolder {
                 return new RuntimeVisibleAnnotationsAttribute(that);
             case "LocalVariableTable":
                 return new LocalVariableTableAttribute(that);
+            case "StackMapTable":
+                return new StackMapTableAttribute(that);
         }
         return that;
     }

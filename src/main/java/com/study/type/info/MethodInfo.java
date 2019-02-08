@@ -59,7 +59,6 @@ public class MethodInfo extends AbstractInfo {
             for (AttributeInfo attribute : attributes) {
                 stringBuilder.append(attribute.describe(4));
             }
-//            stringBuilder.append(AttributeInfo.displayAttributes(attributes, 1));
         }
         return stringBuilder.toString();
     }

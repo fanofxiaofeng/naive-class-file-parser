@@ -16,9 +16,7 @@ public abstract class AbstractCmd extends ConstantPoolHolder {
     public static AbstractCmd build(CodeInputStream codeInputStream) {
         U1 ordinal = codeInputStream.readU1();
         CmdFactory cmdFactory = factory(ordinal.toInt());
-        AbstractCmd abstractCmd = cmdFactory.build(ordinal, codeInputStream);
-//        if (abstractCmd != null) {
-        return abstractCmd;
+        return cmdFactory.build(ordinal, codeInputStream);
     }
 
 
@@ -46,7 +44,7 @@ public abstract class AbstractCmd extends ConstantPoolHolder {
         } else if (ordinal >= 0xc4 && ordinal <= 0xc9) {
             return ExtendedFactory.getInstance();
         } else {
-            throw new RuntimeException("not supported yet!");
+            throw new RuntimeException(String.format("%s is not supported yet! ", ordinal));
         }
     }
 

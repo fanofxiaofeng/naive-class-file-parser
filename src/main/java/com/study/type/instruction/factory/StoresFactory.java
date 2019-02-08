@@ -3,7 +3,6 @@ package com.study.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.FakeCmd;
 import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
@@ -25,6 +24,12 @@ public class StoresFactory implements CmdFactory {
                 return new TwoByteCmd(ordinal, "istore", codeInputStream.readU1());
             case 0x37:
                 return new TwoByteCmd(ordinal, "lstore", codeInputStream.readU1());
+            case 0x38:
+                return new TwoByteCmd(ordinal, "fstore", codeInputStream.readU1());
+            case 0x39:
+                return new TwoByteCmd(ordinal, "dstore", codeInputStream.readU1());
+            case 0x3a:
+                return new TwoByteCmd(ordinal, "astore", codeInputStream.readU1());
             case 0x3b:
             case 0x3c:
             case 0x3d:
@@ -41,6 +46,22 @@ public class StoresFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x3f];
                 return new OneByteCmd(ordinal, name);
             }
+            case 0x43:
+            case 0x44:
+            case 0x45:
+            case 0x46: {
+                String[] names = {"fstore_0", "fstore_1", "fstore_2", "fstore_3"};
+                String name = names[ordinal.toInt() - 0x43];
+                return new OneByteCmd(ordinal, name);
+            }
+            case 0x47:
+            case 0x48:
+            case 0x49:
+            case 0x4a: {
+                String[] names = {"dstore_0", "dstore_1", "dstore_2", "dstore_3"};
+                String name = names[ordinal.toInt() - 0x47];
+                return new OneByteCmd(ordinal, name);
+            }
             case 0x4b:
             case 0x4c:
             case 0x4d:
@@ -49,7 +70,24 @@ public class StoresFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x4b];
                 return new OneByteCmd(ordinal, name);
             }
+            case 0x4f:
+                return new OneByteCmd(ordinal, "iastore");
+            case 0x50:
+                return new OneByteCmd(ordinal, "lastore");
+            case 0x51:
+                return new OneByteCmd(ordinal, "fastore");
+            case 0x52:
+                return new OneByteCmd(ordinal, "dastore");
+            case 0x53:
+                return new OneByteCmd(ordinal, "aastore");
+            case 0x54:
+                return new OneByteCmd(ordinal, "bastore");
+            case 0x55:
+                return new OneByteCmd(ordinal, "castore");
+            case 0x56:
+                return new OneByteCmd(ordinal, "sastore");
+            default:
+                throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }
-        return new FakeCmd(ordinal, "xx stores");
     }
 }

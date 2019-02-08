@@ -3,7 +3,6 @@ package com.study.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.FakeCmd;
 import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
@@ -15,7 +14,6 @@ public class LoadsFactory implements CmdFactory {
     }
 
     private LoadsFactory() {
-
     }
 
     @Override
@@ -32,7 +30,6 @@ public class LoadsFactory implements CmdFactory {
                 return new TwoByteCmd(ordinal, "dload", codeInputStream.readU1());
             case 0x19:
                 return new TwoByteCmd(ordinal, "aload", codeInputStream.readU1());
-
             case 0x1a:
             case 0x1b:
             case 0x1c:
@@ -49,7 +46,22 @@ public class LoadsFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x1e];
                 return new OneByteCmd(ordinal, name);
             }
-
+            case 0x22:
+            case 0x23:
+            case 0x24:
+            case 0x25: {
+                String[] names = {"fload_0", "fload_1", "fload_2", "fload_3"};
+                String name = names[ordinal.toInt() - 0x22];
+                return new OneByteCmd(ordinal, name);
+            }
+            case 0x26:
+            case 0x27:
+            case 0x28:
+            case 0x29: {
+                String[] names = {"dload_0", "dload_1", "dload_2", "dload_3"};
+                String name = names[ordinal.toInt() - 0x26];
+                return new OneByteCmd(ordinal, name);
+            }
             case 0x2a:
             case 0x2b:
             case 0x2c:
@@ -58,9 +70,24 @@ public class LoadsFactory implements CmdFactory {
                 String name = names[ordinal.toInt() - 0x2a];
                 return new OneByteCmd(ordinal, name);
             }
+            case 0x2e:
+                return new OneByteCmd(ordinal, "iaload");
+            case 0x2f:
+                return new OneByteCmd(ordinal, "laload");
+            case 0x30:
+                return new OneByteCmd(ordinal, "faload");
+            case 0x31:
+                return new OneByteCmd(ordinal, "daload");
             case 0x32:
                 return new OneByteCmd(ordinal, "aaload");
+            case 0x33:
+                return new OneByteCmd(ordinal, "baload");
+            case 0x34:
+                return new OneByteCmd(ordinal, "caload");
+            case 0x35:
+                return new OneByteCmd(ordinal, "saload");
+            default:
+                throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }
-        return new FakeCmd(ordinal, "xx loads");
     }
 }
