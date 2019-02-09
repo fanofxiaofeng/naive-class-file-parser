@@ -227,24 +227,12 @@ public class ParseResult {
         }
     }
 
-    public U4 getMagic() {
-        return magic;
-    }
-
     public void setMagic(U4 magic) {
         this.magic = magic;
     }
 
-    public U2 getMinorVersion() {
-        return minorVersion;
-    }
-
     public void setMinorVersion(U2 minorVersion) {
         this.minorVersion = minorVersion;
-    }
-
-    public U2 getMajorVersion() {
-        return majorVersion;
     }
 
     public void setMajorVersion(U2 majorVersion) {
@@ -259,32 +247,16 @@ public class ParseResult {
         this.constantPoolCount = constantPoolCount;
     }
 
-    public AbstractConstant[] getConstantPool() {
-        return constantPool;
-    }
-
     public void setConstantPool(AbstractConstant[] constantPool) {
         this.constantPool = constantPool;
-    }
-
-    public U2 getAccessFlags() {
-        return accessFlags;
     }
 
     public void setAccessFlags(U2 accessFlags) {
         this.accessFlags = accessFlags;
     }
 
-    public U2 getThisClass() {
-        return thisClass;
-    }
-
     public void setThisClass(U2 thisClass) {
         this.thisClass = thisClass;
-    }
-
-    public U2 getSuperClass() {
-        return superClass;
     }
 
     public void setSuperClass(U2 superClass) {
@@ -299,10 +271,6 @@ public class ParseResult {
         this.interfacesCount = interfacesCount;
     }
 
-    public U2[] getInterfaces() {
-        return interfaces;
-    }
-
     public void setInterfaces(U2[] interfaces) {
         this.interfaces = interfaces;
     }
@@ -313,10 +281,6 @@ public class ParseResult {
 
     public void setFieldsCount(U2 fieldsCount) {
         this.fieldsCount = fieldsCount;
-    }
-
-    public FieldInfo[] getFields() {
-        return fields;
     }
 
     public void setFields(FieldInfo[] fields) {
@@ -331,10 +295,6 @@ public class ParseResult {
         this.methodsCount = methodsCount;
     }
 
-    public MethodInfo[] getMethods() {
-        return methods;
-    }
-
     public void setMethods(MethodInfo[] methods) {
         this.methods = methods;
     }
@@ -345,10 +305,6 @@ public class ParseResult {
 
     public void setAttributesCount(U2 attributesCount) {
         this.attributesCount = attributesCount;
-    }
-
-    public AttributeInfo[] getAttributes() {
-        return attributes;
     }
 
     public void setAttributes(AttributeInfo[] attributes) {

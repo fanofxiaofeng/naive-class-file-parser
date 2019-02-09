@@ -23,7 +23,7 @@ public class InnerClassesAttribute extends AttributeInfo {
         }
         StringBuilder stringBuilder = new StringBuilder(String.format("%s:\n", constantPool[this.attributeNameIndex.toInt()].desc()));
         for (int i = 0; i < numberOfClasses.toInt(); i++) {
-            String line = String.format("%-40s// %s\n", "#" + innerClasses[i].innerClassInfoIndex.toInt() + ";", constantPool[innerClasses[i].innerClassInfoIndex.toInt()].detail());
+            String line = String.format("%-40s// class %s\n", "#" + innerClasses[i].innerClassInfoIndex.toInt() + ";", constantPool[innerClasses[i].innerClassInfoIndex.toInt()].detail());
             stringBuilder.append("  ").append(line);
         }
         return stringBuilder.toString();

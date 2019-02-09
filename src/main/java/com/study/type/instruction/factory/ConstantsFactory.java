@@ -2,9 +2,7 @@ package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
-import com.study.type.constant.ConstantInteger;
-import com.study.type.constant.ConstantLong;
+import com.study.type.constant.*;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.ThreeByteCmd;
@@ -83,7 +81,17 @@ public class ConstantsFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("int %s", constantPool[_byte.toInt()].desc());
+                        AbstractConstant constant = constantPool[_byte.toInt()];
+                        if (ConstantInteger.class.isInstance(constant)) {
+                            return String.format("int %s", constant.desc());
+                        }
+                        if (ConstantClass.class.isInstance(constant)) {
+                            return String.format("class %s", constant.detail());
+                        }
+                        if (ConstantString.class.isInstance(constant)) {
+                            return String.format("String %s", constant.detail());
+                        }
+                        throw new RuntimeException(String.format("%d in constant pool is not supported yet!", _byte.toInt()));
                     }
 
                 };

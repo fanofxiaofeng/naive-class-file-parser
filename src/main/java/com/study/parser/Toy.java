@@ -3,17 +3,14 @@ package com.study.parser;
 import java.io.IOException;
 import java.io.Serializable;
 
-@Deprecated
 public class Toy implements Serializable {
 
-    @Deprecated
     private static int count = 424242;
     private final static int a = 2;
     private final static long b = 2L;
     private final static float c = 3.3f;
     private final static double d = 3.1415;
 
-    @Deprecated
     public static void main(String[] args) throws Exception, IOException, ArithmeticException {
         Runnable r = new Runnable() {
             @Override

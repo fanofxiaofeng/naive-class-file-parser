@@ -31,7 +31,16 @@ public class ComparisonsFactory implements CmdFactory {
             case 0x98:
                 return new OneByteCmd(ordinal, "dcmpg");
             case 0x99: {
-                return new ThreeByteCmd(ordinal, "ifeq", codeInputStream);
+                return new ThreeByteCmd(ordinal, "ifeq", codeInputStream) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s%s",
+                                index,
+                                name,
+                                index + combine().toInt()
+                        );
+                    }
+                };
             }
             case 0x9a: {
                 return new ThreeByteCmd(ordinal, "ifne", codeInputStream) {
@@ -67,7 +76,15 @@ public class ComparisonsFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "if_icmplt", codeInputStream);
             }
             case 0xa2:
-                return new ThreeByteCmd(ordinal, "if_icmpge", codeInputStream);
+                return new ThreeByteCmd(ordinal, "if_icmpge", codeInputStream) {
+                    @Override
+                    public String desc(int index) {
+                        return String.format("%10s: %-14s%s",
+                                index,
+                                name,
+                                index + combine().toInt());
+                    }
+                };
             case 0xa3:
                 return new ThreeByteCmd(ordinal, "if_icmpgt", codeInputStream) {
                     @Override

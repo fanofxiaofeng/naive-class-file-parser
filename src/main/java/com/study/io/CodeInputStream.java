@@ -4,7 +4,6 @@ import com.study.parser.ConstantPoolHolder;
 import com.study.type.U1;
 import com.study.type.U4;
 import com.study.type.instruction.AbstractCmd;
-import com.study.util.Extend;
 
 /**
  * Please refer to https://docs.oracle.com/javase/specs/jvms/se10/html/jvms-7.html
@@ -77,17 +76,14 @@ public class CodeInputStream extends ConstantPoolHolder {
     public String process() {
         StringBuilder stringBuilder = new StringBuilder();
         while (canRead()) {
-            int current = index;
+            int currentIndex = index;
             AbstractCmd abstractCmd = AbstractCmd.build(this);
-            StringBuilder oneLine = new StringBuilder();
-            oneLine.append(abstractCmd.desc(current));
+            String desc = abstractCmd.desc(currentIndex);
             if (abstractCmd.hasDetail()) {
-                Extend.extentTo(oneLine, 46);
-                oneLine.append("// ");
-                oneLine.append(abstractCmd.detail());
+                stringBuilder.append(String.format("%-46s// %s\n", desc, abstractCmd.detail()));
+            } else {
+                stringBuilder.append(String.format("%s\n", desc));
             }
-            oneLine.append('\n');
-            stringBuilder.append(oneLine.toString());
         }
         return stringBuilder.toString();
     }

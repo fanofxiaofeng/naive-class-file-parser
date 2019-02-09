@@ -6,7 +6,6 @@ import com.study.type.U1;
 
 public abstract class AbstractConstant extends ConstantPoolHolder {
 
-
     protected U1 tag;
 
 //    protected U1[] info;

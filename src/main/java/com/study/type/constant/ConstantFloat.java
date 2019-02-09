@@ -28,6 +28,5 @@ public class ConstantFloat extends AbstractConstant {
         if (this.tag.toInt() != 4) {
             throw new AssertionError();
         }
-
     }
 }
