@@ -30,7 +30,7 @@ touch ${TEMP_FILE}
 sed -n '/^Constant pool:$/,/^{$/p' ${OUTPUT_FILE} | grep '^ *#' > ${TEMP_FILE}
 mv ${TEMP_FILE} ${OUTPUT_FILE}
 
+echo "${STANDARD_FILE} 的行数(即 javap 命令解析出的常量池 entry 数): " "$(awk 'END{print NR}' ${STANDARD_FILE})"
+echo "${OUTPUT_FILE} 的行数(即 本项目解析出的常量池 entry 数): " "$(awk 'END{print NR}' ${OUTPUT_FILE})"
 echo 'diff 的结果如下'
 diff ${STANDARD_FILE} ${OUTPUT_FILE}
-# echo 'comm 的结果如下'
-# comm ${STANDARD_FILE} ${OUTPUT_FILE}

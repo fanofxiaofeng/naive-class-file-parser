@@ -4,6 +4,7 @@ import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.OneByteCmd;
+import com.study.type.instruction.ThreeByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
 public class StoresFactory implements CmdFactory {
@@ -20,16 +21,41 @@ public class StoresFactory implements CmdFactory {
     @Override
     public AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
-            case 0x36:
-                return new TwoByteCmd(ordinal, "istore", codeInputStream.readU1());
-            case 0x37:
-                return new TwoByteCmd(ordinal, "lstore", codeInputStream.readU1());
-            case 0x38:
-                return new TwoByteCmd(ordinal, "fstore", codeInputStream.readU1());
-            case 0x39:
-                return new TwoByteCmd(ordinal, "dstore", codeInputStream.readU1());
-            case 0x3a:
-                return new TwoByteCmd(ordinal, "astore", codeInputStream.readU1());
+            case 0x36: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "istore_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "istore", codeInputStream.readU1());
+                }
+            }
+            case 0x37: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "lstore_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "lstore", codeInputStream.readU1());
+                }
+            }
+            case 0x38: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "fstore_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "fstore", codeInputStream.readU1());
+                }
+            }
+            case 0x39: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "dstore_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "dstore", codeInputStream.readU1());
+                }
+            }
+            case 0x3a: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "astore_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "astore", codeInputStream.readU1());
+                }
+            }
             case 0x3b:
             case 0x3c:
             case 0x3d:

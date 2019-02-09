@@ -39,4 +39,15 @@ public class ConstantInterfaceMethodref extends AbstractConstant {
             throw new AssertionError();
         }
     }
+
+    @Override
+    public String detail() {
+        return String.format("%s.%s",
+                constantPool[classIndex.toInt()].detail(),
+                constantPool[nameAndTypeIndex.toInt()].detail()
+        );
+    }
+
+    public static void main(String[] args) {
+    }
 }

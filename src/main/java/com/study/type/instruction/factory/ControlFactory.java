@@ -39,8 +39,12 @@ public class ControlFactory implements CmdFactory {
                 return new ThreeByteCmd(ordinal, "jsr", codeInputStream);
             }
             case 0xa9: {
-                U1 _byte = codeInputStream.readU1();
-                return new TwoByteCmd(ordinal, "ret", _byte);
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "ret_w", codeInputStream);
+                } else {
+                    U1 _byte = codeInputStream.readU1();
+                    return new TwoByteCmd(ordinal, "ret", _byte);
+                }
             }
             case 0xaa: {
                 int start = codeInputStream.getIndex();

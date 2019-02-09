@@ -129,7 +129,10 @@ public class ConstantsFactory implements CmdFactory {
                         if (ConstantInteger.class.isInstance(constant)) {
                             return String.format("%s// int %s", line, constant.desc());
                         }
-                        throw new RuntimeException("unsupported yet!");
+                        if (ConstantDouble.class.isInstance(constant)) {
+                            return String.format("%s// double %s", line, constant.desc());
+                        }
+                        throw new RuntimeException("unsupported yet!" + constant.getClass());
                     }
                 };
             }

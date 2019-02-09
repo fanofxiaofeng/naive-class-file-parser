@@ -3,6 +3,7 @@ package com.study.type;
 import java.math.BigInteger;
 
 public class AbstractU {
+
     protected int[] detail;
 
     private BigInteger bigInteger;
@@ -69,5 +70,25 @@ public class AbstractU {
 
     public int[] getDetail() {
         return detail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        AbstractU abstractU = (AbstractU) o;
+
+        return bigInteger != null ? bigInteger.equals(abstractU.bigInteger) : abstractU.bigInteger == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return bigInteger != null ? bigInteger.hashCode() : 0;
     }
 }

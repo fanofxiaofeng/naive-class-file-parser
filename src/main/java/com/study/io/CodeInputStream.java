@@ -52,6 +52,7 @@ public class CodeInputStream extends ConstantPoolHolder {
 
     private int index = 0;
     private U1[] code;
+    private boolean decoratedByWide = false;
 
     public CodeInputStream(U1[] code) {
         this.code = code;
@@ -77,10 +78,15 @@ public class CodeInputStream extends ConstantPoolHolder {
         StringBuilder stringBuilder = new StringBuilder();
         while (canRead()) {
             int currentIndex = index;
-            AbstractCmd abstractCmd = AbstractCmd.build(this);
-            String desc = abstractCmd.desc(currentIndex);
-            if (abstractCmd.hasDetail()) {
-                stringBuilder.append(String.format("%-46s// %s\n", desc, abstractCmd.detail()));
+            AbstractCmd cmd = AbstractCmd.build(this);
+            if (cmd.getName().equals("wide")) {
+                setDecoratedByWide(true);
+            } else {
+                setDecoratedByWide(false);
+            }
+            String desc = cmd.desc(currentIndex);
+            if (cmd.hasDetail()) {
+                stringBuilder.append(String.format("%-46s// %s\n", desc, cmd.detail()));
             } else {
                 stringBuilder.append(String.format("%s\n", desc));
             }
@@ -88,7 +94,15 @@ public class CodeInputStream extends ConstantPoolHolder {
         return stringBuilder.toString();
     }
 
-    public int getIndex() {
+    public final int getIndex() {
         return this.index;
+    }
+
+    public boolean isDecoratedByWide() {
+        return decoratedByWide;
+    }
+
+    public void setDecoratedByWide(boolean decoratedByWide) {
+        this.decoratedByWide = decoratedByWide;
     }
 }

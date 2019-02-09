@@ -2,17 +2,23 @@ package com.study.type.info;
 
 import com.study.type.U2;
 import com.study.type.info.frame.StackMapFrame;
+import com.study.type.info.frame.StackMapFrameFactory;
 
+/**
+ * The StackMapTable attribute is a variable-length attribute in the attributes table of a Code (§4.7.3) attribute.
+ * This attribute is used during the process of verification by type checking (§4.10.1).
+ * A method's Code attribute may have at most one StackMapTable attribute.
+ */
 public class StackMapTableAttribute extends AttributeInfo {
     private U2 numberOfEntries;
     private StackMapFrame[] entries;
 
-    protected StackMapTableAttribute(AttributeInfo that) {
+    StackMapTableAttribute(AttributeInfo that) {
         super(that);
         numberOfEntries = infoStream.readU2();
         entries = new StackMapFrame[numberOfEntries.toInt()];
         for (int i = 0; i < this.numberOfEntries.toInt(); i++) {
-            entries[i] = StackMapFrame.build(infoStream);
+            entries[i] = StackMapFrameFactory.build(infoStream);
         }
     }
 

@@ -50,8 +50,9 @@ public class MethodInfo extends AbstractInfo {
         }
         stringBuilder.append(toHumanReadable(descriptor.desc()));
         stringBuilder.append(' ');
+        System.out.println(String.format("name: %s", name.desc()));
         stringBuilder.append(name.desc());
-        stringBuilder.append(';');
+        stringBuilder.append("();");
         stringBuilder.append("\n    descriptor: ");
         stringBuilder.append(descriptor.desc());
         stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));

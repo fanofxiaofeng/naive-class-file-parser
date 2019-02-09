@@ -60,13 +60,11 @@ public abstract class AbstractCmd extends ConstantPoolHolder {
         return null;
     }
 
-    protected void extentTo(StringBuilder stringBuilder) {
-        while (stringBuilder.length() < 14) {
-            stringBuilder.append(' ');
-        }
-    }
-
     public abstract int size();
+
+    public String getName() {
+        return this.name;
+    }
 
     static enum CommandType {
         constants,

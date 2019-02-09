@@ -19,6 +19,19 @@ public class ExtendedFactory implements CmdFactory {
     @Override
     public AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
+            case 0xc4: {
+                System.out.println("wide cmd found");
+                return new AbstractCmd(ordinal) {
+                    {
+                        name = "wide";
+                    }
+
+                    @Override
+                    public int size() {
+                        return 1;
+                    }
+                };
+            }
             case 0xc5: {
                 return new AbstractCmd(ordinal) {
                     {

@@ -9,7 +9,10 @@
 # ./scripts/all.sh 'target/classes/com/study/parser/ParseResult.class'
 
 mvn compile
+# javap 命令的运行结果输出至此文件
 STANDARD_FILE='scripts/result/standard.txt'
+
+# 本项目的运行结果输出至此文件
 OUTPUT_FILE='scripts/result/output.txt'
 
 rm ${STANDARD_FILE} 2>/dev/null

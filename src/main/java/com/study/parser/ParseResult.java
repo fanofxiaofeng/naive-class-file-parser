@@ -12,9 +12,21 @@ import java.io.PrintStream;
 import java.util.StringJoiner;
 
 public class ParseResult {
+    /**
+     * 魔数
+     */
     private U4 magic;
+
+    /**
+     * 次版本号
+     */
     private U2 minorVersion;
+
+    /**
+     * 主版本号
+     */
     private U2 majorVersion;
+
     private U2 constantPoolCount;
     private AbstractConstant[] constantPool;
     private U2 accessFlags;
@@ -29,6 +41,9 @@ public class ParseResult {
     private U2 attributesCount;
     private AttributeInfo[] attributes;
 
+    /**
+     * 用于输出解析结果
+     */
     private PrintStream printStream;
 
     public void show(PrintStream printStream) {
@@ -189,7 +204,8 @@ public class ParseResult {
                         (ConstantFieldref.class.isInstance(constant)) ||
                         (ConstantNameAndType.class.isInstance(constant)) ||
                         (ConstantString.class.isInstance(constant)) ||
-                        (ConstantClass.class.isInstance(constant))
+                        (ConstantClass.class.isInstance(constant)) ||
+                        (ConstantInterfaceMethodref.class.isInstance(constant))
                 ;
     }
 

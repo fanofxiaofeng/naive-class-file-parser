@@ -75,7 +75,74 @@ public class ConstantUtf8 extends AbstractConstant {
 
     @Override
     public String desc() {
-        return desc(content);
+        String raw = desc(content);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c : raw.toCharArray()) {
+            switch (c) {
+                case '\b':
+                    // U+0008
+                    stringBuilder.append("\\b");
+                    break;
+                case '\t':
+                    // U+0009
+                    stringBuilder.append("\\t");
+                    break;
+                case '\n':
+                    // U+000a
+                    stringBuilder.append("\\n");
+                    break;
+                case '\f':
+                    // U+000c
+                    stringBuilder.append("\\f");
+                    break;
+                case '\r':
+                    // U+000d
+                    stringBuilder.append("\\r");
+                    break;
+                case '\"':
+                    stringBuilder.append("\\\"");
+                    break;
+                case '\'':
+                    stringBuilder.append("\\'");
+                    break;
+                case '\\':
+                    stringBuilder.append("\\\\");
+                    break;
+                case '\u0000':
+                case '\u0001':
+                case '\u0002':
+                case '\u0003':
+                case '\u0004':
+                case '\u0005':
+                case '\u0006':
+                case '\u0007':
+                case '\u000b':
+                case '\u000e':
+                case '\u000f':
+                case '\u0010':
+                case '\u0011':
+                case '\u0012':
+                case '\u0013':
+                case '\u0014':
+                case '\u0015':
+                case '\u0016':
+                case '\u0017':
+                case '\u0018':
+                case '\u0019':
+                case '\u001a':
+                case '\u001b':
+                case '\u001c':
+                case '\u001d':
+                case '\u001e':
+                case '\u001f':
+                case '\u007f':
+                    stringBuilder.append('\\').append('u').append(String.format("%04x", (int) c));
+                    break;
+                default:
+                    stringBuilder.append(c);
+            }
+        }
+        return stringBuilder.toString();
     }
 
     @Override

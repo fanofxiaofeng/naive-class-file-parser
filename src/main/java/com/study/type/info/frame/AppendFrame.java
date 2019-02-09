@@ -4,6 +4,7 @@ import com.study.io.U1InputStream;
 import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.info.verification.VerificationTypeInfo;
+import com.study.type.info.verification.VerificationTypeInfoFactory;
 
 import java.util.StringJoiner;
 
@@ -18,7 +19,7 @@ public class AppendFrame extends StackMapFrame {
         this.offsetDelta = stream.readU2();
         this.locals = new VerificationTypeInfo[this.frameType.toInt() - 251];
         for (int i = 0; i < this.locals.length; i++) {
-            this.locals[i] = VerificationTypeInfo.build(stream);
+            this.locals[i] = VerificationTypeInfoFactory.build(stream);
         }
     }
 

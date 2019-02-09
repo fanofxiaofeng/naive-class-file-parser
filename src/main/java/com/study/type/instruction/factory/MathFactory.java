@@ -92,18 +92,38 @@ public class MathFactory implements CmdFactory {
                 return new OneByteCmd(ordinal, "ixor");
             case 0x83:
                 return new OneByteCmd(ordinal, "lxor");
-            case 0x84:
-                return new ThreeByteCmd(ordinal, "iinc", codeInputStream) {
-                    @Override
-                    public String desc(int index) {
-                        // todo 逻辑有待确认
-                        return String.format("%10s: %-14s%s, %s",
-                                index,
-                                name,
-                                this.b1.toInt(),
-                                this.b2.toInt());
-                    }
-                };
+            case 0x84: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new AbstractCmd(ordinal) {
+                        {
+                            // todo 有待确认
+                            name = "iinc_w";
+                            U1 indexByte1 = codeInputStream.readU1();
+                            U1 indexByte2 = codeInputStream.readU1();
+                            U1 constByte1 = codeInputStream.readU1();
+                            U1 constByte2 = codeInputStream.readU1();
+                        }
+                        // todo desc 的逻辑尚未实现
+
+                        @Override
+                        public int size() {
+                            return 5;
+                        }
+                    };
+                } else {
+                    return new ThreeByteCmd(ordinal, "iinc", codeInputStream) {
+                        @Override
+                        public String desc(int index) {
+                            // todo 逻辑有待确认
+                            return String.format("%10s: %-14s%s, %s",
+                                    index,
+                                    name,
+                                    this.b1.toInt(),
+                                    this.b2.toInt());
+                        }
+                    };
+                }
+            }
             default:
                 throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }

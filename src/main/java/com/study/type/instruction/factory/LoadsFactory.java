@@ -4,6 +4,7 @@ import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.OneByteCmd;
+import com.study.type.instruction.ThreeByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
 public class LoadsFactory implements CmdFactory {
@@ -19,17 +20,42 @@ public class LoadsFactory implements CmdFactory {
     @Override
     public AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
-            case 0x15:
-                return new TwoByteCmd(ordinal, "iload", codeInputStream.readU1());
-            case 0x16:
+            case 0x15: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "iload_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "iload", codeInputStream.readU1());
+                }
+            }
+            case 0x16: {
                 // todo 特殊
-                return new TwoByteCmd(ordinal, "lload", codeInputStream.readU1());
-            case 0x17:
-                return new TwoByteCmd(ordinal, "fload", codeInputStream.readU1());
-            case 0x18:
-                return new TwoByteCmd(ordinal, "dload", codeInputStream.readU1());
-            case 0x19:
-                return new TwoByteCmd(ordinal, "aload", codeInputStream.readU1());
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "lload_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "lload", codeInputStream.readU1());
+                }
+            }
+            case 0x17: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "fload_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "fload", codeInputStream.readU1());
+                }
+            }
+            case 0x18: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "dload_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "dload", codeInputStream.readU1());
+                }
+            }
+            case 0x19: {
+                if (codeInputStream.isDecoratedByWide()) {
+                    return new ThreeByteCmd(ordinal, "aload_w", codeInputStream);
+                } else {
+                    return new TwoByteCmd(ordinal, "aload", codeInputStream.readU1());
+                }
+            }
             case 0x1a:
             case 0x1b:
             case 0x1c:
