@@ -6,23 +6,39 @@
 # ./scripts/constantPool.sh ${the relative path to the class file}
 
 # example:
-# ./scripts/constantPool.sh 'target/classes/com/study/parser/ParseResult.class'
+# ./scripts/constantPool.sh './target/classes/com/study/parser/ParseResult.class'
+
+
+#set -x
+#set -v
 
 mvn compile
+
+RESULT_DIR="./scripts/result/"
+if [[ -d "${RESULT_DIR}" ]]; then
+   echo "directory: ${RESULT_DIR} will be re-created!"
+   rm -rf ${RESULT_DIR}
+fi
+mkdir ${RESULT_DIR}
+
+
 STANDARD_FILE='scripts/result/standard.txt'
 OUTPUT_FILE='scripts/result/output.txt'
 TEMP_FILE='scripts/result/temp.txt'
 
-rm ${STANDARD_FILE} 2>/dev/null
-rm ${OUTPUT_FILE} 2>/dev/null
 
 printf '%-20s -> %s\n' '$1' $1
 printf '%-20s -> %s\n' '${STANDARD_FILE}' ${STANDARD_FILE}
 printf '%-20s -> %s\n' '${OUTPUT_FILE}' ${OUTPUT_FILE}
 printf '%-20s -> %s\n' '${TEMP_FILE}' ${TEMP_FILE}
 
+
 # 将 `javap` 命令输出的常量池信息输出至 `${STANDARD_FILE}` 中
-javap -v -p $1 | sed -n '/^Constant pool:$/,/^{$/p' | grep  '^ *#' > ${STANDARD_FILE}
+# 1. the beginning line of Constant pool has text "Constant pool:"
+# 2. the line after Constant pool has text "{"
+# use `sed` command to find these two lines
+# use grep to extract all lines between these two lines
+javap -v -p $1 | sed -n '/^Constant pool:$/,/^{$/p' | grep '^ *#' > ${STANDARD_FILE}
 
 mvn compile exec:java -DthePath=$1
 
