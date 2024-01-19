@@ -14,6 +14,6 @@ public class ObjectVariableInfo extends VerificationTypeInfo {
 
     @Override
     public String desc() {
-        return "class " + constantPool[cPoolIndex.toInt()].detail();
+        return "class " + constantPool.get(cPoolIndex.toInt()).detail();
     }
 }

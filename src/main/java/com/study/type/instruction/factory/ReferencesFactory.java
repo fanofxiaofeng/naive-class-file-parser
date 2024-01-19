@@ -7,7 +7,6 @@ import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.ThreeByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
-import static com.sun.tools.javac.jvm.ByteCodes.new_;
 
 public class ReferencesFactory implements CmdFactory {
     private ReferencesFactory() {
@@ -39,7 +38,7 @@ public class ReferencesFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("Field %s", constantPool[combine().toInt()].detail());
+                        return String.format("Field %s", constantPool.get(combine()).detail());
                     }
                 };
             }
@@ -59,7 +58,7 @@ public class ReferencesFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("Field %s", constantPool[combine().toInt()].detail());
+                        return String.format("Field %s", constantPool.get(combine()).detail());
                     }
                 };
             }
@@ -102,7 +101,7 @@ public class ReferencesFactory implements CmdFactory {
                     @Override
                     public String detail() {
                         System.out.println(combine().toInt());
-                        return String.format("Method %s", constantPool[combine().toInt()].detail());
+                        return String.format("Method %s", constantPool.get(combine()).detail());
                     }
                 };
             }
@@ -120,7 +119,7 @@ public class ReferencesFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("Method %s", constantPool[combine().toInt()].detail());
+                        return String.format("Method %s", constantPool.get(combine()).detail());
                     }
                 };
             }
@@ -166,7 +165,7 @@ public class ReferencesFactory implements CmdFactory {
                 };
             }
             // 0xbb
-            case new_: {
+            case 0xbb: {
                 return new ThreeByteCmd(ordinal, "new", codeInputStream) {
                     @Override
                     public String desc(int index) {
@@ -180,7 +179,7 @@ public class ReferencesFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("class %s", constantPool[combine().toInt()].detail());
+                        return String.format("class %s", constantPool.get(combine()).detail());
                     }
                 };
             }
@@ -203,7 +202,7 @@ public class ReferencesFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        return String.format("class %s", constantPool[combine().toInt()].detail());
+                        return String.format("class %s", constantPool.get(combine()).detail());
                     }
                 };
             }

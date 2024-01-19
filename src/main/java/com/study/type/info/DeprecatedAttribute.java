@@ -9,7 +9,7 @@ public class DeprecatedAttribute extends AttributeInfo {
     @Override
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent);
-        stringBuilder.append(String.format("%s: true\n", constantPool[attributeNameIndex.toInt()].desc()));
+        stringBuilder.append(String.format("%s: true\n", constantPool.get(attributeNameIndex).desc()));
         return stringBuilder.toString();
     }
 }

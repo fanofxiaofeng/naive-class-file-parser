@@ -1,14 +1,19 @@
 package com.study.type.constant;
 
+import com.study.constants.ConstantKind;
 import com.study.parser.ConstantPoolHolder;
 import com.study.type.AbstractU;
-import com.study.type.U1;
+import com.study.type.ConstantPool;
+
+import java.util.Optional;
 
 public abstract class AbstractConstant extends ConstantPoolHolder {
 
-    protected U1 tag;
+    protected final ConstantKind tag;
 
-//    protected U1[] info;
+    protected AbstractConstant(ConstantKind tag) {
+        this.tag = tag;
+    }
 
     public abstract String desc();
 
@@ -38,7 +43,7 @@ public abstract class AbstractConstant extends ConstantPoolHolder {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('#');
         stringBuilder.append(u1.toInt());
-        if (ConstantNameAndType.class.isInstance(this)) {
+        if (this instanceof ConstantNameAndType) {
             stringBuilder.append(':');
         } else {
             stringBuilder.append('.');
@@ -54,8 +59,16 @@ public abstract class AbstractConstant extends ConstantPoolHolder {
 
     public abstract void validate();
 
-    public String detail() {
-        System.out.println(this.getClass().getName());
-        throw new RuntimeException("Unsupported yet!");
+    @Deprecated
+    public Optional<String> detail() {
+        return Optional.empty();
+    }
+
+    public Optional<String> detail(ConstantPool constantPool) {
+        return Optional.empty();
+    }
+
+    public ConstantKind getTag() {
+        return tag;
     }
 }

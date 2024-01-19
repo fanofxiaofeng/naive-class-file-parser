@@ -1,24 +1,26 @@
 package com.study.type.constant;
 
+import com.study.constants.ConstantKind;
 import com.study.type.U1;
 import com.study.type.U2;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * 格式参考
+ * Format
  * <p>
  * #19 = Utf8               Lcom/study/parser/Naive;
  */
 public class ConstantUtf8 extends AbstractConstant {
-    private U2 length;
-    private U1[] bytes;
+    private final U2 length;
+    private final U1[] bytes;
 
     private char[] content;
 
     public ConstantUtf8(U2 length, U1[] bytes) {
-        this.tag = new U1(1);
+        super(ConstantKind.CONSTANT_Utf8);
         this.length = length;
         this.bytes = bytes;
         fillContent();
@@ -79,67 +81,27 @@ public class ConstantUtf8 extends AbstractConstant {
         StringBuilder stringBuilder = new StringBuilder();
         for (char c : raw.toCharArray()) {
             switch (c) {
-                case '\b':
+                case '\b' ->
                     // U+0008
-                    stringBuilder.append("\\b");
-                    break;
-                case '\t':
+                        stringBuilder.append("\\b");
+                case '\t' ->
                     // U+0009
-                    stringBuilder.append("\\t");
-                    break;
-                case '\n':
+                        stringBuilder.append("\\t");
+                case '\n' ->
                     // U+000a
-                    stringBuilder.append("\\n");
-                    break;
-                case '\f':
+                        stringBuilder.append("\\n");
+                case '\f' ->
                     // U+000c
-                    stringBuilder.append("\\f");
-                    break;
-                case '\r':
+                        stringBuilder.append("\\f");
+                case '\r' ->
                     // U+000d
-                    stringBuilder.append("\\r");
-                    break;
-                case '\"':
-                    stringBuilder.append("\\\"");
-                    break;
-                case '\'':
-                    stringBuilder.append("\\'");
-                    break;
-                case '\\':
-                    stringBuilder.append("\\\\");
-                    break;
-                case '\u0000':
-                case '\u0001':
-                case '\u0002':
-                case '\u0003':
-                case '\u0004':
-                case '\u0005':
-                case '\u0006':
-                case '\u0007':
-                case '\u000b':
-                case '\u000e':
-                case '\u000f':
-                case '\u0010':
-                case '\u0011':
-                case '\u0012':
-                case '\u0013':
-                case '\u0014':
-                case '\u0015':
-                case '\u0016':
-                case '\u0017':
-                case '\u0018':
-                case '\u0019':
-                case '\u001a':
-                case '\u001b':
-                case '\u001c':
-                case '\u001d':
-                case '\u001e':
-                case '\u001f':
-                case '\u007f':
-                    stringBuilder.append('\\').append('u').append(String.format("%04x", (int) c));
-                    break;
-                default:
-                    stringBuilder.append(c);
+                        stringBuilder.append("\\r");
+                case '\"' -> stringBuilder.append("\\\"");
+                case '\'' -> stringBuilder.append("\\'");
+                case '\\' -> stringBuilder.append("\\\\");
+                case '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u000b', '\u000e', '\u000f', '\u0010', '\u0011', '\u0012', '\u0013', '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001a', '\u001b', '\u001c', '\u001d', '\u001e', '\u001f', '\u007f' ->
+                        stringBuilder.append('\\').append('u').append(String.format("%04x", (int) c));
+                default -> stringBuilder.append(c);
             }
         }
         return stringBuilder.toString();
@@ -152,7 +114,7 @@ public class ConstantUtf8 extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 1) {
+        if (this.tag != ConstantKind.CONSTANT_Utf8) {
             throw new AssertionError();
         }
     }

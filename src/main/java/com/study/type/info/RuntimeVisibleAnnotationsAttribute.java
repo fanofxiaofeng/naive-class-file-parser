@@ -25,7 +25,7 @@ public class RuntimeVisibleAnnotationsAttribute extends AttributeInfo {
         for (int i = 0; i < count; i++) {
             Annotation annotation = this.annotations[i];
             stringBuilder.append(String.format("%s%s: #%s()\n", indentedString(indent + 2), i, annotation.typeIndex.toInt()));
-            stringBuilder.append(String.format("%s%s\n", indentedString(indent + 4), toHumanReadable(constantPool[annotation.typeIndex.toInt()].desc())));
+            stringBuilder.append(String.format("%s%s\n", indentedString(indent + 4), toHumanReadable(constantPool.get(annotation.typeIndex).desc())));
         }
         return stringBuilder.toString();
     }

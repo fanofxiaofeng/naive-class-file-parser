@@ -8,8 +8,7 @@ import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.ThreeByteCmd;
 import com.study.type.instruction.TwoByteCmd;
 
-import static com.sun.tools.javac.jvm.ByteCodes.areturn;
-import static com.sun.tools.javac.jvm.ByteCodes.dreturn;
+
 
 public class ControlFactory implements CmdFactory {
     private ControlFactory() {
@@ -160,11 +159,11 @@ public class ControlFactory implements CmdFactory {
             case 0xae:
                 return new OneByteCmd(ordinal, "freturn");
             // 0xaf
-            case dreturn: {
+            case 0xaf: {
                 return new OneByteCmd(ordinal, "dreturn");
             }
             // 0xb0
-            case areturn: {
+            case 0xb0: {
                 return new OneByteCmd(ordinal, "areturn");
             }
             case 0xb1:

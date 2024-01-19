@@ -9,7 +9,7 @@ public class ElementValue extends ConstantPoolHolder {
 
     public static ElementValue build(U1InputStream u1InputStream) {
         U1 tag = u1InputStream.readU1();
-        System.out.println("" + constantPool[tag.toInt()].desc());
+        System.out.println("" + constantPool.get(tag.toInt()).desc());
 //        switch (constantPool[tag.toInt()].desc())
         return null;
     }

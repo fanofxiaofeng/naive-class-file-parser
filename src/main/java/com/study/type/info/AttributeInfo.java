@@ -37,7 +37,7 @@ public class AttributeInfo extends ConstantPoolHolder {
 
     private static AttributeInfo convert(AttributeInfo that) {
         U2 attributeNameIndex = that.attributeNameIndex;
-        String name = constantPool[attributeNameIndex.toInt()].desc();
+        String name = constantPool.get(attributeNameIndex.toInt()).desc();
 
         System.out.println(String.format("属性 %s 将会被创建(length: %s)", name, that.infoStream.length()));
         switch (name) {
@@ -88,7 +88,7 @@ public class AttributeInfo extends ConstantPoolHolder {
     // todo
     public String describe(int indent) {
         return withIndent(indent).
-                append(constantPool[attributeNameIndex.toInt()].desc()).
+                append(constantPool.get(attributeNameIndex.toInt()).desc()).
                 append(":").append("[请修改实现逻辑]").append('\n').
                 toString();
     }

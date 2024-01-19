@@ -28,9 +28,9 @@ public class ExceptionsAttribute extends AttributeInfo {
             StringJoiner joiner = new StringJoiner(", ");
             for (U2 u2 : exceptionIndexTable) {
                 System.out.println(u2.toInt());
-                joiner.add(AttributeInfo.constantPool[u2.toInt()].detail().replaceAll("/", "."));
+                joiner.add(AttributeInfo.constantPool.get(u2).detail().get().replaceAll("/", "."));
             }
-            stringBuilder.append(joiner.toString());
+            stringBuilder.append(joiner);
         }
         stringBuilder.append('\n');
         return stringBuilder.toString();

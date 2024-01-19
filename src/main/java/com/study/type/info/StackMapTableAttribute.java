@@ -26,7 +26,7 @@ public class StackMapTableAttribute extends AttributeInfo {
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent);
         stringBuilder.append(String.format("%s: number_of_entries = %s\n",
-                constantPool[attributeNameIndex.toInt()].desc(),
+                constantPool.get(attributeNameIndex).desc(),
                 numberOfEntries.toInt()
         ));
         for (StackMapFrame entry : entries) {

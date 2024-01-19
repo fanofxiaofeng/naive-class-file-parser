@@ -1,7 +1,9 @@
 package com.study.type.constant;
 
-import com.study.type.U1;
+import com.study.constants.ConstantKind;
 import com.study.type.U2;
+
+import java.util.Optional;
 
 /**
  * 格式参考
@@ -10,10 +12,10 @@ import com.study.type.U2;
  */
 public class ConstantString extends AbstractConstant {
 
-    private U2 stringIndex;
+    private final U2 stringIndex;
 
     public ConstantString(U2 stringIndex) {
-        this.tag = new U1(8);
+        super(ConstantKind.CONSTANT_String);
         this.stringIndex = stringIndex;
     }
 
@@ -29,17 +31,17 @@ public class ConstantString extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 8) {
+        if (this.tag != ConstantKind.CONSTANT_String) {
             throw new AssertionError();
         }
 
-        if (!ConstantUtf8.class.isInstance(constantPool[stringIndex.toInt()])) {
+        if (!(constantPool.get(stringIndex.toInt()) instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
     }
 
     @Override
-    public String detail() {
-        return constantPool[stringIndex.toInt()].desc();
+    public Optional<String> detail() {
+        return Optional.of(constantPool.get(stringIndex.toInt()).desc());
     }
 }

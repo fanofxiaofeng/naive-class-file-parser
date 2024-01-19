@@ -1,5 +1,6 @@
 package com.study.parser;
 
+import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.U4;
 import com.study.type.constant.*;
@@ -11,24 +12,26 @@ import com.study.util.Extend;
 import java.io.PrintStream;
 import java.util.StringJoiner;
 
+import static com.study.constants.Const.MAGIC_NUMBER;
+
 public class ParseResult {
     /**
-     * 魔数
+     * Magic number
      */
     private U4 magic;
 
     /**
-     * 次版本号
+     * minor version
      */
     private U2 minorVersion;
 
     /**
-     * 主版本号
+     * major version
      */
     private U2 majorVersion;
 
-    private U2 constantPoolCount;
-    private AbstractConstant[] constantPool;
+    //    private U2 constantPoolCount;
+    private ConstantPool constantPool;
     private U2 accessFlags;
     private U2 thisClass;
     private U2 superClass;
@@ -42,23 +45,19 @@ public class ParseResult {
     private AttributeInfo[] attributes;
 
     /**
-     * 用于输出解析结果
+     * To output the analysis result
      */
     private PrintStream printStream;
+
 
     public void show(PrintStream printStream) {
         this.printStream = printStream;
 
-        if (!magic.toString().equals("0xCAFEBABE")) {
-            throw new AssertionError();
+        if (!magic.toString().equals(MAGIC_NUMBER)) {
+            throw new AssertionError("Magic number is not as expected!");
         }
 
-        showMinorVersion();
-        showMajorVersion();
 
-        showAccessFlags();
-        showThisClass();
-        showSuperClass();
         showCount();
 
         showConstantPool();
@@ -76,65 +75,6 @@ public class ParseResult {
         showAttributes();
     }
 
-    private void showMinorVersion() {
-        printStream.println(String.format("  minor version: %s", minorVersion.toInt()));
-    }
-
-    private void showMajorVersion() {
-        printStream.println(String.format("  major version: %s", majorVersion.toInt()));
-    }
-
-    private void showAccessFlags() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  flags: (0x%04x)", accessFlags.toInt()));
-        StringJoiner joiner = new StringJoiner(", ");
-        if (accessFlags.isOn(0x0001)) {
-            joiner.add("ACC_PUBLIC");
-        }
-        if (accessFlags.isOn(0x0010)) {
-            joiner.add("ACC_FINAL");
-        }
-        if (accessFlags.isOn(0x0020)) {
-            joiner.add("ACC_SUPER");
-        }
-        if (accessFlags.isOn(0x0200)) {
-            joiner.add("ACC_INTERFACE");
-        }
-        if (accessFlags.isOn(0x0400)) {
-            joiner.add("ACC_ABSTRACT");
-        }
-        if (accessFlags.isOn(0x1000)) {
-            joiner.add("ACC_SYNTHETIC");
-        }
-        if (accessFlags.isOn(0x2000)) {
-            joiner.add("ACC_ANNOTATION");
-        }
-        if (accessFlags.isOn(0x4000)) {
-            joiner.add("ACC_ENUM");
-        }
-        if (joiner.length() > 0) {
-            stringBuilder.append(' ');
-            stringBuilder.append(joiner.toString());
-        }
-        printStream.println(stringBuilder.toString());
-    }
-
-    private void showThisClass() {
-        StringBuilder stringBuilder = new StringBuilder(String.format("  this_class: #%d", thisClass.toInt()));
-        extendTo(stringBuilder, 42);
-        stringBuilder.append("// ");
-        stringBuilder.append(constantPool[thisClass.toInt()].detail());
-        printStream.println(stringBuilder.toString());
-    }
-
-    private void showSuperClass() {
-        StringBuilder stringBuilder = new StringBuilder(String.format("  super_class: #%d", superClass.toInt()));
-        extendTo(stringBuilder, 42);
-        stringBuilder.append("// ");
-        stringBuilder.append(constantPool[superClass.toInt()].detail());
-        printStream.println(stringBuilder.toString());
-    }
-
     private void showCount() {
         printStream.println(String.format("  interfaces: %d, fields: %d, methods: %d, attributes: %d",
                 interfacesCount.toInt(), fieldsCount.toInt(), methodsCount.toInt(), attributesCount.toInt()));
@@ -143,24 +83,24 @@ public class ParseResult {
     private void showConstantPool() {
         printStream.println("Constant pool:");
 
-        int count = this.constantPoolCount.toInt();
+        int count = this.constantPool.getCount().toInt();
 
         int index = 1;
         while (index < count) {
             // "  #42" 这种格式的字符串(leading whitespace 的数量是计算出来的)
-            AbstractConstant constant = constantPool[index];
+            AbstractConstant constant = constantPool.get(index);
             constant.validate();
 
             StringBuilder stringBuilder = new StringBuilder();
             String format = withThreeWidthControl();
-            stringBuilder.append(String.format(format, "#" + index, constant.type(), constant.desc()));
+            stringBuilder.append(String.format(format, "#" + index, constant.getTag().getType(), constant.desc()));
             if (hasDetail(constant)) {
-                Extend.extentTo(stringBuilder, 42);
+                Extend.extendTo(stringBuilder, 42);
                 stringBuilder.append("// ").append(constant.detail());
             }
 
             rightTrim(stringBuilder);
-            printStream.println(stringBuilder.toString());
+            printStream.println(stringBuilder);
 
             if (occupyOneSlot(constant)) {
                 index++;
@@ -171,7 +111,7 @@ public class ParseResult {
     }
 
     private String withThreeWidthControl() {
-        int count = this.constantPoolCount.toInt();
+        int count = this.constantPool.getCount().toInt();
         int width = String.format("  #%d", count).length();
 
         // partOneControl 是类似于 "%5s" 这样的字符串
@@ -193,19 +133,19 @@ public class ParseResult {
     }
 
     private boolean occupyOneSlot(AbstractConstant constant) {
-        return !ConstantDouble.class.isInstance(constant) &&
-                !ConstantLong.class.isInstance(constant);
+        return !(constant instanceof ConstantDouble) &&
+                !(constant instanceof ConstantLong);
     }
 
     // todo 类型可能有遗漏
     private boolean hasDetail(AbstractConstant constant) {
         return
-                (ConstantMethodref.class.isInstance(constant)) ||
-                        (ConstantFieldref.class.isInstance(constant)) ||
-                        (ConstantNameAndType.class.isInstance(constant)) ||
-                        (ConstantString.class.isInstance(constant)) ||
-                        (ConstantClass.class.isInstance(constant)) ||
-                        (ConstantInterfaceMethodref.class.isInstance(constant))
+                (constant instanceof ConstantMethodref) ||
+                        (constant instanceof ConstantFieldref) ||
+                        (constant instanceof ConstantNameAndType) ||
+                        (constant instanceof ConstantString) ||
+                        (constant instanceof ConstantClass) ||
+                        (constant instanceof ConstantInterfaceMethodref)
                 ;
     }
 
@@ -215,7 +155,7 @@ public class ParseResult {
         for (int i = 0; i < count; i++) {
             joiner.add(fields[i].desc());
         }
-        printStream.print(joiner.toString());
+        printStream.print(joiner);
     }
 
     private void showMethods() {
@@ -233,7 +173,7 @@ public class ParseResult {
         for (AttributeInfo attribute : attributes) {
             stringBuilder.append(attribute.describe(0));
         }
-        printStream.println(stringBuilder.toString());
+        printStream.println(stringBuilder);
     }
 
     private void extendTo(StringBuilder stringBuilder, int expectedLength) {
@@ -247,23 +187,28 @@ public class ParseResult {
         this.magic = magic;
     }
 
+    public U4 getMagic() {
+        return magic;
+    }
+
     public void setMinorVersion(U2 minorVersion) {
         this.minorVersion = minorVersion;
+    }
+
+    public U2 getMinorVersion() {
+        return minorVersion;
     }
 
     public void setMajorVersion(U2 majorVersion) {
         this.majorVersion = majorVersion;
     }
 
-    public U2 getConstantPoolCount() {
-        return constantPoolCount;
+    public U2 getMajorVersion() {
+        return majorVersion;
     }
 
-    public void setConstantPoolCount(U2 constantPoolCount) {
-        this.constantPoolCount = constantPoolCount;
-    }
 
-    public void setConstantPool(AbstractConstant[] constantPool) {
+    public void setConstantPool(ConstantPool constantPool) {
         this.constantPool = constantPool;
     }
 
@@ -325,5 +270,21 @@ public class ParseResult {
 
     public void setAttributes(AttributeInfo[] attributes) {
         this.attributes = attributes;
+    }
+
+    public U2 getAccessFlags() {
+        return accessFlags;
+    }
+
+    public U2 getThisClass() {
+        return thisClass;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
+    public U2 getSuperClass() {
+        return superClass;
     }
 }

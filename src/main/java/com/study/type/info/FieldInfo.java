@@ -35,12 +35,12 @@ public class FieldInfo extends AbstractInfo {
     @Override
     public String desc() {
         int mod = accessFlags.toInt();
-        AbstractConstant descriptor = constantPool[descriptorIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(descriptor)) {
+        AbstractConstant descriptor = constantPool.get(descriptorIndex.toInt());
+        if (!(descriptor instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
-        AbstractConstant name = constantPool[nameIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(name)) {
+        AbstractConstant name = constantPool.get(nameIndex.toInt());
+        if (!(name instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
 

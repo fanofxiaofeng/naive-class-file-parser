@@ -1,13 +1,13 @@
 package com.study.type.constant;
 
-import com.study.type.U1;
+import com.study.constants.ConstantKind;
 import com.study.type.U4;
 
 public class ConstantFloat extends AbstractConstant {
-    private U4 bytes;
+    private final U4 bytes;
 
     public ConstantFloat(U4 bytes) {
-        this.tag = new U1(4);
+        super(ConstantKind.CONSTANT_Float);
         this.bytes = bytes;
     }
 
@@ -25,7 +25,7 @@ public class ConstantFloat extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 4) {
+        if (this.tag != ConstantKind.CONSTANT_Float) {
             throw new AssertionError();
         }
     }

@@ -81,11 +81,11 @@ public class ConstantsFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        AbstractConstant constant = constantPool[_byte.toInt()];
-                        if (ConstantInteger.class.isInstance(constant)) {
+                        AbstractConstant constant = constantPool.get(_byte.toInt());
+                        if (constant instanceof ConstantInteger) {
                             return String.format("int %s", constant.desc());
                         }
-                        if (ConstantClass.class.isInstance(constant)) {
+                        if (constant instanceof ConstantClass) {
                             return String.format("class %s", constant.detail());
                         }
                         if (ConstantString.class.isInstance(constant)) {
@@ -122,7 +122,7 @@ public class ConstantsFactory implements CmdFactory {
                         String line = String.format("%10s: %-14s#%-19s", index, name, constantIndex);
                         System.out.println("b1: " + b1.toInt());
                         System.out.println("b2: " + b2.toInt());
-                        AbstractConstant constant = constantPool[constantIndex];
+                        AbstractConstant constant = constantPool.get(constantIndex);
                         if (ConstantLong.class.isInstance(constant)) {
                             return String.format("%s// long %s", line, constant.desc());
                         }

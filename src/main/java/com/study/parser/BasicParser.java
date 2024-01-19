@@ -1,10 +1,8 @@
 package com.study.parser;
 
 import com.study.io.BasicInputStream;
-import com.study.type.constant.AbstractConstant;
-import com.study.type.constant.ConstantDouble;
-import com.study.type.constant.ConstantLong;
-import com.study.type.constant.ConstantPoolFactory;
+import com.study.type.ConstantPool;
+import com.study.type.U2;
 import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
@@ -33,14 +31,12 @@ public class BasicParser {
      * @return 构建结果
      */
     public ParseResult build() {
-        this.parseResult = new ParseResult();
+        parseResult = new ParseResult();
 
         fillMagic();
 
-        fillMinorVersion();
-        fillMajorVersion();
+        fillVersion();
 
-        fillConstantPoolCount();
         fillConstantPool();
 
         fillAccessFlags();
@@ -61,79 +57,65 @@ public class BasicParser {
 
         makeSure();
 
-        return this.parseResult;
+        return parseResult;
     }
 
     private void fillMagic() {
-        this.parseResult.setMagic(basicInputStream.readU4());
+        parseResult.setMagic(basicInputStream.readU4());
     }
 
-    private void fillMinorVersion() {
-        this.parseResult.setMinorVersion(basicInputStream.readU2());
-    }
-
-    private void fillMajorVersion() {
-        this.parseResult.setMajorVersion(basicInputStream.readU2());
-    }
-
-    private void fillConstantPoolCount() {
-        this.parseResult.setConstantPoolCount(basicInputStream.readU2());
+    private void fillVersion() {
+        parseResult.setMinorVersion(basicInputStream.readU2());
+        parseResult.setMajorVersion(basicInputStream.readU2());
     }
 
     private void fillConstantPool() {
-        int count = this.parseResult.getConstantPoolCount().toInt();
-        AbstractConstant[] constantPool = new AbstractConstant[count];
-        for (int i = 1; i < count; i++) {
-            constantPool[i] = ConstantPoolFactory.build(basicInputStream);
-
-            if (!occupyOneSlot(constantPool[i])) {
-                i++;
-            }
-        }
+        U2 count = basicInputStream.readU2();
+        ConstantPool constantPool = new ConstantPool.Builder().build(count, basicInputStream);
         ConstantPoolHolder.setConstantPool(constantPool);
-        this.parseResult.setConstantPool(constantPool);
+        parseResult.setConstantPool(constantPool);
     }
 
     private void fillAccessFlags() {
-        this.parseResult.setAccessFlags(basicInputStream.readU2());
+        parseResult.setAccessFlags(basicInputStream.readU2());
     }
 
     private void fillThisClass() {
-        this.parseResult.setThisClass(basicInputStream.readU2());
+        parseResult.setThisClass(basicInputStream.readU2());
     }
 
     private void fillSuperClass() {
-        this.parseResult.setSuperClass(basicInputStream.readU2());
+        parseResult.setSuperClass(basicInputStream.readU2());
     }
 
     private void fillInterfacesCount() {
-        this.parseResult.setInterfacesCount(basicInputStream.readU2());
+        parseResult.setInterfacesCount(basicInputStream.readU2());
     }
 
     private void fillInterfaces() {
-        int size = this.parseResult.getInterfacesCount().toInt();
-        this.parseResult.setInterfaces(basicInputStream.readU2Array(size));
+        int size = parseResult.getInterfacesCount().toInt();
+        parseResult.setInterfaces(basicInputStream.readU2Array(size));
     }
 
     private void fillFieldsCount() {
-        this.parseResult.setFieldsCount(basicInputStream.readU2());
+        parseResult.setFieldsCount(basicInputStream.readU2());
     }
 
     private void fillFields() {
-        int count = this.parseResult.getFieldsCount().toInt();
+        int count = parseResult.getFieldsCount().toInt();
         FieldInfo[] fields = new FieldInfo[count];
         for (int i = 0; i < count; i++) {
             fields[i] = FieldInfo.build(basicInputStream);
         }
-        this.parseResult.setFields(fields);
+        parseResult.setFields(fields);
     }
 
     private void fillMethodsCount() {
-        this.parseResult.setMethodsCount(basicInputStream.readU2());
+        parseResult.setMethodsCount(basicInputStream.readU2());
     }
 
     private void fillMethods() {
-        int count = this.parseResult.getMethodsCount().toInt();
+        int count = parseResult.getMethodsCount().toInt();
         MethodInfo[] methods = new MethodInfo[count];
         for (int i = 0; i < count; i++) {
             methods[i] = MethodInfo.build(basicInputStream);
@@ -158,10 +140,5 @@ public class BasicParser {
         if (!basicInputStream.justFinished()) {
             throw new AssertionError();
         }
-    }
-
-    private boolean occupyOneSlot(AbstractConstant constant) {
-        return !ConstantDouble.class.isInstance(constant) &&
-                !ConstantLong.class.isInstance(constant);
     }
 }

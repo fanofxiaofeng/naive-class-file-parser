@@ -1,14 +1,17 @@
 package com.study.parser;
 
-import com.study.type.constant.AbstractConstant;
+import com.study.type.ConstantPool;
 
 /**
  * 其子类都用到了常量池
  */
+@Deprecated
 public abstract class ConstantPoolHolder {
-    protected static AbstractConstant[] constantPool;
+    @Deprecated
+    protected static ConstantPool constantPool;
 
-    public static void setConstantPool(AbstractConstant[] constantPool) {
+    @Deprecated
+    public static void setConstantPool(ConstantPool constantPool) {
         ConstantPoolHolder.constantPool = constantPool;
     }
 }

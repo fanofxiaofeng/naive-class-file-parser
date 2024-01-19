@@ -13,8 +13,8 @@ public class ConstantValueAttribute extends AttributeInfo {
     }
 
     private void validate() {
-        AbstractConstant constant = constantPool[attributeNameIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(constant) ||
+        AbstractConstant constant = constantPool.get(attributeNameIndex);
+        if (!(constant instanceof ConstantUtf8) ||
                 !"ConstantValue".equals(constant.desc())) {
             throw new AssertionError();
         }
@@ -27,16 +27,16 @@ public class ConstantValueAttribute extends AttributeInfo {
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent).append("ConstantValue: ");
         int index = constantValueIndex.toInt();
-        AbstractConstant constant = constantPool[index];
-        if (ConstantLong.class.isInstance(constant)) {
+        AbstractConstant constant = constantPool.get(index);
+        if (constant instanceof ConstantLong) {
             stringBuilder.append("long").append(" ").append(constant.desc());
-        } else if (ConstantFloat.class.isInstance(constant)) {
+        } else if (constant instanceof ConstantFloat) {
             stringBuilder.append("float").append(" ").append(constant.desc());
-        } else if (ConstantDouble.class.isInstance(constant)) {
+        } else if (constant instanceof ConstantDouble) {
             stringBuilder.append("double").append(" ").append(constant.desc());
-        } else if (ConstantInteger.class.isInstance(constant)) {
+        } else if (constant instanceof ConstantInteger) {
             stringBuilder.append("int").append(" ").append(constant.desc());
-        } else if (ConstantString.class.isInstance(constant)) {
+        } else if (constant instanceof ConstantString) {
             stringBuilder.append("String").append(" ").append(constant.detail());
         } else {
             throw new RuntimeException("Bad constant value! the index is: " + index);

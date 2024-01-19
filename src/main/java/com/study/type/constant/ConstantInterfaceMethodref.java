@@ -1,16 +1,18 @@
 package com.study.type.constant;
 
-import com.study.type.U1;
+import com.study.constants.ConstantKind;
 import com.study.type.U2;
+
+import java.util.Optional;
 
 public class ConstantInterfaceMethodref extends AbstractConstant {
 
-    private U2 classIndex;
+    private final U2 classIndex;
 
-    private U2 nameAndTypeIndex;
+    private final U2 nameAndTypeIndex;
 
     public ConstantInterfaceMethodref(U2 classIndex, U2 nameAndTypeIndex) {
-        this.tag = new U1(11);
+        super(ConstantKind.CONSTANT_InterfaceMethodref);
         this.classIndex = classIndex;
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
@@ -27,24 +29,25 @@ public class ConstantInterfaceMethodref extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 11) {
+        if (this.tag != ConstantKind.CONSTANT_InterfaceMethodref) {
             throw new AssertionError();
         }
 
-        if (!ConstantClass.class.isInstance(constantPool[classIndex.toInt()])) {
+        if (!(constantPool.get(classIndex) instanceof ConstantClass)) {
             throw new AssertionError();
         }
 
-        if (!ConstantNameAndType.class.isInstance(constantPool[nameAndTypeIndex.toInt()])) {
+        if (!(constantPool.get(nameAndTypeIndex) instanceof ConstantNameAndType)) {
             throw new AssertionError();
         }
     }
 
     @Override
-    public String detail() {
-        return String.format("%s.%s",
-                constantPool[classIndex.toInt()].detail(),
-                constantPool[nameAndTypeIndex.toInt()].detail()
+    public Optional<String> detail() {
+        return Optional.of(String.format("%s.%s",
+                        constantPool.get(classIndex).detail(),
+                        constantPool.get(nameAndTypeIndex).detail()
+                )
         );
     }
 

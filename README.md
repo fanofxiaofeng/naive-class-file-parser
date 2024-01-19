@@ -1,18 +1,33 @@
 # 运行指南
+# How to run
+
 `javap` 命令可以对 class 文件进行解析
+The `javap` command can be used to analyze class files
+
 例如我们可以使用如下命令对 `xx.class` 进行解析
+For example, we can use the following command to analyze `xx.class`
+
 ```
 javap -v -p xx.class
 ```
-本项目的目标是输出内容与 `javap -v -p` 一致
+
+本项目的目标是输出内容与 `javap -v -p` 基本一致
+The goal of this project is to generate output similar to what `javap -v -p` does
 
 ## 只比较常量池的解析结果
+## Only compare the analysis result for the constant pool
+
 在本项目的顶层目录(即 [pom.xml](pom.xml) 所在目录)执行如下命令
+Please execute the following command in the root directory of this project
+
 ```bash
 ./scripts/constantPool.sh 'target/classes/com/study/parser/BasicParser.class'   
 ```
+Then you should be able to see the comparison for the analysis result for the constant pool
 就可以看到常量池的解析结果的比较了
+
 运行结果类似下图
+The result should look like this
 ![diff.png](pic/diff.png)
 
 成功执行上述命令后, 
@@ -63,9 +78,9 @@ ClassFile {
 | CONSTANT_Double | 6 | [ConstantDouble.java](src/main/java/com/study/type/constant/ConstantDouble.java) |
 | CONSTANT_NameAndType | 12 | [ConstantNameAndType.java](src/main/java/com/study/type/constant/ConstantNameAndType.java) |
 | CONSTANT_Utf8 | 1 | [ConstantUtf8.java](src/main/java/com/study/type/constant/ConstantUtf8.java) |
-| CONSTANT_MethodHandle | 15 | 尚无 |
-| CONSTANT_MethodType | 16 | 尚无 |
-| CONSTANT_InvokeDynamic | 18 | 尚无 |
+| CONSTANT_MethodHandle | 15 | todo |
+| CONSTANT_MethodType | 16 | todo |
+| CONSTANT_InvokeDynamic | 18 | todo |
 
 
 # 其他

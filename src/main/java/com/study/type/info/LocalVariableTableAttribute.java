@@ -20,13 +20,13 @@ public class LocalVariableTableAttribute extends AttributeInfo {
 
     @Override
     public String describe(int indent) {
-        StringBuilder stringBuilder = withIndent(indent).append(constantPool[this.attributeNameIndex.toInt()].desc()).append(":\n");
+        StringBuilder stringBuilder = withIndent(indent).append(constantPool.get(this.attributeNameIndex.toInt()).desc()).append(":\n");
         stringBuilder.append(String.format("%sStart  Length  Slot  Name   Signature\n", indentedString(indent + 2)));
         int count = this.localVariableTableLength.toInt();
         if (count > 0) {
             for (LocalVariableTable item : this.localVariableTable) {
-                String name = constantPool[item.nameIndex.toInt()].desc();
-                String desc = constantPool[item.descriptorIndex.toInt()].desc();
+                String name = constantPool.get(item.nameIndex.toInt()).desc();
+                String desc = constantPool.get(item.descriptorIndex.toInt()).desc();
                 stringBuilder.append(String.format("%s%5s%8s%6s %5s   %s\n",
                         indentedString(indent + 2),
                         item.startPc.toInt(),

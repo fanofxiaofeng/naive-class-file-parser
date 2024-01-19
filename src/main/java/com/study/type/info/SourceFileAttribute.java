@@ -13,7 +13,7 @@ public class SourceFileAttribute extends AttributeInfo {
     @Override
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent).append("SourceFile: ");
-        stringBuilder.append(String.format("\"%s\"\n", constantPool[sourceFileIndex.toInt()].desc()));
+        stringBuilder.append(String.format("\"%s\"\n", constantPool.get(sourceFileIndex.toInt()).desc()));
         return stringBuilder.toString();
     }
 }

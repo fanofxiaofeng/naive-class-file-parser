@@ -1,19 +1,19 @@
 package com.study.type.constant;
 
-import com.study.type.U1;
+import com.study.constants.ConstantKind;
 import com.study.type.U4;
 
 /**
- * 格式参考
+ * Format
  * <p>
  * #9 = Integer            1
  */
 public class ConstantInteger extends AbstractConstant {
 
-    private U4 bytes;
+    private final U4 bytes;
 
     public ConstantInteger(U4 bytes) {
-        this.tag = new U1(3);
+        super(ConstantKind.CONSTANT_Integer);
         this.bytes = bytes;
     }
 
@@ -33,7 +33,7 @@ public class ConstantInteger extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 3) {
+        if (this.tag != ConstantKind.CONSTANT_Integer) {
             throw new AssertionError();
         }
     }

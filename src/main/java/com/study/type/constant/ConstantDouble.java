@@ -1,15 +1,15 @@
 package com.study.type.constant;
 
-import com.study.type.U1;
+import com.study.constants.ConstantKind;
 import com.study.type.U4;
 
 public class ConstantDouble extends AbstractConstant {
 
-    private U4 highBytes;
-    private U4 lowBytes;
+    private final U4 highBytes;
+    private final U4 lowBytes;
 
     public ConstantDouble(U4 highBytes, U4 lowBytes) {
-        this.tag = new U1(6);
+        super(ConstantKind.CONSTANT_Double);
         this.highBytes = highBytes;
         this.lowBytes = lowBytes;
     }
@@ -29,7 +29,7 @@ public class ConstantDouble extends AbstractConstant {
 
     @Override
     public void validate() {
-        if (this.tag.toInt() != 6) {
+        if (this.tag != ConstantKind.CONSTANT_Double) {
             throw new AssertionError();
         }
     }

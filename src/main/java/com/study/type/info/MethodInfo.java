@@ -40,12 +40,12 @@ public class MethodInfo extends AbstractInfo {
         // todo 下一行是否正确有待确认
         stringBuilder.append(Modifier.toString(mod));
         stringBuilder.append(' ');
-        AbstractConstant name = constantPool[nameIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(name)) {
+        AbstractConstant name = constantPool.get(nameIndex.toInt());
+        if (!(name instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
-        AbstractConstant descriptor = constantPool[descriptorIndex.toInt()];
-        if (!ConstantUtf8.class.isInstance(descriptor)) {
+        AbstractConstant descriptor = constantPool.get(descriptorIndex.toInt());
+        if (!(descriptor instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
         stringBuilder.append(toHumanReadable(descriptor.desc()));

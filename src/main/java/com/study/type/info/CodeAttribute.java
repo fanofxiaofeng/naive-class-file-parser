@@ -76,13 +76,13 @@ public class CodeAttribute extends AttributeInfo {
                 // 2. catch_type != 0 时, 需要对应常量池中的一个元素
                 boolean isAny = exceptionTableEntry.catchType.toInt() == 0;
 
-                AbstractConstant exceptionClass = constantPool[exceptionTableEntry.catchType.toInt()];
-                if (!isAny && !ConstantClass.class.isInstance(exceptionClass)) {
+                AbstractConstant exceptionClass = constantPool.get(exceptionTableEntry.catchType.toInt());
+                if (!isAny && !(exceptionClass instanceof ConstantClass)) {
 //                    System.out.println(stringBuilder.toString());
 //                    System.out.println("~~" + exceptionTable.catchType.toInt());
                     throw new AssertionError("variable \"exceptionClass\" is not an instance of ConstantClass!" + exceptionClass.getClass().toString());
                 }
-                String classInfo = isAny ? "any" : exceptionClass.detail();
+                String classInfo = isAny ? "any" : exceptionClass.detail().get();
                 stringBuilder.append(String.format("%14d%6d%6d   Class %s\n",
                         exceptionTableEntry.startPc.toInt(),
                         exceptionTableEntry.endPc.toInt(),
