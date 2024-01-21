@@ -8,5 +8,9 @@ public enum PresentKind {
 
     SUPER_CLASS,
 
+    COUNT,
+
     CONSTANT_POOL,
+
+    FIELDS,
 }

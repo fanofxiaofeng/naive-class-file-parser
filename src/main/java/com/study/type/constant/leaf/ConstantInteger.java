@@ -1,4 +1,4 @@
-package com.study.type.constant;
+package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
 import com.study.type.U4;
@@ -8,7 +8,7 @@ import com.study.type.U4;
  * <p>
  * #9 = Integer            1
  */
-public class ConstantInteger extends AbstractConstant {
+public class ConstantInteger extends LeafCpInfo {
 
     private final U4 bytes;
 
@@ -24,11 +24,6 @@ public class ConstantInteger extends AbstractConstant {
             value -= 0x100000000L;
         }
         return desc((int) value);
-    }
-
-    @Override
-    public String type() {
-        return "Integer";
     }
 
     @Override

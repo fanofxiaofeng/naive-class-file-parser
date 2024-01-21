@@ -5,7 +5,7 @@ import com.study.io.U1InputStream;
 import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.U4;
-import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.CpInfo;
 import com.study.type.constant.ConstantClass;
 
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class CodeAttribute extends AttributeInfo {
                 // 2. catch_type != 0 时, 需要对应常量池中的一个元素
                 boolean isAny = exceptionTableEntry.catchType.toInt() == 0;
 
-                AbstractConstant exceptionClass = constantPool.get(exceptionTableEntry.catchType.toInt());
+                CpInfo exceptionClass = constantPool.get(exceptionTableEntry.catchType.toInt());
                 if (!isAny && !(exceptionClass instanceof ConstantClass)) {
 //                    System.out.println(stringBuilder.toString());
 //                    System.out.println("~~" + exceptionTable.catchType.toInt());

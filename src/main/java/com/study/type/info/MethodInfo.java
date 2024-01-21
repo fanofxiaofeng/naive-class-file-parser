@@ -2,7 +2,7 @@ package com.study.type.info;
 
 import com.study.io.BasicInputStream;
 import com.study.type.U2;
-import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.CpInfo;
 import com.study.type.constant.ConstantUtf8;
 
 import java.lang.reflect.Modifier;
@@ -40,11 +40,11 @@ public class MethodInfo extends AbstractInfo {
         // todo 下一行是否正确有待确认
         stringBuilder.append(Modifier.toString(mod));
         stringBuilder.append(' ');
-        AbstractConstant name = constantPool.get(nameIndex.toInt());
+        CpInfo name = constantPool.get(nameIndex.toInt());
         if (!(name instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
-        AbstractConstant descriptor = constantPool.get(descriptorIndex.toInt());
+        CpInfo descriptor = constantPool.get(descriptorIndex);
         if (!(descriptor instanceof ConstantUtf8)) {
             throw new AssertionError();
         }

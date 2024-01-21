@@ -1,26 +1,27 @@
 package com.study.type;
 
 import com.study.io.BasicInputStream;
-import com.study.type.constant.AbstractConstant;
-import com.study.type.constant.ConstantDouble;
-import com.study.type.constant.ConstantLong;
+import com.study.type.constant.CpInfo;
+import com.study.type.constant.leaf.ConstantDouble;
+import com.study.type.constant.leaf.ConstantLong;
 import com.study.type.constant.ConstantPoolFactory;
 import com.study.util.ConstantPoolUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Iterator;
+import java.util.Optional;
 
-public class ConstantPool implements Iterable<Pair<Integer, AbstractConstant>> {
+public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
 
     private final U2 count;
 
-    private final AbstractConstant[] items;
+    private final CpInfo[] items;
 
-    public AbstractConstant get(int i) {
+    public CpInfo get(int i) {
         return items[i];
     }
 
-    public AbstractConstant get(U2 u2) {
+    public CpInfo get(U2 u2) {
         return get(u2.toInt());
     }
 
@@ -28,15 +29,16 @@ public class ConstantPool implements Iterable<Pair<Integer, AbstractConstant>> {
         return count;
     }
 
-    private ConstantPool(U2 count, AbstractConstant[] items) {
+    private ConstantPool(U2 count, CpInfo[] items) {
         this.count = count;
         this.items = items;
     }
 
     @Override
-    public Iterator<Pair<Integer, AbstractConstant>> iterator() {
+    public Iterator<Pair<Integer, CpInfo>> iterator() {
         return new Iterator<>() {
             int currentIndex = 0;
+
             @Override
             public boolean hasNext() {
                 return nextIndex() < items.length;
@@ -50,7 +52,7 @@ public class ConstantPool implements Iterable<Pair<Integer, AbstractConstant>> {
             }
 
             @Override
-            public Pair<Integer, AbstractConstant> next() {
+            public Pair<Integer, CpInfo> next() {
                 int nextIndex = nextIndex();
                 currentIndex = nextIndex;
                 return Pair.of(nextIndex, items[nextIndex]);
@@ -60,7 +62,7 @@ public class ConstantPool implements Iterable<Pair<Integer, AbstractConstant>> {
 
     public static class Builder {
         public ConstantPool build(U2 count, BasicInputStream basicInputStream) {
-            AbstractConstant[] items = new AbstractConstant[count.toInt()];
+            CpInfo[] items = new CpInfo[count.toInt()];
             for (int i = 1; i < count.toInt(); i++) {
                 items[i] = ConstantPoolFactory.build(basicInputStream);
 
@@ -72,9 +74,13 @@ public class ConstantPool implements Iterable<Pair<Integer, AbstractConstant>> {
             return new ConstantPool(count, items);
         }
 
-        private boolean occupyOneSlot(AbstractConstant constant) {
+        private boolean occupyOneSlot(CpInfo constant) {
             return !(constant instanceof ConstantDouble) &&
                     !(constant instanceof ConstantLong);
         }
+    }
+
+    public Optional<String> detail(U2 index) {
+        return get(index).detail(this);
     }
 }

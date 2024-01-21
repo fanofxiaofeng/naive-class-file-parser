@@ -1,6 +1,7 @@
 package com.study.type.constant;
 
 import com.study.constants.ConstantKind;
+import com.study.type.ConstantPool;
 import com.study.type.U2;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
  * <p>
  * #12 = String             #37            // ~~
  */
-public class ConstantString extends AbstractConstant {
+public class ConstantString extends CpInfo {
 
     private final U2 stringIndex;
 
@@ -22,11 +23,6 @@ public class ConstantString extends AbstractConstant {
     @Override
     public String desc() {
         return desc(stringIndex);
-    }
-
-    @Override
-    public String type() {
-        return "String";
     }
 
     @Override
@@ -43,5 +39,10 @@ public class ConstantString extends AbstractConstant {
     @Override
     public Optional<String> detail() {
         return Optional.of(constantPool.get(stringIndex.toInt()).desc());
+    }
+
+    @Override
+    public Optional<String> detail(ConstantPool constantPool) {
+        return constantPool.detail(stringIndex);
     }
 }

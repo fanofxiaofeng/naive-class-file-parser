@@ -6,7 +6,7 @@ import com.study.type.U2;
 
 import java.util.Optional;
 
-public class ConstantNameAndType extends AbstractConstant {
+public class ConstantNameAndType extends CpInfo {
     private final U2 nameIndex;
     private final U2 descriptorIndex;
 
@@ -19,11 +19,6 @@ public class ConstantNameAndType extends AbstractConstant {
     @Override
     public String desc() {
         return desc(nameIndex, descriptorIndex);
-    }
-
-    @Override
-    public String type() {
-        return "NameAndType";
     }
 
     @Override

@@ -12,10 +12,10 @@ public enum ConstantKind {
     CONSTANT_Double(6, "Double"),
     CONSTANT_NameAndType(12, "NameAndType"),
     CONSTANT_Utf8(1, "Utf8"),
-    CONSTANT_MethodHandle(15, "todo"),
-    CONSTANT_MethodType(16, "todo"),
+    CONSTANT_MethodHandle(15, "MethodHandle"),
+    CONSTANT_MethodType(16, "MethodType"),
     CONSTANT_Dynamic(17, "todo"),
-    CONSTANT_InvokeDynamic(18, "todo"),
+    CONSTANT_InvokeDynamic(18, "InvokeDynamic"),
     CONSTANT_Module(19, "todo"),
     CONSTANT_Package(20, "todo"),
     ;

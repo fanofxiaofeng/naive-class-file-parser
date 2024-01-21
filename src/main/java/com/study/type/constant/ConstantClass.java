@@ -4,7 +4,6 @@ import com.study.constants.ConstantKind;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 
-import java.awt.desktop.OpenFilesEvent;
 import java.util.Optional;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Optional;
  * #5 = Class              #36            // java/lang/Object
  * #36 = Utf8               java/lang/Object
  */
-public class ConstantClass extends AbstractConstant {
+public class ConstantClass extends CpInfo {
     /**
      * points to CONSTANT_Utf8_info
      */
@@ -27,11 +26,6 @@ public class ConstantClass extends AbstractConstant {
     @Override
     public String desc() {
         return desc(nameIndex);
-    }
-
-    @Override
-    public String type() {
-        return "Class";
     }
 
     @Override

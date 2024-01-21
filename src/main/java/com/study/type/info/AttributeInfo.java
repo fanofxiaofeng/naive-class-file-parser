@@ -3,6 +3,7 @@ package com.study.type.info;
 import com.study.io.BasicInputStream;
 import com.study.io.U1InputStream;
 import com.study.parser.ConstantPoolHolder;
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.U4;
@@ -37,32 +38,23 @@ public class AttributeInfo extends ConstantPoolHolder {
 
     private static AttributeInfo convert(AttributeInfo that) {
         U2 attributeNameIndex = that.attributeNameIndex;
-        String name = constantPool.get(attributeNameIndex.toInt()).desc();
+        String name = constantPool.get(attributeNameIndex).desc();
 
         System.out.println(String.format("属性 %s 将会被创建(length: %s)", name, that.infoStream.length()));
-        switch (name) {
-            case "InnerClasses":
-                return new InnerClassesAttribute(that);
-            case "Deprecated":
-                return new DeprecatedAttribute(that);
-            case "Exceptions":
-                return new ExceptionsAttribute(that);
-            case "SourceFile":
-                return new SourceFileAttribute(that);
-            case "ConstantValue":
-                return new ConstantValueAttribute(that);
-            case "Code":
-                return new CodeAttribute(that);
-            case "LineNumberTable":
-                return new LineNumberTableAttribute(that);
-            case "RuntimeVisibleAnnotations":
-                return new RuntimeVisibleAnnotationsAttribute(that);
-            case "LocalVariableTable":
-                return new LocalVariableTableAttribute(that);
-            case "StackMapTable":
-                return new StackMapTableAttribute(that);
-        }
-        return that;
+        return switch (name) {
+            case "InnerClasses" -> new InnerClassesAttribute(that);
+            case "Deprecated" -> new DeprecatedAttribute(that);
+            case "Exceptions" -> new ExceptionsAttribute(that);
+            case "SourceFile" -> new SourceFileAttribute(that);
+            case "ConstantValue" -> new ConstantValueAttribute(that);
+            case "Code" -> new CodeAttribute(that);
+            case "LineNumberTable" -> new LineNumberTableAttribute(that);
+            case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttribute(that);
+            case "LocalVariableTable" -> new LocalVariableTableAttribute(that);
+            case "StackMapTable" -> new StackMapTableAttribute(that);
+            case "Signature" -> new SignatureAttribute(that);
+            default -> that;
+        };
     }
 
     public static AttributeInfo build(U1InputStream u1InputStream) {
@@ -85,24 +77,33 @@ public class AttributeInfo extends ConstantPoolHolder {
         infoStream = new U1InputStream(info);
     }
 
+
+    public String describe(ConstantPool constantPool) {
+        return "to be implemented...";
+//        throw new UnsupportedOperationException();
+    }
+
     // todo
+    @Deprecated
     public String describe(int indent) {
-        return withIndent(indent).
-                append(constantPool.get(attributeNameIndex.toInt()).desc()).
+        return new StringBuilder().
+                append(constantPool.get(attributeNameIndex).desc()).
                 append(":").append("[请修改实现逻辑]").append('\n').
                 toString();
     }
 
     protected StringBuilder withIndent(int indent) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < indent; i++) {
-            stringBuilder.append(' ');
-        }
+        stringBuilder.append(" ".repeat(Math.max(0, indent)));
         return stringBuilder;
     }
 
     protected String indentedString(int indent) {
         return withIndent(indent).toString();
+    }
+
+    protected String buildName(ConstantPool constantPool) {
+        return constantPool.get(attributeNameIndex).desc();
     }
 }
 

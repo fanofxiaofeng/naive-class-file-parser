@@ -2,7 +2,7 @@ package com.study.present;
 
 import com.study.parser.ParseResult;
 import com.study.type.ConstantPool;
-import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.CpInfo;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintStream;
@@ -21,7 +21,7 @@ public class ConstantPoolPresenter extends AbstractPresenter {
 
         ConstantPool constantPool = result.getConstantPool();
 
-        for (Pair<Integer, AbstractConstant> pair : constantPool) {
+        for (Pair<Integer, CpInfo> pair : constantPool) {
 //            item.validate();
             new ItemPresenter(result, printStream, pair).present();
         }

@@ -2,7 +2,7 @@ package com.test.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.CpInfo;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.factory.ConstantsFactory;
 import org.junit.Assert;
@@ -10,11 +10,11 @@ import org.junit.Test;
 
 public class ConstantsFactoryTest {
     private ConstantsFactory factory = ConstantsFactory.getInstance();
-    private AbstractConstant[] constantPool;
+    private CpInfo[] constantPool;
     private U1[] code;
 
     private AbstractCmd common(int value) {
-        constantPool = new AbstractConstant[1];
+        constantPool = new CpInfo[1];
         code = new U1[1];
         code[0] = new U1(value);
         CodeInputStream stream = new CodeInputStream(code);
@@ -78,7 +78,7 @@ public class ConstantsFactoryTest {
 
     @Test
     public void build0x10() {
-        constantPool = new AbstractConstant[1];
+        constantPool = new CpInfo[1];
         code = new U1[2];
         code[0] = new U1(0x10);
         code[1] = new U1(0x42);

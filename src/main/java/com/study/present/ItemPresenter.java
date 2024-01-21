@@ -1,7 +1,7 @@
 package com.study.present;
 
 import com.study.parser.ParseResult;
-import com.study.type.constant.AbstractConstant;
+import com.study.type.constant.CpInfo;
 import com.study.util.ConstantPoolUtils;
 import com.study.util.PaddingUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,9 +12,11 @@ import java.util.Optional;
 
 public class ItemPresenter extends AbstractPresenter {
 
-    private final Pair<Integer, AbstractConstant> pair;
+    private final Pair<Integer, CpInfo> pair;
 
-    protected ItemPresenter(ParseResult result, PrintStream printStream, Pair<Integer, AbstractConstant> pair) {
+    private static final int TYPE_PART_WIDTH = 19;
+
+    protected ItemPresenter(ParseResult result, PrintStream printStream, Pair<Integer, CpInfo> pair) {
         super(result, printStream);
         this.pair = pair;
     }
@@ -22,7 +24,7 @@ public class ItemPresenter extends AbstractPresenter {
     @Override
     public void present() {
         int index = pair.getKey();
-        AbstractConstant item = pair.getRight();
+        CpInfo item = pair.getRight();
 
         String indexPart = buildIndexPart(index);
         String typePart = item.getTag().getType();
@@ -39,24 +41,25 @@ public class ItemPresenter extends AbstractPresenter {
         printStream.println(content);
     }
 
-    private String buildContent(String indexPart, String typePart, String descPart) {
-        String content = String.format("%s = %s%s",
+    private String buildCoreInfo(String indexPart, String typePart, String descPart) {
+        return String.format("%s = %s%s",
                 indexPart,
-                StringUtils.rightPad(typePart, 19),
+                StringUtils.rightPad(typePart, TYPE_PART_WIDTH),
                 descPart
         );
+    }
+
+    private String buildContent(String indexPart, String typePart, String descPart) {
+        String content = buildCoreInfo(indexPart, typePart, descPart);
         return PaddingUtils.prepend(content, DEFAULT_LEFT_PADDING_CNT);
     }
 
     private String buildContent(String indexPart, String typePart, String descPart, String detail) {
-        String content = String.format("%s = %s%s%s",
-                indexPart,
-                StringUtils.rightPad(typePart, 19),
-                StringUtils.rightPad(descPart, 15),
-                "// " + detail
-        );
+        String coreInfo = buildCoreInfo(indexPart, typePart, descPart);
+        String result1 = StringUtils.rightPad(coreInfo, CORE_INFO_WIDTH);
+        String result2 = result1 + "// " + detail;
 
-        return PaddingUtils.prepend(content, DEFAULT_LEFT_PADDING_CNT);
+        return PaddingUtils.prepend(result2, DEFAULT_LEFT_PADDING_CNT);
     }
 
     private String buildIndexPart(int index) {

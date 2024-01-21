@@ -1,9 +1,9 @@
-package com.study.type.constant;
+package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
 import com.study.type.U4;
 
-public class ConstantFloat extends AbstractConstant {
+public class ConstantFloat extends LeafCpInfo {
     private final U4 bytes;
 
     public ConstantFloat(U4 bytes) {
@@ -16,11 +16,6 @@ public class ConstantFloat extends AbstractConstant {
         long raw = bytes.toLong();
         float value = Float.intBitsToFloat((int) raw);
         return desc(value);
-    }
-
-    @Override
-    public String type() {
-        return "Float";
     }
 
     @Override

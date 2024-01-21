@@ -1,11 +1,14 @@
 package com.study.type.constant;
 
 import com.study.constants.ConstantKind;
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
+import com.study.type.constant.leaf.LeafCpInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -13,7 +16,7 @@ import java.util.List;
  * <p>
  * #19 = Utf8               Lcom/study/parser/Naive;
  */
-public class ConstantUtf8 extends AbstractConstant {
+public class ConstantUtf8 extends LeafCpInfo {
     private final U2 length;
     private final U1[] bytes;
 
@@ -108,14 +111,14 @@ public class ConstantUtf8 extends AbstractConstant {
     }
 
     @Override
-    public String type() {
-        return "Utf8";
-    }
-
-    @Override
     public void validate() {
         if (this.tag != ConstantKind.CONSTANT_Utf8) {
             throw new AssertionError();
         }
+    }
+
+    @Override
+    public Optional<String> detail(ConstantPool constantPool) {
+        return Optional.of(new String(content));
     }
 }

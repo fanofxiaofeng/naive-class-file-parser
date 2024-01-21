@@ -4,17 +4,11 @@ import com.study.constants.PresentKind;
 import com.study.parser.ParseResult;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
-
-import java.io.PrintStream;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.StringJoiner;
-import java.util.TreeMap;
-
-import com.study.type.constant.*;
-import com.study.util.Extend;
 import com.study.util.PaddingUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.PrintStream;
+import java.util.*;
 
 import static com.study.constants.Const.MAGIC_NUMBER;
 
@@ -50,8 +44,9 @@ public class MainPresenter extends AbstractPresenter {
             showSuperClass();
         }
 
-
-//        showCount();
+        if (presentKinds.contains(PresentKind.COUNT)) {
+            showCount();
+        }
 
         if (presentKinds.contains(PresentKind.CONSTANT_POOL)) {
             new ConstantPoolPresenter(result, printStream).present();
@@ -59,8 +54,9 @@ public class MainPresenter extends AbstractPresenter {
 
         printStream.println('{');
 
-//        showFields();
-
+        if (presentKinds.contains(PresentKind.FIELDS)) {
+            showFields();
+        }
 //        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
 //            printStream.println();
 //        }
@@ -68,6 +64,7 @@ public class MainPresenter extends AbstractPresenter {
 //        showMethods();
 
 //        showAttributes();
+        printStream.println('}');
     }
 
     private void showVersion() {
@@ -97,7 +94,7 @@ public class MainPresenter extends AbstractPresenter {
         StringBuilder stringBuilder = new StringBuilder();
         U2 accessFlags = result.getAccessFlags();
         String message = String.format("flags: (0x%04x)", accessFlags.toInt());
-        stringBuilder.append(StringUtils.leftPad(message, DEFAULT_LEFT_PADDING_CNT));
+        stringBuilder.append(message);
         StringJoiner joiner = new StringJoiner(", ");
 
         map.forEach((key, value) -> {
@@ -110,7 +107,9 @@ public class MainPresenter extends AbstractPresenter {
             stringBuilder.append(' ');
             stringBuilder.append(joiner);
         }
-        printStream.println(stringBuilder);
+
+        String result = PaddingUtils.prepend(stringBuilder.toString(), DEFAULT_LEFT_PADDING_CNT);
+        printStream.println(result);
     }
 
     private void showThisClass() {
@@ -126,85 +125,34 @@ public class MainPresenter extends AbstractPresenter {
 
         String padded =
                 StringUtils.rightPad(
-                        StringUtils.leftPad(mainPart, mainPart.length() + DEFAULT_LEFT_PADDING_CNT),
+                        PaddingUtils.prepend(mainPart, DEFAULT_LEFT_PADDING_CNT),
                         42
                 );
-        StringBuilder builder = new StringBuilder();
-        builder.append(padded);
-        builder.append("// ");
-        builder.append(result.getConstantPool().get(someClass).detail());
-
-        printStream.println(builder);
-    }
-
-    private void showConstantPool() {
-        printStream.println("Constant pool:");
 
         ConstantPool constantPool = result.getConstantPool();
-        int count = constantPool.getCount().toInt();
+        Optional<String> detail = constantPool.detail(someClass);
 
-        int index = 1;
-        while (index < count) {
-            // "  #42" 这种格式的字符串(leading whitespace 的数量是计算出来的)
-            AbstractConstant constant = constantPool.get(index);
-            constant.validate();
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String format = withThreeWidthControl();
-            stringBuilder.append(String.format(format, "#" + index, constant.getTag().getType(), constant.desc()));
-            if (hasDetail(constant)) {
-                Extend.extendTo(stringBuilder, 42);
-                stringBuilder.append("// ").append(constant.detail());
-            }
-
-            rightTrim(stringBuilder);
-            printStream.println(stringBuilder);
-
-            if (occupyOneSlot(constant)) {
-                index++;
-            } else {
-                index += 2;
-            }
+        if (detail.isEmpty()) {
+            throw new IllegalArgumentException();
         }
+
+        String content = String.format("%s// %s", padded, detail.get());
+        printStream.println(content);
     }
 
-    // todo 类型可能有遗漏
-    private boolean hasDetail(AbstractConstant constant) {
-        return
-                (constant instanceof ConstantMethodref) ||
-                        (constant instanceof ConstantFieldref) ||
-                        (constant instanceof ConstantNameAndType) ||
-                        (constant instanceof ConstantString) ||
-                        (constant instanceof ConstantClass) ||
-                        (constant instanceof ConstantInterfaceMethodref)
-                ;
+
+    private void showCount() {
+        String content = String.format("interfaces: %d, fields: %d, methods: %d, attributes: %d",
+                result.getInterfacesCount().toInt(),
+                result.getFields().fieldsCount().toInt(),
+                result.getMethodsCount().toInt(),
+                result.getAttributesCount().toInt());
+
+        printStream.println(PaddingUtils.prepend(content, DEFAULT_LEFT_PADDING_CNT));
     }
 
-    private String withThreeWidthControl() {
-        int count = result.getConstantPool().getCount().toInt();
-        int width = String.format("  #%d", count).length();
-
-        // partOneControl 是类似于 "%5s" 这样的字符串
-        String partOneControl = String.format("%%%ds", width);
-        String partTwoControl = "%-19s";
-        String partThreeControl = "%s";
-        return String.format("%s = %s%s", partOneControl, partTwoControl, partThreeControl);
-    }
-
-    private boolean occupyOneSlot(AbstractConstant constant) {
-        return !(constant instanceof ConstantDouble) &&
-                !(constant instanceof ConstantLong);
-    }
-
-    /**
-     * 删除右边的 whitespace, 逻辑参考了 {@link String#trim()}
-     *
-     * @param stringBuilder 要对它进行操作
-     */
-    private void rightTrim(StringBuilder stringBuilder) {
-        while (stringBuilder.charAt(stringBuilder.length() - 1) <= ' ') {
-            stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        }
+    private void showFields() {
+        new FieldsPresenter(result, printStream).present();
     }
 }
 

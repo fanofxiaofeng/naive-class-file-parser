@@ -1,14 +1,15 @@
-package com.study.type.constant;
+package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
 import com.study.type.U4;
 
-public class ConstantLong extends AbstractConstant {
+public class ConstantDouble extends LeafCpInfo {
+
     private final U4 highBytes;
     private final U4 lowBytes;
 
-    public ConstantLong(U4 highBytes, U4 lowBytes) {
-        super(ConstantKind.CONSTANT_Long);
+    public ConstantDouble(U4 highBytes, U4 lowBytes) {
+        super(ConstantKind.CONSTANT_Double);
         this.highBytes = highBytes;
         this.lowBytes = lowBytes;
     }
@@ -17,19 +18,13 @@ public class ConstantLong extends AbstractConstant {
     public String desc() {
         long high = highBytes.toLong();
         long low = lowBytes.toLong();
-        // todo 有待确认
-        long value = (high << 32) + low;
+        double value = Double.longBitsToDouble((high << 32) + low);
         return desc(value);
     }
 
     @Override
-    public String type() {
-        return "Long";
-    }
-
-    @Override
     public void validate() {
-        if (this.tag != ConstantKind.CONSTANT_Long) {
+        if (this.tag != ConstantKind.CONSTANT_Double) {
             throw new AssertionError();
         }
     }

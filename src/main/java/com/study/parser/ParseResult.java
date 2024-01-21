@@ -1,16 +1,13 @@
 package com.study.parser;
 
 import com.study.type.ConstantPool;
+import com.study.type.Fields;
 import com.study.type.U2;
 import com.study.type.U4;
-import com.study.type.constant.*;
 import com.study.type.info.AttributeInfo;
-import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
-import com.study.util.Extend;
 
 import java.io.PrintStream;
-import java.util.StringJoiner;
 
 import static com.study.constants.Const.MAGIC_NUMBER;
 
@@ -30,15 +27,15 @@ public class ParseResult {
      */
     private U2 majorVersion;
 
-    //    private U2 constantPoolCount;
     private ConstantPool constantPool;
     private U2 accessFlags;
     private U2 thisClass;
     private U2 superClass;
     private U2 interfacesCount;
     private U2[] interfaces;
-    private U2 fieldsCount;
-    private FieldInfo[] fields;
+//    private U2 fieldsCount;
+//    private FieldInfo[] fields;
+    private Fields fields;
     private U2 methodsCount;
     private MethodInfo[] methods;
     private U2 attributesCount;
@@ -58,105 +55,28 @@ public class ParseResult {
         }
 
 
-        showCount();
 
-        showConstantPool();
+//        showFields();
 
-        printStream.println('{');
-
-        showFields();
-
-        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
-            printStream.println();
-        }
+//        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
+//            printStream.println();
+//        }
 
         showMethods();
 
         showAttributes();
     }
 
-    private void showCount() {
-        printStream.println(String.format("  interfaces: %d, fields: %d, methods: %d, attributes: %d",
-                interfacesCount.toInt(), fieldsCount.toInt(), methodsCount.toInt(), attributesCount.toInt()));
-    }
 
-    private void showConstantPool() {
-        printStream.println("Constant pool:");
 
-        int count = this.constantPool.getCount().toInt();
-
-        int index = 1;
-        while (index < count) {
-            // "  #42" 这种格式的字符串(leading whitespace 的数量是计算出来的)
-            AbstractConstant constant = constantPool.get(index);
-            constant.validate();
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String format = withThreeWidthControl();
-            stringBuilder.append(String.format(format, "#" + index, constant.getTag().getType(), constant.desc()));
-            if (hasDetail(constant)) {
-                Extend.extendTo(stringBuilder, 42);
-                stringBuilder.append("// ").append(constant.detail());
-            }
-
-            rightTrim(stringBuilder);
-            printStream.println(stringBuilder);
-
-            if (occupyOneSlot(constant)) {
-                index++;
-            } else {
-                index += 2;
-            }
-        }
-    }
-
-    private String withThreeWidthControl() {
-        int count = this.constantPool.getCount().toInt();
-        int width = String.format("  #%d", count).length();
-
-        // partOneControl 是类似于 "%5s" 这样的字符串
-        String partOneControl = String.format("%%%ds", width);
-        String partTwoControl = "%-19s";
-        String partThreeControl = "%s";
-        return String.format("%s = %s%s", partOneControl, partTwoControl, partThreeControl);
-    }
-
-    /**
-     * 删除右边的 whitespace, 逻辑参考了 {@link String#trim()}
-     *
-     * @param stringBuilder 要对它进行操作
-     */
-    private void rightTrim(StringBuilder stringBuilder) {
-        while (stringBuilder.charAt(stringBuilder.length() - 1) <= ' ') {
-            stringBuilder = stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        }
-    }
-
-    private boolean occupyOneSlot(AbstractConstant constant) {
-        return !(constant instanceof ConstantDouble) &&
-                !(constant instanceof ConstantLong);
-    }
-
-    // todo 类型可能有遗漏
-    private boolean hasDetail(AbstractConstant constant) {
-        return
-                (constant instanceof ConstantMethodref) ||
-                        (constant instanceof ConstantFieldref) ||
-                        (constant instanceof ConstantNameAndType) ||
-                        (constant instanceof ConstantString) ||
-                        (constant instanceof ConstantClass) ||
-                        (constant instanceof ConstantInterfaceMethodref)
-                ;
-    }
-
-    private void showFields() {
-        int count = this.fieldsCount.toInt();
-        StringJoiner joiner = new StringJoiner("\n");
-        for (int i = 0; i < count; i++) {
-            joiner.add(fields[i].desc());
-        }
-        printStream.print(joiner);
-    }
+//    private void showFields() {
+//        int count = this.fieldsCount.toInt();
+//        StringJoiner joiner = new StringJoiner("\n");
+//        for (int i = 0; i < count; i++) {
+//            joiner.add(fields[i].desc());
+//        }
+//        printStream.print(joiner);
+//    }
 
     private void showMethods() {
         int count = this.methodsCount.toInt();
@@ -174,13 +94,6 @@ public class ParseResult {
             stringBuilder.append(attribute.describe(0));
         }
         printStream.println(stringBuilder);
-    }
-
-    private void extendTo(StringBuilder stringBuilder, int expectedLength) {
-        final char given = ' ';
-        while (stringBuilder.length() < expectedLength) {
-            stringBuilder.append(given);
-        }
     }
 
     public void setMagic(U4 magic) {
@@ -236,16 +149,12 @@ public class ParseResult {
         this.interfaces = interfaces;
     }
 
-    public U2 getFieldsCount() {
-        return fieldsCount;
-    }
-
-    public void setFieldsCount(U2 fieldsCount) {
-        this.fieldsCount = fieldsCount;
-    }
-
-    public void setFields(FieldInfo[] fields) {
+    public void setFields(Fields fields) {
         this.fields = fields;
+    }
+
+    public Fields getFields() {
+        return fields;
     }
 
     public U2 getMethodsCount() {
@@ -287,4 +196,6 @@ public class ParseResult {
     public U2 getSuperClass() {
         return superClass;
     }
+
+
 }

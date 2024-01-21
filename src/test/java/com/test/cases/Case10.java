@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case10 {
+public class Case10 implements Case {
 
     // todo: use lambda expression
     public Runnable f(int a, int b) {

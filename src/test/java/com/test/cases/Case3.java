@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case3 {
+public class Case3 implements Case {
     private int n1 = 42;
     private int n2 = Integer.MAX_VALUE;
 

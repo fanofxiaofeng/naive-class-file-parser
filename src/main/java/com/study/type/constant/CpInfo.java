@@ -7,36 +7,18 @@ import com.study.type.ConstantPool;
 
 import java.util.Optional;
 
-public abstract class AbstractConstant extends ConstantPoolHolder {
+public abstract class CpInfo extends ConstantPoolHolder {
 
     protected final ConstantKind tag;
 
-    protected AbstractConstant(ConstantKind tag) {
+    protected CpInfo(ConstantKind tag) {
         this.tag = tag;
     }
 
     public abstract String desc();
 
-    public abstract String type();
-
     String desc(AbstractU u) {
         return "#" + u.toInt();
-    }
-
-    String desc(int value) {
-        return "" + value;
-    }
-
-    String desc(float value) {
-        return String.valueOf(value) + 'f';
-    }
-
-    String desc(long value) {
-        return String.valueOf(value) + 'l';
-    }
-
-    String desc(double value) {
-        return String.valueOf(value) + 'd';
     }
 
     String desc(AbstractU u1, AbstractU u2) {
@@ -53,7 +35,7 @@ public abstract class AbstractConstant extends ConstantPoolHolder {
         return stringBuilder.toString();
     }
 
-    String desc(char[] chars) {
+    protected String desc(char[] chars) {
         return new String(chars);
     }
 

@@ -2,6 +2,7 @@ package com.study.parser;
 
 import com.study.io.BasicInputStream;
 import com.study.type.ConstantPool;
+import com.study.type.Fields;
 import com.study.type.U2;
 import com.study.type.info.AttributeInfo;
 import com.study.type.info.FieldInfo;
@@ -46,7 +47,6 @@ public class BasicParser {
         fillInterfacesCount();
         fillInterfaces();
 
-        fillFieldsCount();
         fillFields();
 
         fillMethodsCount();
@@ -97,16 +97,14 @@ public class BasicParser {
         parseResult.setInterfaces(basicInputStream.readU2Array(size));
     }
 
-    private void fillFieldsCount() {
-        parseResult.setFieldsCount(basicInputStream.readU2());
-    }
 
     private void fillFields() {
-        int count = parseResult.getFieldsCount().toInt();
-        FieldInfo[] fields = new FieldInfo[count];
-        for (int i = 0; i < count; i++) {
-            fields[i] = FieldInfo.build(basicInputStream);
+        U2 count = basicInputStream.readU2();
+        FieldInfo[] fieldInfoArray = new FieldInfo[count.toInt()];
+        for (int i = 0; i < count.toInt(); i++) {
+            fieldInfoArray[i] = FieldInfo.build(basicInputStream);
         }
+        Fields fields = new Fields(count, fieldInfoArray);
         parseResult.setFields(fields);
     }
 

@@ -15,7 +15,7 @@ public abstract class PresenterTestBase {
 
     private static final String OUTPUT_FILE_NAME = "scripts/result/output.txt";
 
-    protected String[] getResults(Class clazz) throws IOException {
+    protected String[] getResults(Class clazz, PresentKind presentKind) throws IOException {
         String canonicalName = clazz.getCanonicalName();
         String fileName = String.format("target/test-classes/%s.class", canonicalName.replaceAll("\\.", "/"));
         FileInputStream inputStream = new FileInputStream(fileName);
@@ -23,7 +23,7 @@ public abstract class PresenterTestBase {
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
         ParseResult parseResult = new BasicParser(basicInputStream).build();
         MainPresenter presenter = new MainPresenter(parseResult, printStream);
-        presenter.present(EnumSet.of(PresentKind.CONSTANT_POOL));
+        presenter.present(EnumSet.of(presentKind));
 
         try (FileInputStream fileInputStream = new FileInputStream(OUTPUT_FILE_NAME)) {
             return new String(fileInputStream.readAllBytes()).split("\n");

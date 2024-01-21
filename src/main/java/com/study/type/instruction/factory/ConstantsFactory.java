@@ -3,6 +3,9 @@ package com.study.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.constant.*;
+import com.study.type.constant.leaf.ConstantDouble;
+import com.study.type.constant.leaf.ConstantInteger;
+import com.study.type.constant.leaf.ConstantLong;
 import com.study.type.instruction.AbstractCmd;
 import com.study.type.instruction.OneByteCmd;
 import com.study.type.instruction.ThreeByteCmd;
@@ -81,7 +84,7 @@ public class ConstantsFactory implements CmdFactory {
 
                     @Override
                     public String detail() {
-                        AbstractConstant constant = constantPool.get(_byte.toInt());
+                        CpInfo constant = constantPool.get(_byte.toInt());
                         if (constant instanceof ConstantInteger) {
                             return String.format("int %s", constant.desc());
                         }
@@ -122,7 +125,7 @@ public class ConstantsFactory implements CmdFactory {
                         String line = String.format("%10s: %-14s#%-19s", index, name, constantIndex);
                         System.out.println("b1: " + b1.toInt());
                         System.out.println("b2: " + b2.toInt());
-                        AbstractConstant constant = constantPool.get(constantIndex);
+                        CpInfo constant = constantPool.get(constantIndex);
                         if (ConstantLong.class.isInstance(constant)) {
                             return String.format("%s// long %s", line, constant.desc());
                         }

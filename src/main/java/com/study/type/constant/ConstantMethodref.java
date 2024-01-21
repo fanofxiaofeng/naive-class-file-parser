@@ -6,7 +6,7 @@ import com.study.type.U2;
 
 import java.util.Optional;
 
-public class ConstantMethodref extends AbstractConstant {
+public class ConstantMethodref extends CpInfo {
     private final U2 classIndex;
     private final U2 nameAndTypeIndex;
 
@@ -19,11 +19,6 @@ public class ConstantMethodref extends AbstractConstant {
     @Override
     public String desc() {
         return desc(classIndex, nameAndTypeIndex);
-    }
-
-    @Override
-    public String type() {
-        return "Methodref";
     }
 
     @Override
@@ -52,8 +47,8 @@ public class ConstantMethodref extends AbstractConstant {
 
     @Override
     public Optional<String> detail(ConstantPool constantPool) {
-        Optional<String> detail1 = constantPool.get(classIndex).detail(constantPool);
-        Optional<String> detail2 = constantPool.get(nameAndTypeIndex).detail(constantPool);
+        Optional<String> detail1 = constantPool.detail(classIndex);
+        Optional<String> detail2 = constantPool.detail(nameAndTypeIndex);
 
         if (detail1.isEmpty() || detail2.isEmpty()) {
             throw new IllegalArgumentException();
