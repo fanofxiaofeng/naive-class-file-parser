@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class BasicInputStream extends InputStream {
-    private InputStream inputStream;
+    private final InputStream inputStream;
 
     public BasicInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
     /**
-     * 如果函数正常返回, 则保证返回值在 [0, 255] 上
+     * If this function returns normally, then the return value will always be in [0, 255]
      */
     @Override
     public int read() {

@@ -2,7 +2,7 @@ package com.study.signature;
 
 import java.util.List;
 
-public class GenericType extends AbstractSignature {
+public class GenericType implements Signature {
 
     private final List<Integer> codePoints;
 
@@ -12,7 +12,8 @@ public class GenericType extends AbstractSignature {
 
     // todo
     @Override
-    public String desc() {
-        return desc(codePoints);
+    public List<String> desc() {
+        String desc = desc(codePoints);
+        return List.of(desc);
     }
 }

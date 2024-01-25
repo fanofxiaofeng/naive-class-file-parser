@@ -3,9 +3,7 @@ package com.study.type.constant;
 import com.study.constants.ConstantKind;
 import com.study.parser.ConstantPoolHolder;
 import com.study.type.AbstractU;
-import com.study.type.ConstantPool;
-
-import java.util.Optional;
+import com.study.type.constant.compound.ConstantNameAndType;
 
 public abstract class CpInfo extends ConstantPoolHolder {
 
@@ -17,11 +15,11 @@ public abstract class CpInfo extends ConstantPoolHolder {
 
     public abstract String desc();
 
-    String desc(AbstractU u) {
+    protected String desc(AbstractU u) {
         return "#" + u.toInt();
     }
 
-    String desc(AbstractU u1, AbstractU u2) {
+    protected String desc(AbstractU u1, AbstractU u2) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('#');
         stringBuilder.append(u1.toInt());
@@ -42,13 +40,10 @@ public abstract class CpInfo extends ConstantPoolHolder {
     public abstract void validate();
 
     @Deprecated
-    public Optional<String> detail() {
-        return Optional.empty();
+    public String detail() {
+        throw new IllegalArgumentException();
     }
 
-    public Optional<String> detail(ConstantPool constantPool) {
-        return Optional.empty();
-    }
 
     public ConstantKind getTag() {
         return tag;

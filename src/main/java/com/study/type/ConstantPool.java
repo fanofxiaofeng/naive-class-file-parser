@@ -1,19 +1,16 @@
 package com.study.type;
 
-import com.study.io.BasicInputStream;
 import com.study.type.constant.CpInfo;
-import com.study.type.constant.leaf.ConstantDouble;
-import com.study.type.constant.leaf.ConstantLong;
-import com.study.type.constant.ConstantPoolFactory;
+import com.study.type.constant.compound.CompoundCpInfo;
+import com.study.type.constant.leaf.LeafCpInfo;
 import com.study.util.ConstantPoolUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
 
-    private final U2 count;
+    private final int count;
 
     private final CpInfo[] items;
 
@@ -25,11 +22,25 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
         return get(u2.toInt());
     }
 
-    public U2 getCount() {
+    public <T extends CpInfo> T get(U2 u2, Class<T> expectedClass) {
+        CpInfo cpInfo = get(u2);
+        if (expectedClass.isAssignableFrom(cpInfo.getClass())) {
+            return (T) cpInfo;
+        }
+
+        String message =
+                String.format("expectedClass is: %s, but real class is: %s, please check!",
+                        expectedClass.getSimpleName(),
+                        cpInfo.getClass().getSimpleName()
+                );
+        throw new IllegalArgumentException(message);
+    }
+
+    public int getCount() {
         return count;
     }
 
-    private ConstantPool(U2 count, CpInfo[] items) {
+    public ConstantPool(int count, CpInfo[] items) {
         this.count = count;
         this.items = items;
     }
@@ -60,27 +71,20 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
         };
     }
 
-    public static class Builder {
-        public ConstantPool build(U2 count, BasicInputStream basicInputStream) {
-            CpInfo[] items = new CpInfo[count.toInt()];
-            for (int i = 1; i < count.toInt(); i++) {
-                items[i] = ConstantPoolFactory.build(basicInputStream);
-
-                if (!occupyOneSlot(items[i])) {
-                    i++;
-                }
-            }
-
-            return new ConstantPool(count, items);
-        }
-
-        private boolean occupyOneSlot(CpInfo constant) {
-            return !(constant instanceof ConstantDouble) &&
-                    !(constant instanceof ConstantLong);
-        }
+    public String detail(U2 index) {
+        return get(index, CompoundCpInfo.class).detail(this);
     }
 
-    public Optional<String> detail(U2 index) {
-        return get(index).detail(this);
+    public String desc(U2 index) {
+        return get(index, LeafCpInfo.class).desc();
+    }
+
+    public int lastIndex() {
+        int count = getCount();
+        int lastIndex = count - 1;
+        if (get(count - 1) == null) {
+            lastIndex--;
+        }
+        return lastIndex;
     }
 }

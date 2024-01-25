@@ -2,20 +2,20 @@
 
 The `javap` command can be used to analyze class files.
 
-For example, we can use the following command to analyze `xx.class`
+For example, we can use the following command to analyze `xxx.class`
 
 ```
-javap -v -p xx.class
+javap -v -p xxx.class
 ```
 
-The goal of this project is to generate similar output to what `javap -v -p` does
+The goal of this project is to generate similar output to `javap -v -p` 
 
 ## Only compare the analysis result for the constant pool
 
 Please execute the following command in the root directory of this project
 
 ```bash
-./scripts/constantPool.sh 'target/classes/com/study/parser/BasicParser.class'   
+./scripts/constantPool.sh 'com.study.parser.MainParser.class'   
 ```
 Then you should be able to see the comparison for the analysis result for the constant pool
 

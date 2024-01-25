@@ -1,6 +1,8 @@
 package com.study.signature;
 
-public class ArrayType extends AbstractSignature {
+import java.util.List;
+
+public class ArrayType implements Signature {
     private final Signature signature;
 
     public ArrayType(Signature signature) {
@@ -8,7 +10,8 @@ public class ArrayType extends AbstractSignature {
     }
 
     @Override
-    public String desc() {
-        return signature.desc() + "[]";
+    public List<String> desc() {
+        String desc = signature.desc() + "[]";
+        return List.of(desc);
     }
 }

@@ -1,23 +1,28 @@
 package com.study.present;
 
 import com.study.parser.ParseResult;
+import com.study.util.PrintStreamWrapper;
 
-import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.StringJoiner;
 
 public abstract class AbstractPresenter implements Presenter {
 
     protected final ParseResult result;
 
-    protected final PrintStream printStream;
-
-    protected static final int DEFAULT_LEFT_PADDING_CNT = 2;
+    protected final PrintStreamWrapper printStreamWrapper;
     protected static final int CORE_INFO_WIDTH = 40;
 
-    protected AbstractPresenter(ParseResult result, PrintStream printStream) {
+    protected AbstractPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper) {
         this.result = result;
-        this.printStream = printStream;
+        this.printStreamWrapper = printStreamWrapper;
     }
 
-    public abstract void present();
+    public abstract int present();
 
+    protected String buildHeaderLine(String... components) {
+        StringJoiner joiner = new StringJoiner(" ");
+        Arrays.stream(components).filter(e -> !e.isEmpty()).forEach(joiner::add);
+        return joiner + ";";
+    }
 }

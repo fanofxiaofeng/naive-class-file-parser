@@ -2,7 +2,9 @@ package com.study.signature;
 
 import com.study.util.BaseTypeUtils;
 
-public class BaseType extends AbstractSignature {
+import java.util.List;
+
+public class BaseType implements Signature {
 
     private final char type;
 
@@ -23,7 +25,8 @@ public class BaseType extends AbstractSignature {
     }
 
     @Override
-    public String desc() {
-        return BaseTypeUtils.baseTypes.get(type);
+    public List<String> desc() {
+        String desc = BaseTypeUtils.baseTypes.get(type);
+        return List.of(desc);
     }
 }

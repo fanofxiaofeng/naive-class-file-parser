@@ -1,38 +1,38 @@
 package com.study.present;
 
 import com.study.parser.ParseResult;
-import com.study.type.ConstantPool;
-import com.study.type.Fields;
+import com.study.type.ItemsContainer;
 import com.study.type.info.FieldInfo;
+import com.study.util.PrintStreamWrapper;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.IntStream;
 
 public class FieldsPresenter extends AbstractPresenter {
 
-    private final Fields fields;
-
-    protected FieldsPresenter(ParseResult result, PrintStream printStream) {
-        super(result, printStream);
-        this.fields = result.getFields();
+    protected FieldsPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper) {
+        super(result, printStreamWrapper);
     }
 
     @Override
-    public void present() {
-        if (fields.fieldsCount().toInt() == 0) {
-            return;
+    public int present() {
+        ItemsContainer<FieldInfo> fields = result.getFields();
+        if (fields.getCount() == 0) {
+            return 0;
         }
 
-        List<String> descriptions = new ArrayList<>(fields.fieldsCount().toInt());
+        int cnt1 = printStreamWrapper.getPrintlnCount();
 
-        ConstantPool constantPool = result.getConstantPool();
-        for (FieldInfo fieldInfo : fields) {
-            String description = fieldInfo.description(constantPool);
-            descriptions.add(description);
-        }
+        int size = fields.getCount();
+        IntStream.range(0, size).forEach(index -> {
+            if (index > 0) {
+                printStreamWrapper.println();
+            }
 
-        String result = String.join("\n", descriptions);
-        printStream.println(result);
+            FieldInfo fieldInfo = fields.items().get(index);
+            new FieldInfoPresenter(result, printStreamWrapper, fieldInfo).present();
+        });
+
+        int cnt2 = printStreamWrapper.getPrintlnCount();
+        return cnt2 - cnt1;
     }
 }

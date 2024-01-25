@@ -1,158 +1,164 @@
 package com.study.present;
 
+import com.study.constants.ClassAccessFlags;
 import com.study.constants.PresentKind;
 import com.study.parser.ParseResult;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
-import com.study.util.PaddingUtils;
+import com.study.util.PrintStreamWrapper;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.PrintStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.StringJoiner;
 
 import static com.study.constants.Const.MAGIC_NUMBER;
 
 public class MainPresenter extends AbstractPresenter {
 
-    public MainPresenter(ParseResult result, PrintStream printStream) {
-        super(result, printStream);
+    private static final int DEFAULT_INDENT_LEVEL = 1;
+
+    public MainPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper) {
+        super(result, printStreamWrapper);
     }
 
     @Override
-    public void present() {
-        present(EnumSet.allOf(PresentKind.class));
+    public int present() {
+        return present(EnumSet.allOf(PresentKind.class));
     }
 
-    public void present(EnumSet<PresentKind> presentKinds) {
+    public int present(EnumSet<PresentKind> presentKinds) {
+        int cnt1 = printStreamWrapper.getPrintlnCount();
+
         if (!result.getMagic().toString().equals(MAGIC_NUMBER)) {
             throw new AssertionError("Magic number is not as expected!");
         }
 
         if (presentKinds.contains(PresentKind.VERSION)) {
-            showVersion();
+            presentVersion();
         }
 
         if (presentKinds.contains(PresentKind.ACCESS_FLAGS)) {
-            showAccessFlags();
+            presentAccessFlags();
         }
 
         if (presentKinds.contains(PresentKind.THIS_CLASS)) {
-            showThisClass();
+            presentThisClass();
         }
 
         if (presentKinds.contains(PresentKind.SUPER_CLASS)) {
-            showSuperClass();
+            presentSuperClass();
         }
 
         if (presentKinds.contains(PresentKind.COUNT)) {
-            showCount();
+            presentCount();
         }
 
         if (presentKinds.contains(PresentKind.CONSTANT_POOL)) {
-            new ConstantPoolPresenter(result, printStream).present();
+            presentConstantPool();
         }
 
-        printStream.println('{');
+        printStreamWrapper.println('{');
 
         if (presentKinds.contains(PresentKind.FIELDS)) {
-            showFields();
+            int cnt = presentFields();
+            if (cnt > 0) {
+                printStreamWrapper.println();
+            }
+        }
+
+        if (presentKinds.contains(PresentKind.METHODS)) {
+            presentMethods();
         }
 //        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
 //            printStream.println();
 //        }
 
-//        showMethods();
 
 //        showAttributes();
-        printStream.println('}');
+        printStreamWrapper.println('}');
+
+        int cnt2 = printStreamWrapper.getPrintlnCount();
+        return cnt2 - cnt1;
     }
 
-    private void showVersion() {
-        showVersion(result.getMinorVersion(), "minor version");
-        showVersion(result.getMajorVersion(), "major version");
+    private void presentVersion() {
+        presentVersion(result.getMinorVersion(), "minor version");
+        presentVersion(result.getMajorVersion(), "major version");
     }
 
-    private void showVersion(U2 version, String name) {
+    private void presentVersion(U2 version, String name) {
         String message = String.format("%s: %s", name, version.toInt());
-        printStream.println(PaddingUtils.prepend(message, DEFAULT_LEFT_PADDING_CNT));
+        printStreamWrapper.printlnWithIndentLevel(message, DEFAULT_INDENT_LEVEL);
     }
 
-    private static final Map<Integer, String> map = new TreeMap<>() {
-        {
-            put(0x0001, "ACC_PUBLIC");
-            put(0x0010, "ACC_FINAL");
-            put(0x0020, "ACC_SUPER");
-            put(0x0200, "ACC_INTERFACE");
-            put(0x0400, "ACC_ABSTRACT");
-            put(0x1000, "ACC_SYNTHETIC");
-            put(0x2000, "ACC_ANNOTATION");
-            put(0x4000, "ACC_ENUM");
-        }
-    };
-
-    private void showAccessFlags() {
+    private void presentAccessFlags() {
         StringBuilder stringBuilder = new StringBuilder();
+
         U2 accessFlags = result.getAccessFlags();
+
         String message = String.format("flags: (0x%04x)", accessFlags.toInt());
         stringBuilder.append(message);
+
         StringJoiner joiner = new StringJoiner(", ");
-
-        map.forEach((key, value) -> {
-            if (accessFlags.isOn(key)) {
-                joiner.add(value);
-            }
-        });
-
+        Arrays.stream(ClassAccessFlags.values()).
+                filter(item -> accessFlags.isOn(item.getFlag())).
+                forEach(item -> joiner.add(item.toString()));
         if (joiner.length() > 0) {
             stringBuilder.append(' ');
             stringBuilder.append(joiner);
         }
 
-        String result = PaddingUtils.prepend(stringBuilder.toString(), DEFAULT_LEFT_PADDING_CNT);
-        printStream.println(result);
+        printStreamWrapper.printlnWithIndentLevel(stringBuilder.toString(), DEFAULT_INDENT_LEVEL);
     }
 
-    private void showThisClass() {
-        showSomeClass(result.getThisClass(), "this_class");
+    private void presentThisClass() {
+        presentSomeClass(result.getThisClass(), "this_class");
     }
 
-    private void showSuperClass() {
-        showSomeClass(result.getSuperClass(), "super_class");
+    private void presentSuperClass() {
+        U2 superClass = result.getSuperClass();
+        // note: "java.lang.Object" has no super class
+        if (superClass.toInt() == 0) {
+            printStreamWrapper.printlnWithIndentLevel("super_class: #0", DEFAULT_INDENT_LEVEL);
+            return;
+        }
+        presentSomeClass(result.getSuperClass(), "super_class");
     }
 
-    private void showSomeClass(U2 someClass, String name) {
-        String mainPart = String.format("%s: #%d", name, someClass.toInt());
+    private void presentSomeClass(U2 someClass, String name) {
+        String mainPart = String.format("%s: #%s", name, someClass.toInt());
 
-        String padded =
-                StringUtils.rightPad(
-                        PaddingUtils.prepend(mainPart, DEFAULT_LEFT_PADDING_CNT),
-                        42
-                );
+        String padded = StringUtils.rightPad(mainPart, 40);
 
         ConstantPool constantPool = result.getConstantPool();
-        Optional<String> detail = constantPool.detail(someClass);
+        String detail = constantPool.detail(someClass);
 
-        if (detail.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-
-        String content = String.format("%s// %s", padded, detail.get());
-        printStream.println(content);
+        String content = String.format("%s// %s", padded, detail);
+        printStreamWrapper.printlnWithIndentLevel(content, DEFAULT_INDENT_LEVEL);
     }
 
 
-    private void showCount() {
+    private void presentCount() {
         String content = String.format("interfaces: %d, fields: %d, methods: %d, attributes: %d",
                 result.getInterfacesCount().toInt(),
-                result.getFields().fieldsCount().toInt(),
-                result.getMethodsCount().toInt(),
-                result.getAttributesCount().toInt());
+                result.getFields().getCount(),
+                result.getMethods().getCount(),
+                result.getAttributes().getCount());
 
-        printStream.println(PaddingUtils.prepend(content, DEFAULT_LEFT_PADDING_CNT));
+        printStreamWrapper.printlnWithIndentLevel(content, DEFAULT_INDENT_LEVEL);
     }
 
-    private void showFields() {
-        new FieldsPresenter(result, printStream).present();
+    private void presentConstantPool() {
+        new ConstantPoolPresenter(result, printStreamWrapper).present();
+    }
+
+    private int presentFields() {
+        return new FieldsPresenter(result, printStreamWrapper).present();
+    }
+
+    private void presentMethods() {
+        new MethodsPresenter(result, printStreamWrapper).present();
     }
 }
 

@@ -1,7 +1,7 @@
 package com.test.parser;
 
 import com.study.io.BasicInputStream;
-import com.study.parser.BasicParser;
+import com.study.parser.MainParser;
 import com.study.parser.ParseResult;
 import org.junit.Test;
 
@@ -13,18 +13,18 @@ public class ParseResultTest {
     public void show() throws Exception {
         FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/Toy.class");
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
-        ParseResult parseResult = new BasicParser(basicInputStream).build();
-        parseResult.show(System.out);
+        ParseResult parseResult = new MainParser(basicInputStream).parse();
+//        parseResult.show(System.out);
     }
 
     @Test
     public void showWithFile() throws Exception {
         FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/ParseResult.class");
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
-        ParseResult parseResult = new BasicParser(basicInputStream).build();
+        ParseResult parseResult = new MainParser(basicInputStream).parse();
         PrintStream printStream = new PrintStream("scripts/result/output.txt");
 //        PrintStream printStream = new PrintStream(new File("/Users/jinyang/Desktop/study/naive-class-file-parser/scripts/result/output.txt"));
-        parseResult.show(printStream);
+//        parseResult.show(printStream);
     }
 
 }

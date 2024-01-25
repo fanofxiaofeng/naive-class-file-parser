@@ -3,7 +3,7 @@ package com.study.signature;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class ReferenceType extends AbstractSignature {
+public class ReferenceType implements Signature {
 
     private final List<Integer> codePoints;
 
@@ -19,15 +19,16 @@ public class ReferenceType extends AbstractSignature {
     }
 
     @Override
-    public String desc() {
+    public List<String> desc() {
         if (children.isEmpty()) {
-            return desc(codePoints);
+            return List.of(desc(codePoints));
         }
 
         StringJoiner joiner = new StringJoiner(", ");
-        children.forEach(e -> joiner.add(e.desc()));
+        children.forEach(e -> joiner.add(e.desc().get(0)));
         String childrenDesc = joiner.toString();
 
-        return String.format("%s<%s>", desc(codePoints), childrenDesc);
+        String desc = String.format("%s<%s>", desc(codePoints), childrenDesc);
+        return List.of(desc);
     }
 }

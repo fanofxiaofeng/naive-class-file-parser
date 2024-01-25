@@ -1,6 +1,8 @@
 package com.study.signature;
 
-public class SubType extends AbstractSignature {
+import java.util.List;
+
+public class SubType implements Signature {
 
     private final Signature follower;
 
@@ -9,7 +11,8 @@ public class SubType extends AbstractSignature {
     }
 
     @Override
-    public String desc() {
-        return String.format("? extends %s", follower.desc());
+    public List<String> desc() {
+        String desc = String.format("? extends %s", follower.desc().get(0));
+        return List.of(desc);
     }
 }

@@ -1,45 +1,50 @@
 package com.study.type.info;
 
 import com.study.parser.ConstantPoolHolder;
-import com.study.util.BaseTypeUtils;
+import com.study.type.ItemsContainer;
+import com.study.type.U2;
+import com.study.type.info.attribute.AttributeInfo;
+import com.study.type.info.attribute.SignatureAttribute;
 
-import java.util.Map;
+import java.util.Optional;
 
 public abstract class AbstractInfo extends ConstantPoolHolder {
+    protected final U2 accessFlags;
+    protected final U2 nameIndex;
+    protected final U2 descriptorIndex;
 
-    protected static final int INDENT_FOR_EACH_LEVEL = 2;
+    protected final ItemsContainer<AttributeInfo> attributes;
 
+    protected AbstractInfo(U2 accessFlags, U2 nameIndex, U2 descriptorIndex, ItemsContainer<AttributeInfo> attributes) {
+        this.accessFlags = accessFlags;
+        this.nameIndex = nameIndex;
+        this.descriptorIndex = descriptorIndex;
+        this.attributes = attributes;
+    }
 
-    public abstract String desc();
-
-
-    // todo: this method is still buggy
-    @Deprecated
-    String toHumanReadable(String description) {
-        // todo: what does the following if branch do?
-        if (description.contains("(")) {
-        }
-
-        StringBuilder result = new StringBuilder();
-        int arrayCount = 0;
-        while (description.charAt(arrayCount) == '[') {
-            arrayCount++;
-        }
-
-        for (int i = arrayCount; i < description.length(); i++) {
-            char current = description.charAt(i);
-            if (BaseTypeUtils.baseTypes.containsKey(current)) {
-                result.append(BaseTypeUtils.baseTypes.get(current));
-            } else if (current == 'L') {
-                // todo: cannot handle generic types correctly for now
-                int indexOfSemicolon = description.indexOf(';', i);
-                String raw = description.substring(i + 1, indexOfSemicolon);
-                result.append(raw.replaceAll("/", "."));
-                i = indexOfSemicolon;
+    public Optional<SignatureAttribute> findSignatureAttribute() {
+        for (AttributeInfo attribute : attributes) {
+            if (attribute instanceof SignatureAttribute) {
+                return Optional.of((SignatureAttribute) attribute);
             }
         }
 
-        result.append("[]".repeat(arrayCount));
-        return result.toString();
+        return Optional.empty();
+    }
+
+    public U2 getAccessFlags() {
+        return accessFlags;
+    }
+
+    public U2 getNameIndex() {
+        return nameIndex;
+    }
+
+    public U2 getDescriptorIndex() {
+        return descriptorIndex;
+    }
+
+    public ItemsContainer<AttributeInfo> getAttributes() {
+        return attributes;
     }
 }

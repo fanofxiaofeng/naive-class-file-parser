@@ -13,4 +13,6 @@ public enum PresentKind {
     CONSTANT_POOL,
 
     FIELDS,
+
+    METHODS,
 }

@@ -1,6 +1,8 @@
 package com.study.signature;
 
-public class SuperType extends AbstractSignature {
+import java.util.List;
+
+public class SuperType implements Signature {
 
     private final Signature follower;
 
@@ -9,7 +11,8 @@ public class SuperType extends AbstractSignature {
     }
 
     @Override
-    public String desc() {
-        return String.format("? super %s", follower);
+    public List<String> desc() {
+        String desc = String.format("? super %s", follower.desc().get(0));
+        return List.of(desc);
     }
 }

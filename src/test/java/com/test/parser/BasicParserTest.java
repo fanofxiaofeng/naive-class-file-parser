@@ -1,7 +1,7 @@
 package com.test.parser;
 
 import com.study.io.BasicInputStream;
-import com.study.parser.BasicParser;
+import com.study.parser.MainParser;
 import com.study.parser.ParseResult;
 import org.junit.Test;
 
@@ -15,14 +15,14 @@ public class BasicParserTest {
         FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/BasicParser.class");
         PrintStream printStream = new PrintStream(new File("/Users/jinyang/Desktop/output.txt"));
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
-        ParseResult parseResult = new BasicParser(basicInputStream).build();
+        ParseResult parseResult = new MainParser(basicInputStream).parse();
     }
 
     @Test
     public void runWithConsole() throws Exception {
         FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/Toy.class");
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
-        ParseResult parseResult = new BasicParser(basicInputStream).build();
-        parseResult.show(System.out);
+        ParseResult parseResult = new MainParser(basicInputStream).parse();
+//        parseResult.show(System.out);
     }
 }

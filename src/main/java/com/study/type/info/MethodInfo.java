@@ -1,130 +1,84 @@
 package com.study.type.info;
 
-import com.study.io.BasicInputStream;
+import com.study.constants.MethodAccessFlags;
+import com.study.signature.MethodSignatureBuilder;
+import com.study.signature.Signature;
+import com.study.type.ConstantPool;
+import com.study.type.ItemsContainer;
 import com.study.type.U2;
-import com.study.type.constant.CpInfo;
-import com.study.type.constant.ConstantUtf8;
+import com.study.type.constant.leaf.LeafCpInfo;
+import com.study.type.descriptor.MethodDescriptor;
+import com.study.type.info.attribute.AttributeInfo;
+import com.study.type.info.attribute.SignatureAttribute;
 
-import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class MethodInfo extends AbstractInfo {
-    private U2 accessFlags;
-    private U2 nameIndex;
-    private U2 descriptorIndex;
-    private U2 attributesCount;
-    private AttributeInfo[] attributes;
 
-    private MethodInfo(BasicInputStream basicInputStream) {
-        accessFlags = basicInputStream.readU2();
-        nameIndex = basicInputStream.readU2();
-        descriptorIndex = basicInputStream.readU2();
-        attributesCount = basicInputStream.readU2();
+    private static final EnumSet<MethodAccessFlags> skippedFlags =
+            EnumSet.of(
+                    MethodAccessFlags.ACC_VARARGS,
+                    MethodAccessFlags.ACC_SYNTHETIC
+            );
 
-        int count = attributesCount.toInt();
-        attributes = new AttributeInfo[count];
-        for (int i = 0; i < count; i++) {
-            attributes[i] = AttributeInfo.build(basicInputStream);
-        }
+    public MethodInfo(U2 accessFlags, U2 nameIndex, U2 descriptorIndex, ItemsContainer<AttributeInfo> attributes) {
+        super(accessFlags, nameIndex, descriptorIndex, attributes);
     }
 
-    public static MethodInfo build(BasicInputStream basicInputStream) {
-        return new MethodInfo(basicInputStream);
+    public String toHumanReadable(MethodDescriptor methodDescriptor, ConstantPool constantPool) {
+        return String.format(
+                "%s %s%s",
+                methodDescriptor.buildReturnDescriptorDesc(),
+                constantPool.desc(nameIndex),
+                methodDescriptor.buildParameterDescriptorsDesc()
+        );
     }
 
-    @Override
-    public String desc() {
-        int mod = accessFlags.toInt();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("  ");
-        // todo 下一行是否正确有待确认
-        stringBuilder.append(Modifier.toString(mod));
-        stringBuilder.append(' ');
-        CpInfo name = constantPool.get(nameIndex.toInt());
-        if (!(name instanceof ConstantUtf8)) {
-            throw new AssertionError();
-        }
-        CpInfo descriptor = constantPool.get(descriptorIndex);
-        if (!(descriptor instanceof ConstantUtf8)) {
-            throw new AssertionError();
-        }
-        stringBuilder.append(toHumanReadable(descriptor.desc()));
-        stringBuilder.append(' ');
-        System.out.println(String.format("name: %s", name.desc()));
-        stringBuilder.append(name.desc());
-        stringBuilder.append("();");
-        stringBuilder.append("\n    descriptor: ");
-        stringBuilder.append(descriptor.desc());
-        stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));
-        if (attributesCount.toInt() > 0) {
-            for (AttributeInfo attribute : attributes) {
-                stringBuilder.append(attribute.describe(4));
-            }
-        }
-        return stringBuilder.toString();
+    public String buildDescriptorLine(ConstantPool constantPool) {
+        LeafCpInfo descriptor = constantPool.get(descriptorIndex, LeafCpInfo.class);
+        return String.format("descriptor: %s", descriptor.desc());
     }
 
-    /**
-     * @return 描述 accessFlags 的字符串. 返回值的内容举例如下
-     * "flags: (0x0002) ACC_PRIVATE"
-     * "flags: (0x1018) ACC_STATIC, ACC_FINAL, ACC_SYNTHETIC"
-     */
-    private String descAccessFlags() {
-        int mod = this.accessFlags.toInt();
+    public String toHumanReadable(SignatureAttribute signatureAttribute, ConstantPool constantPool) {
+        String raw = signatureAttribute.detail(constantPool);
+        Signature signature = new MethodSignatureBuilder().build(raw);
+        List<String> descriptions = signature.desc();
 
-        StringJoiner joiner = new StringJoiner(", ");
+        StringBuilder builder = new StringBuilder();
+        builder.append(descriptions.get(0));
 
-        // 0x0001
-        if (Modifier.isPublic(mod)) {
-            joiner.add("ACC_PUBLIC");
-        }
+        builder.append(" ").append(constantPool.desc(nameIndex));
+        builder.append('(');
+        descriptions.subList(1, descriptions.size()).forEach(builder::append);
+        builder.append(')');
 
-        // 0x0002
-        if (Modifier.isPrivate(mod)) {
-            joiner.add("ACC_PRIVATE");
-        }
+        return builder.toString();
+    }
 
-        // 0x0004
-        if (Modifier.isProtected(mod)) {
-            joiner.add("ACC_PROTECTED");
-        }
 
-        // 0x0008
-        if (Modifier.isStatic(mod)) {
-            joiner.add("ACC_STATIC");
-        }
+    public String buildHumanReadableFlagsDesc() {
+        StringJoiner joiner = new StringJoiner(" ");
 
-        // 0x0010
-        if (Modifier.isFinal(mod)) {
-            joiner.add("ACC_FINAL");
-        }
+        Arrays.stream(MethodAccessFlags.values()).
+                filter(e -> !skippedFlags.contains(e)).
+                filter(e -> accessFlags.isOn(e.getFlag())).
+                forEach(e -> joiner.add(e.getSimpleName()));
 
-        // 0x0040
-        if (Modifier.isVolatile(mod)) {
-            joiner.add("ACC_VOLATILE");
-        }
+        return joiner.toString();
+    }
 
-        // 0x0080
-        if (Modifier.isTransient(mod)) {
-            joiner.add("ACC_TRANSIENT");
-        }
+    private String functionName(ConstantPool constantPool) {
+        return constantPool.desc(nameIndex);
+    }
 
-        // todo 有没有优雅的写法
-        // 0x1000
-        if (accessFlags.isOn(0x1000)) {
-            joiner.add("ACC_SYNTHETIC");
-        }
+    public boolean isConstructor(ConstantPool constantPool) {
+        return functionName(constantPool).equals("<init>");
+    }
 
-        // todo 有没有优雅的写法
-        // 0x4000
-        if (accessFlags.isOn(0x4000)) {
-            joiner.add("ACC_ENUM");
-        }
-
-        if (joiner.length() > 0) {
-            return String.format("flags: (0x%04x) %s", mod, joiner.toString());
-        } else {
-            return String.format("flags: (0x%04x)", mod);
-        }
+    public boolean isClassInit(ConstantPool constantPool) {
+        return functionName(constantPool).equals("<clinit>");
     }
 }
