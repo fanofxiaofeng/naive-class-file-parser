@@ -1,20 +1,16 @@
 package com.study.type.info.attribute;
 
-import com.study.io.U1InputStream;
 import com.study.type.U2;
+import com.study.type.U4;
+
+import java.util.List;
 
 public class InnerClassesAttribute extends AttributeInfo {
-    private U2 numberOfClasses;
-    private InnerClasses[] innerClasses;
+    private final List<InnerClass> classes;
 
-    public InnerClassesAttribute(RawAttributeInfo that) {
-        super(that);
-        U1InputStream infoStream = that.getInfoStream();
-        numberOfClasses = infoStream.readU2();
-        innerClasses = new InnerClasses[numberOfClasses.toInt()];
-        for (int i = 0; i < numberOfClasses.toInt(); i++) {
-            innerClasses[i] = new InnerClasses(infoStream);
-        }
+    public InnerClassesAttribute(U2 attributeNameIndex, U4 attributeLength, List<InnerClass> classes) {
+        super(attributeNameIndex, attributeLength);
+        this.classes = classes;
     }
 
     @Override
@@ -22,25 +18,49 @@ public class InnerClassesAttribute extends AttributeInfo {
         if (indent != 0) {
             throw new AssertionError("indent should be 0, but in fact indent = " + indent);
         }
+
         StringBuilder stringBuilder = new StringBuilder(String.format("%s:\n", constantPool.get(this.attributeNameIndex).desc()));
-        for (int i = 0; i < numberOfClasses.toInt(); i++) {
-            String line = String.format("%-40s// class %s\n", "#" + innerClasses[i].innerClassInfoIndex.toInt() + ";", constantPool.get(innerClasses[i].innerClassInfoIndex).detail());
+        for (int i = 0; i < classes.size(); i++) {
+            String line = String.format("%-40s// class %s\n", "#" + classes.get(i).innerClassInfoIndex.toInt() + ";", constantPool.get(classes.get(i).innerClassInfoIndex).detail());
             stringBuilder.append("  ").append(line);
         }
         return stringBuilder.toString();
     }
 
-    private class InnerClasses {
+    public List<InnerClass> getClasses() {
+        return classes;
+    }
+
+    public static class InnerClass {
         U2 innerClassInfoIndex;
         U2 outerClassInfoIndex;
         U2 innerNameIndex;
         U2 innerClassAccessFlags;
 
-        InnerClasses(U1InputStream u1InputStream) {
-            innerClassInfoIndex = u1InputStream.readU2();
-            outerClassInfoIndex = u1InputStream.readU2();
-            innerNameIndex = u1InputStream.readU2();
-            innerClassAccessFlags = u1InputStream.readU2();
+        public InnerClass(U2 innerClassInfoIndex,
+                          U2 outerClassInfoIndex,
+                          U2 innerNameIndex,
+                          U2 innerClassAccessFlags) {
+            this.innerClassInfoIndex = innerClassInfoIndex;
+            this.outerClassInfoIndex = outerClassInfoIndex;
+            this.innerNameIndex = innerNameIndex;
+            this.innerClassAccessFlags = innerClassAccessFlags;
+        }
+
+        public U2 getInnerClassInfoIndex() {
+            return innerClassInfoIndex;
+        }
+
+        public U2 getOuterClassInfoIndex() {
+            return outerClassInfoIndex;
+        }
+
+        public U2 getInnerNameIndex() {
+            return innerNameIndex;
+        }
+
+        public U2 getInnerClassAccessFlags() {
+            return innerClassAccessFlags;
         }
     }
 }

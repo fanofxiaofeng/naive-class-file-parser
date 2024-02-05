@@ -25,7 +25,7 @@ public class CodePointsInfo implements Iterable<Integer> {
             public Integer next() {
                 int codePoint = codePoints[next + 1];
                 next++;
-                System.out.printf("You fetched [%s]\n", (char) codePoint);
+//                System.out.printf("You fetched [%s]\n", (char) codePoint);
                 return codePoint;
             }
         };

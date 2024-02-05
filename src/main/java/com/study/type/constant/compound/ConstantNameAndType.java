@@ -26,7 +26,7 @@ public class ConstantNameAndType extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
         if (this.tag != ConstantKind.CONSTANT_NameAndType) {
             throw new AssertionError();
         }
@@ -42,11 +42,6 @@ public class ConstantNameAndType extends CompoundCpInfo {
     }
 
     @Override
-    public String detail() {
-        return detail(constantPool);
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         String part1 = constantPool.get(nameIndex).desc();
         String part2 = constantPool.get(descriptorIndex).desc();
@@ -54,5 +49,9 @@ public class ConstantNameAndType extends CompoundCpInfo {
             return String.format("\"%s\":%s", part1, part2);
         }
         return String.format("%s:%s", part1, part2);
+    }
+
+    public U2 getNameIndex() {
+        return nameIndex;
     }
 }

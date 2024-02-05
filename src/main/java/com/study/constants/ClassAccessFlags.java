@@ -25,9 +25,4 @@ public enum ClassAccessFlags implements FlagHolder {
     public int getFlag() {
         return flag;
     }
-
-    @Override
-    public String getSimpleName() {
-        return name().replace("ACC_", "").toLowerCase();
-    }
 }

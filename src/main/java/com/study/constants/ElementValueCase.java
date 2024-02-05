@@ -5,6 +5,5 @@ public enum ElementValueCase {
     CASE_TWO,
     CASE_THREE,
     CASE_FOUR,
-
     CASE_FIVE
 }

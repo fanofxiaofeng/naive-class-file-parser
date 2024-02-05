@@ -1,20 +1,23 @@
 package com.study.present;
 
 import com.study.parser.ParseResult;
+import com.study.present.attribute.AbstractAttributePresenter;
 import com.study.type.ConstantPool;
 import com.study.type.constant.leaf.ConstantUtf8;
 import com.study.type.descriptor.MethodDescriptor;
 import com.study.type.descriptor.MethodDescriptorBuilder;
-import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.MethodInfo;
 import com.study.type.info.attribute.SignatureAttribute;
 import com.study.util.PrintStreamWrapper;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MethodInfoPresenter extends AbstractPresenter {
 
     private final MethodInfo methodInfo;
+
+    private final int baseIndentLevel = 2;
 
     public MethodInfoPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper, MethodInfo methodInfo) {
         super(result, printStreamWrapper);
@@ -22,9 +25,7 @@ public class MethodInfoPresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
+    public void doPresent() {
         ConstantPool constantPool = result.getConstantPool();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("  ");
@@ -53,19 +54,19 @@ public class MethodInfoPresenter extends AbstractPresenter {
         stringBuilder.append("\n    descriptor: ");
         stringBuilder.append(descriptor.desc());
 //        stringBuilder.append(String.format("\n    %s\n", descAccessFlags()));
-        for (AttributeInfo attribute : methodInfo.getAttributes()) {
-            AttributeInfoPresenter attributeInfoPresenter =
-                    new AttributeInfoPresenter(
-                            result,
-                            printStreamWrapper,
-                            attribute,
-                            2
-                    );
-            attributeInfoPresenter.present();
-        }
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
+        presentAttributes();
     }
 
+    private void presentAttributes() {
+        methodInfo.getAttributes().forEach(attributeInfo -> {
+            Presenter presenter =
+                    AbstractAttributePresenter.build(
+                            result,
+                            printStreamWrapper,
+                            attributeInfo,
+                            baseIndentLevel
+                    );
+            presenter.present();
+        });
+    }
 }

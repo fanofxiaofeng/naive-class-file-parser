@@ -1,9 +1,9 @@
 package com.study.present;
 
 import com.study.parser.ParseResult;
+import com.study.present.attribute.AbstractAttributePresenter;
 import com.study.type.ConstantPool;
 import com.study.type.info.FieldInfo;
-import com.study.type.info.attribute.AttributeInfo;
 import com.study.util.PrintStreamWrapper;
 
 public class FieldInfoPresenter extends AbstractPresenter {
@@ -18,16 +18,11 @@ public class FieldInfoPresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
+    public void doPresent() {
         presentHeaderLine();
         presentDescriptorLine();
         presentAccessFlagsLine();
         presentAttributes();
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
     }
 
     private void presentHeaderLine() {
@@ -47,15 +42,12 @@ public class FieldInfoPresenter extends AbstractPresenter {
     }
 
     private void presentAttributes() {
-        for (AttributeInfo attribute : fieldInfo.getAttributes()) {
-            Presenter presenter = buildAttributeInfoPresenter(attribute);
+        fieldInfo.getAttributes().forEach(attribute -> {
+            Presenter presenter =
+                    AbstractAttributePresenter.build(
+                            result, printStreamWrapper, attribute, DEFAULT_INDENT_LEVEL
+                    );
             presenter.present();
-        }
-    }
-
-    private AttributeInfoPresenter buildAttributeInfoPresenter(AttributeInfo attribute) {
-        return new AttributeInfoPresenter(
-                result, printStreamWrapper, attribute, DEFAULT_INDENT_LEVEL
-        );
+        });
     }
 }

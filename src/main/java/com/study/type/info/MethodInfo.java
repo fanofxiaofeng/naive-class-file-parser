@@ -1,8 +1,6 @@
 package com.study.type.info;
 
 import com.study.constants.MethodAccessFlags;
-import com.study.signature.MethodSignatureBuilder;
-import com.study.signature.Signature;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
@@ -20,6 +18,7 @@ public class MethodInfo extends AbstractInfo {
 
     private static final EnumSet<MethodAccessFlags> skippedFlags =
             EnumSet.of(
+                    MethodAccessFlags.ACC_BRIDGE,
                     MethodAccessFlags.ACC_VARARGS,
                     MethodAccessFlags.ACC_SYNTHETIC
             );
@@ -43,9 +42,14 @@ public class MethodInfo extends AbstractInfo {
     }
 
     public String toHumanReadable(SignatureAttribute signatureAttribute, ConstantPool constantPool) {
+        if (true) {
+            return "???";
+        }
+
         String raw = signatureAttribute.detail(constantPool);
-        Signature signature = new MethodSignatureBuilder().build(raw);
-        List<String> descriptions = signature.desc();
+//        Signature signature = new MethodSignatureBuilder().build(raw);
+//        List<String> descriptions = signature.desc();
+        List<String> descriptions = List.of(); // todo: remove this line
 
         StringBuilder builder = new StringBuilder();
         builder.append(descriptions.get(0));

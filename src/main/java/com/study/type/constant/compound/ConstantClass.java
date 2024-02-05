@@ -33,11 +33,6 @@ public class ConstantClass extends CompoundCpInfo {
 //    }
 
     @Override
-    public String detail() {
-        return detail(constantPool);
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         String detail = constantPool.get(nameIndex).desc().replaceAll("\\.", "/");
         if (detail.startsWith("[")) {
@@ -48,7 +43,7 @@ public class ConstantClass extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
         if (this.tag != ConstantKind.CONSTANT_Class) {
             throw new AssertionError();
         }

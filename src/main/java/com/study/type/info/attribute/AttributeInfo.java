@@ -2,8 +2,7 @@ package com.study.type.info.attribute;
 
 import com.study.io.U1InputStream;
 import com.study.parser.ConstantPoolHolder;
-import com.study.parser.attribute.ConstantValueAttributeParser;
-import com.study.parser.attribute.RuntimeVisibleAnnotationsAttributeParser;
+import com.study.parser.attribute.*;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.U4;
@@ -28,17 +27,17 @@ public class AttributeInfo extends ConstantPoolHolder {
 
         System.out.println(String.format("属性 %s 将会被创建(length: %s)", name, rawAttributeInfo.getInfoStream().length()));
         return switch (name) {
-            case "InnerClasses" -> new InnerClassesAttribute(rawAttributeInfo);
-            case "Deprecated" -> new DeprecatedAttribute(rawAttributeInfo);
-            case "Exceptions" -> new ExceptionsAttribute(rawAttributeInfo);
-            case "SourceFile" -> new SourceFileAttribute(rawAttributeInfo);
+            case "InnerClasses" -> new InnerClassesAttributeParser(rawAttributeInfo).parse();
+            case "Deprecated" -> new DeprecatedAttributeParser(rawAttributeInfo).parse();
+            case "Exceptions" -> new ExceptionsAttributeParser(rawAttributeInfo).parse();
+            case "SourceFile" -> new SourceFileAttributeParser(rawAttributeInfo).parse();
             case "ConstantValue" -> new ConstantValueAttributeParser(rawAttributeInfo).parse();
             case "Code" -> new CodeAttribute(rawAttributeInfo);
             case "LineNumberTable" -> new LineNumberTableAttribute(rawAttributeInfo);
             case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttributeParser(rawAttributeInfo).parse();
             case "LocalVariableTable" -> new LocalVariableTableAttribute(rawAttributeInfo);
             case "StackMapTable" -> new StackMapTableAttribute(rawAttributeInfo);
-            case "Signature" -> new SignatureAttribute(rawAttributeInfo);
+            case "Signature" -> new SignatureAttributeParser(rawAttributeInfo).parse();
             default -> rawAttributeInfo;
         };
     }

@@ -2,31 +2,20 @@ package com.study.signature;
 
 import com.study.util.BaseTypeUtils;
 
-import java.util.List;
-
-public class BaseType implements Signature {
-
+public final class BaseType implements JavaTypeSignature {
     private final char type;
 
-    public BaseType(int codePoint) {
-        if (!BaseTypeUtils.isBaseType(codePoint)) {
-            throw new IllegalArgumentException();
+    public BaseType(int type) {
+        if (!BaseTypeUtils.isBaseType(type)) {
+            String message = String.format("%s is not a base type!", type);
+            throw new IllegalArgumentException(message);
         }
 
-        this.type = (char) codePoint;
-    }
-
-    public BaseType(char type) {
-        if (!BaseTypeUtils.baseTypes.containsKey(type)) {
-            throw new IllegalArgumentException();
-        }
-
-        this.type = type;
+        this.type = (char) type;
     }
 
     @Override
-    public List<String> desc() {
-        String desc = BaseTypeUtils.baseTypes.get(type);
-        return List.of(desc);
+    public String desc() {
+        return BaseTypeUtils.baseTypes.get(type);
     }
 }

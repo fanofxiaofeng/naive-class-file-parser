@@ -5,6 +5,8 @@ import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
 
+import java.util.List;
+
 public class ParseResult {
     /**
      * Magic number
@@ -19,8 +21,7 @@ public class ParseResult {
     private U2 accessFlags;
     private U2 thisClass;
     private U2 superClass;
-    private U2 interfacesCount;
-    private U2[] interfaces;
+    private List<U2> interfaces;
     private ItemsContainer<FieldInfo> fields;
 
     private ItemsContainer<MethodInfo> methods;
@@ -69,15 +70,7 @@ public class ParseResult {
         this.superClass = superClass;
     }
 
-    public U2 getInterfacesCount() {
-        return interfacesCount;
-    }
-
-    public void setInterfacesCount(U2 interfacesCount) {
-        this.interfacesCount = interfacesCount;
-    }
-
-    public void setInterfaces(U2[] interfaces) {
+    public void setInterfaces(List<U2> interfaces) {
         this.interfaces = interfaces;
     }
 
@@ -88,7 +81,6 @@ public class ParseResult {
     public ItemsContainer<FieldInfo> getFields() {
         return fields;
     }
-
 
     public void setMethods(ItemsContainer<MethodInfo> methods) {
         this.methods = methods;
@@ -114,12 +106,15 @@ public class ParseResult {
         return superClass;
     }
 
-
     public ItemsContainer<MethodInfo> getMethods() {
         return methods;
     }
 
     public ItemsContainer<AttributeInfo> getAttributes() {
         return attributes;
+    }
+
+    public List<U2> getInterfaces() {
+        return interfaces;
     }
 }

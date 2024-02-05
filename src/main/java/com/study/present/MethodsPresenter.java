@@ -7,6 +7,7 @@ import com.study.util.PrintStreamWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class MethodsPresenter extends AbstractPresenter {
 
@@ -18,27 +19,24 @@ public class MethodsPresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
-        if (methods.getCount() == 0) {
-            return 0;
+    public void doPresent() {
+        int count = methods.getCount();
+        if (count == 0) {
+            return;
         }
 
-        int cnt1 = printStreamWrapper.getPrintlnCount();
         List<String> descriptions = new ArrayList<>(methods.getCount());
 
-        for (MethodInfo methodInfo : methods) {
-            int tempCount = printStreamWrapper.getPrintlnCount();
-            if (tempCount > cnt1) {
+        IntStream.range(0, count).forEach(index -> {
+            if (index > 0) {
                 printStreamWrapper.println();
             }
 
+            MethodInfo methodInfo = methods.items().get(index);
             MethodInfoPresenter methodInfoPresenter = new MethodInfoPresenter(result, printStreamWrapper, methodInfo);
             methodInfoPresenter.present();
-        }
+        });
 
         printStreamWrapper.batchPrintln(descriptions);
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
     }
 }

@@ -13,20 +13,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaseFourPresenter extends ElementValuePresenter {
+public class CaseFourPresenter extends AbstractElementValuePresenter {
 
     public CaseFourPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper, U2 elementNameIndex, ElementValue elementValue, int baseIndentLevel) {
         super(result, printStreamWrapper, elementNameIndex, elementValue, baseIndentLevel);
-    }
-
-    @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
-        printStreamWrapper.printlnWithIndentLevel(String.format("%s=%s", buildName(), buildValue()), baseIndentLevel);
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
     }
 
     @Override
@@ -44,8 +34,14 @@ public class CaseFourPresenter extends ElementValuePresenter {
         List<String> pairDescriptions = new ArrayList<>(pairs.size());
         pairs.forEach(pair -> {
             String key = result.getConstantPool().desc(pair.getKey());
-            ElementValuePresenter elementValuePresenter = new ElementValuePresenterBuilder().
-                    build(result, printStreamWrapper, pair.getKey(), pair.getValue(), baseIndentLevel + 1);
+            AbstractElementValuePresenter elementValuePresenter =
+                    ElementValuePresenterBuilder.build(
+                            result,
+                            printStreamWrapper,
+                            pair.getKey(),
+                            pair.getValue(),
+                            baseIndentLevel + 1
+                    );
             String value = elementValuePresenter.buildValue();
             String description = String.format("%s%s=%s", "  ".repeat(baseIndentLevel + 1), key, value);
             pairDescriptions.add(description);

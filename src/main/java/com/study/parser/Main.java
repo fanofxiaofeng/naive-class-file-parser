@@ -11,7 +11,6 @@ import java.util.EnumSet;
 
 public class Main {
 
-
     public static void main(String[] args) throws Exception {
         String classAsPath = PathUtils.convert(args[0]);
         InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(classAsPath);
@@ -19,8 +18,9 @@ public class Main {
         PrintStreamWrapper printStreamWrapper = new PrintStreamWrapper("scripts/result/output.txt");
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
         ParseResult parseResult = new MainParser(basicInputStream).parse();
-        MainPresenter presenter = new MainPresenter(parseResult, printStreamWrapper);
+
         EnumSet<PresentKind> allKinds = EnumSet.allOf(PresentKind.class);
-        presenter.present(allKinds);
+        MainPresenter presenter = new MainPresenter(parseResult, printStreamWrapper, allKinds);
+        presenter.present();
     }
 }

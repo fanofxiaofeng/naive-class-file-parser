@@ -4,7 +4,10 @@ import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.U4;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class U1InputStream {
     private U1[] data;
@@ -49,6 +52,12 @@ public class U1InputStream {
             u2s[i] = readU2();
         }
         return u2s;
+    }
+
+    public List<U2> readU2List(int length) {
+        List<U2> u2List = new ArrayList<>(length);
+        IntStream.range(0, length).forEach(e -> u2List.add(readU2()));
+        return u2List;
     }
 
     public int length() {

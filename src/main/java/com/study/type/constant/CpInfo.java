@@ -1,11 +1,12 @@
 package com.study.type.constant;
 
 import com.study.constants.ConstantKind;
-import com.study.parser.ConstantPoolHolder;
 import com.study.type.AbstractU;
+import com.study.type.ConstantPool;
+import com.study.type.constant.compound.CompoundCpInfo;
 import com.study.type.constant.compound.ConstantNameAndType;
 
-public abstract class CpInfo extends ConstantPoolHolder {
+public abstract class CpInfo {
 
     protected final ConstantKind tag;
 
@@ -37,8 +38,12 @@ public abstract class CpInfo extends ConstantPoolHolder {
         return new String(chars);
     }
 
-    public abstract void validate();
+    public abstract void validate(ConstantPool constantPool);
 
+    /**
+     * Should use the following method instead
+     * {@link CompoundCpInfo#detail(ConstantPool)}
+     */
     @Deprecated
     public String detail() {
         throw new IllegalArgumentException();

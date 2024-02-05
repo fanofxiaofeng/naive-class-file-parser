@@ -25,7 +25,7 @@ public class ConstantString extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
         if (this.tag != ConstantKind.CONSTANT_String) {
             throw new AssertionError();
         }
@@ -36,12 +36,12 @@ public class ConstantString extends CompoundCpInfo {
     }
 
     @Override
-    public String detail() {
-        return detail(constantPool);
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         return constantPool.get(stringIndex).desc();
     }
+
+//    @Override
+//    public String decoratedDetail(ConstantPool constantPool) {
+//        return detail(constantPool).stripTrailing();
+//    }
 }

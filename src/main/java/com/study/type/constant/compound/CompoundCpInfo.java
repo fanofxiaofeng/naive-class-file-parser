@@ -22,4 +22,8 @@ public abstract class CompoundCpInfo extends CpInfo {
     }
 
     public abstract String detail(ConstantPool constantPool);
+
+    public String decoratedDetail(ConstantPool constantPool) {
+        return detail(constantPool);
+    }
 }

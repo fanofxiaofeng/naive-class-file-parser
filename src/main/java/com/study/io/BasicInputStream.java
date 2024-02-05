@@ -6,6 +6,9 @@ import com.study.type.U4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class BasicInputStream extends InputStream {
     private final InputStream inputStream;
@@ -58,12 +61,12 @@ public class BasicInputStream extends InputStream {
         return u1s;
     }
 
-    public U2[] readU2Array(int length) {
-        U2[] u2s = new U2[length];
-        for (int i = 0; i < length; i++) {
-            u2s[i] = readU2();
-        }
-        return u2s;
+    public List<U2> readU2List(int length) {
+        List<U2> u2List = new ArrayList<>(length);
+
+        IntStream.range(0, length).forEach(index -> u2List.add(readU2()));
+
+        return u2List;
     }
 
     public boolean justFinished() {

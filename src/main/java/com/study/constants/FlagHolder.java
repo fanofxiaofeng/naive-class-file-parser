@@ -1,6 +1,10 @@
 package com.study.constants;
 
 public interface FlagHolder {
+
     int getFlag();
-    String getSimpleName();
+
+    default String getSimpleName() {
+        return toString().replace("ACC_", "").toLowerCase();
+    }
 }

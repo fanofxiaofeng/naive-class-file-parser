@@ -10,7 +10,7 @@ public class AttributesParser extends RelationParser<AttributeInfo> {
         super(
                 basicInputStream,
                 constantPool,
-                () -> new AttributeInfoParser(basicInputStream, constantPool)
+                () -> new AttributeInfoParser<>(basicInputStream, constantPool)
         );
     }
 }

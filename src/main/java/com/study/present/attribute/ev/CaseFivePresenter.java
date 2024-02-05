@@ -8,7 +8,7 @@ import com.study.util.PrintStreamWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaseFivePresenter extends ElementValuePresenter {
+public class CaseFivePresenter extends AbstractElementValuePresenter {
 
     public CaseFivePresenter(ParseResult result,
                              PrintStreamWrapper printStreamWrapper,
@@ -23,25 +23,18 @@ public class CaseFivePresenter extends ElementValuePresenter {
     }
 
     @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
-        String content = String.format("%s=%s", buildName(), buildValue());
-        printStreamWrapper.printlnWithIndentLevel(content, baseIndentLevel);
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
-    }
-
-    @Override
     public String buildValue() {
         ElementValue.CaseFive elementValue = getElementValue(ElementValue.CaseFive.class);
         List<String> valueDescriptions = new ArrayList<>(elementValue.getValues().size());
         elementValue.getValues().forEach(value -> {
             String valueDescription =
-                    new ElementValuePresenterBuilder().
-                            build(result, printStreamWrapper, elementNameIndex, value, baseIndentLevel).
-                            buildValue();
+                    ElementValuePresenterBuilder.build(
+                            result,
+                            printStreamWrapper,
+                            elementNameIndex,
+                            value,
+                            baseIndentLevel
+                    ).buildValue();
             valueDescriptions.add(valueDescription);
         });
         return String.format("[%s]", String.join(",", valueDescriptions));

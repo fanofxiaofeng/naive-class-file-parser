@@ -6,15 +6,12 @@ import com.study.type.U4;
 import java.util.List;
 
 // todo this class is complex
-public class RuntimeVisibleAnnotationsAttribute extends AttributeInfo {
-    private final List<Annotation> annotations;
-
+public class RuntimeVisibleAnnotationsAttribute extends AbstractRuntimeAnnotationsAttribute {
 
     public RuntimeVisibleAnnotationsAttribute(U2 attributeNameIndex,
                                               U4 attributeLength,
                                               List<Annotation> annotations) {
-        super(attributeNameIndex, attributeLength);
-        this.annotations = annotations;
+        super(attributeNameIndex, attributeLength, annotations);
     }
 
     @Override
@@ -47,9 +44,5 @@ public class RuntimeVisibleAnnotationsAttribute extends AttributeInfo {
         }
 
         return result.toString();
-    }
-
-    public List<Annotation> getAnnotations() {
-        return annotations;
     }
 }

@@ -1,6 +1,7 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
+import com.study.type.ConstantPool;
 import com.study.type.U4;
 
 public class ConstantLong extends LeafCpInfo {
@@ -23,8 +24,8 @@ public class ConstantLong extends LeafCpInfo {
     }
 
     @Override
-    public void validate() {
-        if (this.tag != ConstantKind.CONSTANT_Long) {
+    public void validate(ConstantPool constantPool) {
+        if (tag != ConstantKind.CONSTANT_Long) {
             throw new AssertionError();
         }
     }

@@ -14,16 +14,14 @@ public class FieldsPresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
+    public void doPresent() {
         ItemsContainer<FieldInfo> fields = result.getFields();
-        if (fields.getCount() == 0) {
-            return 0;
+        int count = fields.getCount();
+        if (count == 0) {
+            return;
         }
 
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
-        int size = fields.getCount();
-        IntStream.range(0, size).forEach(index -> {
+        IntStream.range(0, count).forEach(index -> {
             if (index > 0) {
                 printStreamWrapper.println();
             }
@@ -31,8 +29,5 @@ public class FieldsPresenter extends AbstractPresenter {
             FieldInfo fieldInfo = fields.items().get(index);
             new FieldInfoPresenter(result, printStreamWrapper, fieldInfo).present();
         });
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
     }
 }

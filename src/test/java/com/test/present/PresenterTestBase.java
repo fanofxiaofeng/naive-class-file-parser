@@ -14,19 +14,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.EnumSet;
+import java.util.Set;
 
 public abstract class PresenterTestBase {
 
     private static final String OUTPUT_FILE_NAME = "scripts/result/output.txt";
 
-    private String buildFileName(Class clazz) {
-        String canonicalName = clazz.getCanonicalName();
-        System.out.println(clazz.getSimpleName());
-        System.out.println(canonicalName);
-        return PathUtils.convert(canonicalName);
+    private static String buildFileName(Class<?> clazz) {
+//        String canonicalName = clazz.getCanonicalName();
+//        if (canonicalName != null) {
+//            System.out.println(clazz.getSimpleName());
+//            System.out.println(canonicalName);
+//            return PathUtils.convert(canonicalName);
+//        }
+        return PathUtils.convert(clazz.getName());
     }
 
-    protected String[] getResults(Class clazz, PresentKind presentKind) throws IOException {
+    protected static String[] getResults(Class<?> clazz, PresentKind presentKind) throws IOException {
+        return getResults(clazz, EnumSet.of(presentKind));
+    }
+
+    protected static String[] getResults(Class<?> clazz, Set<PresentKind> presentKinds) throws IOException {
         String fileName = buildFileName(clazz);
         InputStream inputStream = PresenterTestBase.class.getClassLoader().getResourceAsStream(fileName);
         PrintStream printStream = new PrintStream(OUTPUT_FILE_NAME);
@@ -36,11 +44,11 @@ public abstract class PresenterTestBase {
         Parser<ParseResult> mainParser = new MainParser(basicInputStream);
         ParseResult parseResult = mainParser.parse();
 
-        MainPresenter presenter = new MainPresenter(parseResult, printStreamWrapper);
-        presenter.present(EnumSet.of(presentKind));
+        MainPresenter presenter = new MainPresenter(parseResult, printStreamWrapper, presentKinds);
+        presenter.present();
 
         try (FileInputStream fileInputStream = new FileInputStream(OUTPUT_FILE_NAME)) {
-            return new String(fileInputStream.readAllBytes()).split("\n");
+            return new String(fileInputStream.readAllBytes()).split(System.lineSeparator());
         }
     }
 }

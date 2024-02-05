@@ -3,6 +3,10 @@ package com.study.type.descriptor;
 import java.util.List;
 import java.util.StringJoiner;
 
+/**
+ * Please refer to the following section for more details
+ * <a href="https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-4.html#jvms-4.3.3">4.3.3. Method Descriptors</a>
+ */
 public class MethodDescriptor {
 
     private final List<FieldType> parameterDescriptors;

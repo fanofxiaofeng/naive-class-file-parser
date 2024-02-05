@@ -24,7 +24,7 @@ public class AbstractU {
             // safe
             return Integer.parseInt(toString(10));
         } else if (getClass() == U4.class) {
-            // the operations is not safe (overflow is possible)
+            // This operation is not safe (overflow is possible)
             return Integer.parseInt(toString(10));
         } else {
             throw new RuntimeException("Unsupported type!");
@@ -40,6 +40,7 @@ public class AbstractU {
 
     public boolean isOn(int mask) {
         int flags = toInt();
+        // todo: maybe < 0 (or <= 0) is OK? please check...
         if (flags < 0 || mask <= 0) {
             throw new RuntimeException(String.format("bad case with flags: %d, mask: %d", flags, mask));
         }

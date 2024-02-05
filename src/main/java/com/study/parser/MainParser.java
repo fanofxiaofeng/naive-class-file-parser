@@ -3,6 +3,7 @@ package com.study.parser;
 import com.study.io.BasicInputStream;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
+import com.study.type.U2;
 import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.FieldInfo;
 import com.study.type.info.MethodInfo;
@@ -39,7 +40,6 @@ public class MainParser implements Parser<ParseResult> {
         parseThisClass();
         parseSuperClass();
 
-        parseInterfacesCount();
         parseInterfaces();
 
         parseFields();
@@ -80,13 +80,9 @@ public class MainParser implements Parser<ParseResult> {
         parseResult.setSuperClass(basicInputStream.readU2());
     }
 
-    private void parseInterfacesCount() {
-        parseResult.setInterfacesCount(basicInputStream.readU2());
-    }
-
     private void parseInterfaces() {
-        int size = parseResult.getInterfacesCount().toInt();
-        parseResult.setInterfaces(basicInputStream.readU2Array(size));
+        U2 interfacesCount = basicInputStream.readU2();
+        parseResult.setInterfaces(basicInputStream.readU2List(interfacesCount.toInt()));
     }
 
     private void parseFields() {

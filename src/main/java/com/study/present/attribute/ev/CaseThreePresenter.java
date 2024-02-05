@@ -6,7 +6,7 @@ import com.study.type.U2;
 import com.study.type.info.ElementValue;
 import com.study.util.PrintStreamWrapper;
 
-public class CaseThreePresenter extends ElementValuePresenter {
+public class CaseThreePresenter extends AbstractElementValuePresenter {
 
     public CaseThreePresenter(
             ParseResult result,
@@ -16,13 +16,6 @@ public class CaseThreePresenter extends ElementValuePresenter {
             int baseIndentLevel
     ) {
         super(result, printStreamWrapper, elementNameIndex, elementValue, baseIndentLevel);
-    }
-
-    @Override
-    public int present() {
-        printStreamWrapper.printlnWithIndentLevel(String.format("%s=class %s", buildName(), buildValue()), baseIndentLevel);
-
-        return 1;
     }
 
     @Override

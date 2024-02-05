@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * A relation parser holds some child items, so we can consider this class as a parent.
+ * That's why I call it "relation parser"
+ *
+ * @param <C> child type
+ */
 public abstract class RelationParser<C> extends AbstractParser<ItemsContainer<C>> {
 
     protected final ConstantPool constantPool;

@@ -1,18 +1,13 @@
 package com.study.type.info.attribute;
 
 import com.study.type.ConstantPool;
+import com.study.type.U2;
+import com.study.type.U4;
 
 public class DeprecatedAttribute extends AttributeInfo {
 
-    public DeprecatedAttribute(RawAttributeInfo that) {
-        super(that);
-    }
-
-    @Override
-    public String describe(int indent) {
-        StringBuilder stringBuilder = withIndent(indent);
-        stringBuilder.append(String.format("%s: true\n", constantPool.get(attributeNameIndex).desc()));
-        return stringBuilder.toString();
+    public DeprecatedAttribute(U2 attributeNameIndex, U4 attributeLength) {
+        super(attributeNameIndex, attributeLength);
     }
 
     @Override

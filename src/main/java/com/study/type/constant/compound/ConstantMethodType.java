@@ -4,7 +4,6 @@ import com.study.constants.ConstantKind;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.constant.leaf.LeafCpInfo;
-import com.study.util.PaddingUtils;
 
 public class ConstantMethodType extends CompoundCpInfo {
 
@@ -26,15 +25,16 @@ public class ConstantMethodType extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
-
+    public void validate(ConstantPool constantPool) {
     }
 
     @Override
     public String detail(ConstantPool constantPool) {
-        String descriptorDesc = constantPool.get(descriptorIndex, LeafCpInfo.class).desc();
+        return constantPool.get(descriptorIndex, LeafCpInfo.class).desc();
+    }
 
-        // todo: fix hard-coded value
-        return PaddingUtils.prepend(descriptorDesc, 1);
+    @Override
+    public String decoratedDetail(ConstantPool constantPool) {
+        return " " + detail(constantPool);
     }
 }

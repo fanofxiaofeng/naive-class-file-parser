@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Signature {
 
-    List<String> desc();
+//    List<String> desc();
 
     default int[] to(List<Integer> codePoints) {
         int[] ans = new int[codePoints.size()];

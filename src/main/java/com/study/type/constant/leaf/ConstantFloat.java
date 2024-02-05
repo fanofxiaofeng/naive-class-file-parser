@@ -1,6 +1,7 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
+import com.study.type.ConstantPool;
 import com.study.type.U4;
 
 public class ConstantFloat extends LeafCpInfo {
@@ -19,8 +20,8 @@ public class ConstantFloat extends LeafCpInfo {
     }
 
     @Override
-    public void validate() {
-        if (this.tag != ConstantKind.CONSTANT_Float) {
+    public void validate(ConstantPool constantPool) {
+        if (tag != ConstantKind.CONSTANT_Float) {
             throw new AssertionError();
         }
     }

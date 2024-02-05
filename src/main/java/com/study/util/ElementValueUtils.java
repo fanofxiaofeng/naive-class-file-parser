@@ -5,6 +5,21 @@ import com.study.type.U1;
 
 public class ElementValueUtils {
 
+    public static Class<?> toClass(U1 tag) {
+        return switch (tag.toInt()) {
+            case 'B' -> byte.class;
+            case 'C' -> char.class;
+            case 'D' -> double.class;
+            case 'F' -> float.class;
+            case 'I' -> int.class;
+            case 'J' -> long.class;
+            case 'S' -> short.class;
+            case 'Z' -> boolean.class;
+            case 's' -> String.class;
+            default -> throw new IllegalArgumentException("Unsupported tag: " + (char) tag.toInt());
+        };
+    }
+
     public static ElementValueCase convert(U1 tag) {
         /*
         B	byte	const_value_index	CONSTANT_Integer

@@ -15,9 +15,7 @@ public class ConstantPoolPresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
+    public void doPresent() {
         printStreamWrapper.println(HEADER_LINE);
 
         ConstantPool constantPool = result.getConstantPool();
@@ -25,8 +23,5 @@ public class ConstantPoolPresenter extends AbstractPresenter {
         for (Pair<Integer, CpInfo> pair : constantPool) {
             new ItemPresenter(result, printStreamWrapper, pair).present();
         }
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
     }
 }

@@ -2,16 +2,19 @@ package com.study.type.info;
 
 import com.study.constants.FieldAccessFlags;
 import com.study.signature.FieldSignatureBuilder;
-import com.study.signature.Signature;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
 import com.study.type.constant.leaf.LeafCpInfo;
 import com.study.type.descriptor.FieldDescriptor;
+import com.study.type.descriptor.FieldDescriptorBuilder;
 import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.attribute.SignatureAttribute;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Optional;
+import java.util.StringJoiner;
 
 public class FieldInfo extends AbstractInfo {
     private static final EnumSet<FieldAccessFlags> skippedFlags =
@@ -33,6 +36,15 @@ public class FieldInfo extends AbstractInfo {
         return descAccessFlags();
     }
 
+
+    public String buildHumanReadableTypeDesc(ConstantPool constantPool) {
+        Optional<SignatureAttribute> optionalSignature = findSignatureAttribute();
+
+        return optionalSignature.isPresent() ?
+                toHumanReadable(optionalSignature.get(), constantPool) :
+                toHumanReadable(constantPool);
+    }
+
     public String buildHumanReadableFlagsDesc() {
         int mod = accessFlags.toInt();
 
@@ -46,21 +58,14 @@ public class FieldInfo extends AbstractInfo {
         return joiner.toString();
     }
 
-    public List<String> buildAttributeLines(ConstantPool constantPool) {
-        List<String> attributeLines = new ArrayList<>();
-        for (AttributeInfo attribute : attributes) {
-            attributeLines.add(attribute.describe(constantPool));
-        }
-        return attributeLines;
-    }
-
     public String toHumanReadable(SignatureAttribute signature, ConstantPool constantPool) {
         String raw = signature.detail(constantPool);
-        Signature s = new FieldSignatureBuilder().build(raw);
-        return s.desc().get(0);
+        return new FieldSignatureBuilder().build(raw).desc();
     }
 
-    public String toHumanReadable(FieldDescriptor fieldDescriptor) {
+    public String toHumanReadable(ConstantPool constantPool) {
+        FieldDescriptorBuilder fieldDescriptorBuilder = new FieldDescriptorBuilder();
+        FieldDescriptor fieldDescriptor = fieldDescriptorBuilder.build(constantPool, getDescriptorIndex());
         return fieldDescriptor.fieldType().desc();
     }
 
@@ -79,7 +84,9 @@ public class FieldInfo extends AbstractInfo {
                 filter(e -> (mod & e.getFlag()) > 0).
                 forEach(e -> joiner.add(e.toString()));
 
-        return String.format("flags: (0x%04x) %s", mod, joiner);
+        if (joiner.length() > 0) {
+            return String.format("flags: (0x%04x) %s", mod, joiner);
+        }
+        return String.format("flags: (0x%04x)", mod);
     }
-
 }

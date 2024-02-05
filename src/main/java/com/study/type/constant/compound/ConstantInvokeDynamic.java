@@ -26,7 +26,7 @@ public class ConstantInvokeDynamic extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
 
     }
 

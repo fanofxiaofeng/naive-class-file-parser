@@ -1,6 +1,6 @@
 package com.study.signature;
 
-public interface SignatureBuilder {
+public interface SignatureBuilder<T> {
 
-    Signature build(String raw);
+    T build(String raw);
 }

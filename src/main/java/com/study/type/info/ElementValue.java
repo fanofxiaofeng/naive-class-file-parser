@@ -19,6 +19,10 @@ public abstract class ElementValue {
         this.tag = tag;
     }
 
+    public U1 getTag() {
+        return tag;
+    }
+
     private static final Map<Class<? extends ElementValue>, ElementValueCase> map = Map.ofEntries(
             Map.entry(CaseOne.class, ElementValueCase.CASE_ONE),
             Map.entry(CaseTwo.class, ElementValueCase.CASE_TWO),

@@ -9,29 +9,30 @@ import com.study.util.PrintStreamWrapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import static com.study.constants.Const.MAGIC_NUMBER;
 
 public class MainPresenter extends AbstractPresenter {
 
+    private final Set<PresentKind> presentKinds;
+
     private static final int DEFAULT_INDENT_LEVEL = 1;
 
-    public MainPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper) {
+    public MainPresenter(ParseResult result, PrintStreamWrapper printStreamWrapper, Set<PresentKind> presentKinds) {
         super(result, printStreamWrapper);
+        this.presentKinds = presentKinds;
     }
 
     @Override
-    public int present() {
-        return present(EnumSet.allOf(PresentKind.class));
-    }
-
-    public int present(EnumSet<PresentKind> presentKinds) {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
+    public void doPresent() {
         if (!result.getMagic().toString().equals(MAGIC_NUMBER)) {
             throw new AssertionError("Magic number is not as expected!");
+        }
+
+        if (presentKinds.contains(PresentKind.HEADER)) {
+            presentHeader();
         }
 
         if (presentKinds.contains(PresentKind.VERSION)) {
@@ -60,26 +61,28 @@ public class MainPresenter extends AbstractPresenter {
 
         printStreamWrapper.println('{');
 
+        int cnt = 0;
         if (presentKinds.contains(PresentKind.FIELDS)) {
-            int cnt = presentFields();
-            if (cnt > 0) {
-                printStreamWrapper.println();
-            }
+            cnt += presentFields();
         }
 
         if (presentKinds.contains(PresentKind.METHODS)) {
+            // There is always at least one method (i.e. a constructor),
+            // so if some fields have been presented, we need to print a line before presenting methods
+            if (cnt > 0) {
+                printStreamWrapper.println();
+            }
             presentMethods();
         }
-//        if (fieldsCount.toInt() > 0 && methodsCount.toInt() > 0) {
-//            printStream.println();
-//        }
-
-
-//        showAttributes();
         printStreamWrapper.println('}');
 
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-        return cnt2 - cnt1;
+        if (presentKinds.contains(PresentKind.ATTRIBUTES)) {
+            presentAttributes();
+        }
+    }
+
+    private void presentHeader() {
+        new ClassFileHeaderLinePresenter(result, printStreamWrapper).present();
     }
 
     private void presentVersion() {
@@ -141,7 +144,7 @@ public class MainPresenter extends AbstractPresenter {
 
     private void presentCount() {
         String content = String.format("interfaces: %d, fields: %d, methods: %d, attributes: %d",
-                result.getInterfacesCount().toInt(),
+                result.getInterfaces().size(),
                 result.getFields().getCount(),
                 result.getMethods().getCount(),
                 result.getAttributes().getCount());
@@ -160,5 +163,8 @@ public class MainPresenter extends AbstractPresenter {
     private void presentMethods() {
         new MethodsPresenter(result, printStreamWrapper).present();
     }
-}
 
+    private void presentAttributes() {
+        new AttributesPresenter(result, printStreamWrapper).present();
+    }
+}

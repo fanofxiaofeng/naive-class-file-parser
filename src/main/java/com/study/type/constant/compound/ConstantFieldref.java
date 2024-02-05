@@ -25,7 +25,7 @@ public class ConstantFieldref extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
         if (this.tag != ConstantKind.CONSTANT_Fieldref) {
             throw new AssertionError();
         }
@@ -37,11 +37,6 @@ public class ConstantFieldref extends CompoundCpInfo {
         if (!(constantPool.get(nameAndTypeIndex) instanceof ConstantNameAndType)) {
             throw new AssertionError();
         }
-    }
-
-    @Override
-    public String detail() {
-        return detail(constantPool);
     }
 
     @Override

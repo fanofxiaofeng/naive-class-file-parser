@@ -15,7 +15,7 @@ public class U2 extends AbstractU implements Iterable<Integer> {
     @Override
     public Iterator<Integer> iterator() {
         return new Iterator<>() {
-            int end = U2.this.toInt();
+            final int end = U2.this.toInt();
             int current = -1;
 
             @Override

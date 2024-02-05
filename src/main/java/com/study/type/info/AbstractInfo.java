@@ -1,14 +1,15 @@
 package com.study.type.info;
 
-import com.study.parser.ConstantPoolHolder;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
 import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.attribute.SignatureAttribute;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public abstract class AbstractInfo extends ConstantPoolHolder {
+public abstract class AbstractInfo {
     protected final U2 accessFlags;
     protected final U2 nameIndex;
     protected final U2 descriptorIndex;
@@ -22,14 +23,20 @@ public abstract class AbstractInfo extends ConstantPoolHolder {
         this.attributes = attributes;
     }
 
+    public <T extends AttributeInfo> List<T> findAttribute(Class<T> clazz) {
+        return attributes.items().stream().
+                filter(attribute -> clazz.isAssignableFrom(attribute.getClass())).
+                map(attribute -> (T) attribute).
+                collect(Collectors.toList());
+    }
+
     public Optional<SignatureAttribute> findSignatureAttribute() {
-        for (AttributeInfo attribute : attributes) {
-            if (attribute instanceof SignatureAttribute) {
-                return Optional.of((SignatureAttribute) attribute);
-            }
+        List<SignatureAttribute> raw = findAttribute(SignatureAttribute.class);
+        if (raw.isEmpty()) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        return Optional.of(raw.get(0));
     }
 
     public U2 getAccessFlags() {

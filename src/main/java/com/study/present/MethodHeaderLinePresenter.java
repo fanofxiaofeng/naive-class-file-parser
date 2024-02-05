@@ -24,15 +24,9 @@ public class MethodHeaderLinePresenter extends AbstractPresenter {
     }
 
     @Override
-    public int present() {
-        int cnt1 = printStreamWrapper.getPrintlnCount();
-
+    public void doPresent() {
         String headerLine = buildHeaderLine();
         printStreamWrapper.printlnWithIndentLevel(headerLine, 1);
-
-        int cnt2 = printStreamWrapper.getPrintlnCount();
-
-        return cnt2 - cnt1;
     }
 
     public String buildHeaderLine() {

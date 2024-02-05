@@ -1,12 +1,11 @@
 package com.study.util;
 
-import com.study.constants.Const;
-
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.List;
 
 public class PrintStreamWrapper {
+    private static final int INDENT_FOR_EACH_LEVEL = 2;
 
     private final PrintStream printStream;
 
@@ -30,23 +29,14 @@ public class PrintStreamWrapper {
         printlnCount++;
     }
 
-    public void print(String content) {
-        printStream.print(content);
-    }
-
     public void println() {
         printStream.println();
         printlnCount++;
     }
 
     public void printlnWithIndentLevel(String content, int indentLevel) {
-        printStream.print(" ".repeat(Const.INDENT_FOR_EACH_LEVEL * indentLevel));
+        printStream.print(" ".repeat(INDENT_FOR_EACH_LEVEL * indentLevel));
         println(content);
-    }
-
-    public void printWithIndentLevel(String content, int indentLevel) {
-        printStream.print(" ".repeat(Const.INDENT_FOR_EACH_LEVEL * indentLevel));
-        print(content);
     }
 
     public void batchPrintln(List<String> contents) {

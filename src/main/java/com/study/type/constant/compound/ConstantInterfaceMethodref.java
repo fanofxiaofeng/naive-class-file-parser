@@ -27,7 +27,7 @@ public class ConstantInterfaceMethodref extends CompoundCpInfo {
     }
 
     @Override
-    public void validate() {
+    public void validate(ConstantPool constantPool) {
         if (this.tag != ConstantKind.CONSTANT_InterfaceMethodref) {
             throw new AssertionError();
         }
@@ -42,15 +42,9 @@ public class ConstantInterfaceMethodref extends CompoundCpInfo {
     }
 
     @Override
-    public String detail() {
-        return detail(constantPool);
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         String detail1 = constantPool.detail(classIndex);
         String detail2 = constantPool.detail(nameAndTypeIndex);
-
 
         return String.format("%s.%s", detail1, detail2);
     }

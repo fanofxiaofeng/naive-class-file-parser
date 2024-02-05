@@ -25,8 +25,4 @@ public enum FieldAccessFlags implements FlagHolder {
     public int getFlag() {
         return flag;
     }
-
-    public String getSimpleName() {
-        return name().replace("ACC_", "").toLowerCase();
-    }
 }

@@ -1,6 +1,7 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 
@@ -108,8 +109,8 @@ public class ConstantUtf8 extends LeafCpInfo {
     }
 
     @Override
-    public void validate() {
-        if (this.tag != ConstantKind.CONSTANT_Utf8) {
+    public void validate(ConstantPool constantPool) {
+        if (tag != ConstantKind.CONSTANT_Utf8) {
             throw new AssertionError();
         }
     }

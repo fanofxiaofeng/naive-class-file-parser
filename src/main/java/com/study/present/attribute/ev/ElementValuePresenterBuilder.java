@@ -8,12 +8,11 @@ import com.study.util.PrintStreamWrapper;
 
 public class ElementValuePresenterBuilder {
 
-    public ElementValuePresenter build(ParseResult result,
-                                       PrintStreamWrapper printStreamWrapper,
-                                       U2 elementNameIndex,
-                                       ElementValue elementValue,
-                                       int baseIndentLevel) {
-
+    public static AbstractElementValuePresenter build(ParseResult result,
+                                                      PrintStreamWrapper printStreamWrapper,
+                                                      U2 elementNameIndex,
+                                                      ElementValue elementValue,
+                                                      int baseIndentLevel) {
         ElementValueCase elementValueCase = ElementValue.convert(elementValue);
         switch (elementValueCase) {
             case CASE_ONE -> {
