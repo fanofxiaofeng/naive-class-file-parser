@@ -5,14 +5,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayListAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
-    public static void prepare() throws IOException {
-        buildRealLines(ArrayList.class);
+    public static void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.util.ArrayList"));
     }
 
     @Test

@@ -1,5 +1,7 @@
 package com.study.type.descriptor;
 
+import com.study.util.ClassNameUtils;
+
 import java.util.List;
 
 public final class ObjectType implements FieldType {
@@ -23,6 +25,6 @@ public final class ObjectType implements FieldType {
     @Override
     public String desc() {
         // todo: check whether inner class is OK, too
-        return className.replaceAll("/", ".");
+        return ClassNameUtils.slashToDot(className);
     }
 }

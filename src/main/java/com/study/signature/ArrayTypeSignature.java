@@ -12,4 +12,8 @@ public final class ArrayTypeSignature extends ReferenceTypeSignature {
     public String desc() {
         return component.desc() + "[]";
     }
+
+    public String descForVarArgs() {
+        return component.desc() + "...";
+    }
 }

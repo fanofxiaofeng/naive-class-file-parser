@@ -1,13 +1,8 @@
 package com.study.present.attribute;
 
 import com.study.parser.ParseResult;
-import com.study.type.ConstantPool;
-import com.study.type.U2;
 import com.study.type.info.attribute.ExceptionsAttribute;
 import com.study.util.PrintStreamWrapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExceptionsAttributePresenter extends AbstractAttributePresenter<ExceptionsAttribute> {
 
@@ -26,18 +21,7 @@ public class ExceptionsAttributePresenter extends AbstractAttributePresenter<Exc
     }
 
     private void presentDetails() {
-        List<U2> exceptionIndexTable = attribute.getExceptionIndexTable();
-        List<String> exceptionDescriptionList = new ArrayList<>(exceptionIndexTable.size());
-
-        ConstantPool constantPool = result.getConstantPool();
-        exceptionIndexTable.forEach(exceptionIndex -> {
-            System.out.println("exceptionIndex: " + exceptionIndex.toInt());
-            String desc = constantPool.detail(exceptionIndex);
-            exceptionDescriptionList.add(desc.replaceAll("/", "."));
-        });
-
-        String description = String.format("throws %s", String.join(", ", exceptionDescriptionList));
-
+        String description = attribute.buildDesc(result.getConstantPool());
         printStreamWrapper.printlnWithIndentLevel(description, baseIndentLevel + 1);
     }
 

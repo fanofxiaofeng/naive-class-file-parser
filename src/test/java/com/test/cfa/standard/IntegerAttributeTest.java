@@ -10,10 +10,16 @@ import java.util.List;
 public class IntegerAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
-    public static void prepare() throws IOException {
-        buildRealLines(Integer.class);
+    public static void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Integer"));
     }
 
+    @Test
+    public void test_for_Signature_Attribute() {
+        expectedConsecutiveLines = List.of(
+                "Signature: #441                         // Ljava/lang/Number;Ljava/lang/Comparable<Ljava/lang/Integer;>;Ljava/lang/constant/Constable;Ljava/lang/constant/ConstantDesc;"
+        );
+    }
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(

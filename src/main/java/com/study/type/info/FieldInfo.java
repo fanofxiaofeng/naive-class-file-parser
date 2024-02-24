@@ -1,7 +1,7 @@
 package com.study.type.info;
 
 import com.study.constants.FieldAccessFlags;
-import com.study.signature.FieldSignatureBuilder;
+import com.study.signature.builder.SignatureFacade;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
@@ -60,7 +60,7 @@ public class FieldInfo extends AbstractInfo {
 
     public String toHumanReadable(SignatureAttribute signature, ConstantPool constantPool) {
         String raw = signature.detail(constantPool);
-        return new FieldSignatureBuilder().build(raw).desc();
+        return new SignatureFacade().buildFieldSignature(raw).desc();
     }
 
     public String toHumanReadable(ConstantPool constantPool) {

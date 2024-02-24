@@ -2,16 +2,22 @@ package com.study.present;
 
 import com.study.constants.ClassAccessFlags;
 import com.study.parser.ParseResult;
+import com.study.signature.ClassSignature;
+import com.study.signature.builder.SignatureFacade;
 import com.study.type.ConstantPool;
+import com.study.type.ItemsContainer;
 import com.study.type.U2;
+import com.study.type.info.attribute.AttributeInfo;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.study.util.ClassNameUtils;
 import com.study.util.PrintStreamWrapper;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ClassFileHeaderLinePresenter extends AbstractPresenter {
+
+    private final boolean isInterface;
 
     private static final Set<ClassAccessFlags> skippedFlags =
             EnumSet.of(
@@ -23,6 +29,7 @@ public class ClassFileHeaderLinePresenter extends AbstractPresenter {
 
     public ClassFileHeaderLinePresenter(ParseResult result, PrintStreamWrapper printStreamWrapper) {
         super(result, printStreamWrapper);
+        this.isInterface = result.getAccessFlags().isOn(ClassAccessFlags.ACC_INTERFACE.getFlag());
     }
 
     @Override
@@ -34,14 +41,89 @@ public class ClassFileHeaderLinePresenter extends AbstractPresenter {
     public String buildHeaderLine() {
         String accessFlagsDesc = buildHumanReadableAccessFlagsDesc();
 
-        String temp = result.getAccessFlags().isOn(ClassAccessFlags.ACC_INTERFACE.getFlag()) ?
-                "" : "class";
+        String temp = isInterface ? "" : "class";
 
         ConstantPool constantPool = result.getConstantPool();
-        String thisClassDesc = constantPool.detail(result.getThisClass()).
-                replace('/', '.');
+        String thisClassDesc = ClassNameUtils.slashToDot(constantPool.detail(result.getThisClass()));
 
-        return smartJoin(accessFlagsDesc, temp, thisClassDesc);
+        Optional<SignatureAttribute> optionalSignatureAttribute = findSignatureAttribute();
+
+        String selfDesc = smartJoin(accessFlagsDesc, temp, thisClassDesc);
+        if (optionalSignatureAttribute.isPresent()) {
+            SignatureAttribute signatureAttribute = optionalSignatureAttribute.get();
+            String raw = constantPool.desc(signatureAttribute.getSignatureIndex());
+            ClassSignature classSignature = new SignatureFacade().buildClassSignature(raw);
+            return selfDesc + classSignature.desc(isInterface);
+        } else {
+            return buildHeaderLine(selfDesc);
+        }
+    }
+
+    private String buildHeaderLine(String selfDesc) {
+        Optional<String> nonTrivialSuperClassDesc = buildNonTrivialSuperClassDesc();
+        List<String> interfaceDescList = buildInterfaceDescList();
+
+        String verb = isInterface ? "extends" : "implements";
+        if (nonTrivialSuperClassDesc.isPresent()) {
+            String headerLine = String.format("%s extends %s", selfDesc, nonTrivialSuperClassDesc.get());
+            if (!interfaceDescList.isEmpty()) {
+                headerLine =
+                        String.format(
+                                "%s implements %s",
+                                headerLine,
+                                String.join(",", interfaceDescList)
+                        );
+            }
+            return headerLine;
+        }
+
+        if (interfaceDescList.isEmpty()) {
+            return selfDesc;
+        }
+        return String.format(
+                "%s %s %s",
+                selfDesc,
+                verb,
+                String.join(",", interfaceDescList)
+        );
+    }
+
+    private Optional<SignatureAttribute> findSignatureAttribute() {
+        ItemsContainer<AttributeInfo> attributes = result.getAttributes();
+
+        List<SignatureAttribute> rawResult = attributes.items().stream().
+                filter(attributeInfo -> (attributeInfo instanceof SignatureAttribute)).
+                map(a -> (SignatureAttribute) a).
+                toList();
+
+        if (rawResult.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(rawResult.get(0));
+    }
+
+    private List<String> buildInterfaceDescList() {
+        ConstantPool constantPool = result.getConstantPool();
+
+        return result.getInterfaces().stream().
+                map(constantPool::detail).
+                map(ClassNameUtils::slashToDot).
+                collect(Collectors.toList());
+    }
+
+    private Optional<String> buildNonTrivialSuperClassDesc() {
+        ConstantPool constantPool = result.getConstantPool();
+        U2 superClassIndex = result.getSuperClass();
+        if (superClassIndex.toInt() == 0) {
+            return Optional.empty();
+        }
+        String detail = constantPool.detail(superClassIndex);
+        if (detail.equals("java/lang/Object")) {
+            return Optional.empty();
+        }
+
+        return Optional.of(ClassNameUtils.slashToDot(detail));
     }
 
     private String buildHumanReadableAccessFlagsDesc() {

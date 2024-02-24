@@ -71,18 +71,25 @@ public abstract class ConsecutiveLinesTestGenerator extends AbstractTestGenerato
         super.printImportStatements();
     }
 
-    protected abstract boolean shouldProcessThisItem(List<String> linesForOneItem);
+    protected boolean shouldProcessThisItem(List<String> linesForOneItem) {
+        return true;
+    }
 
     protected abstract String buildTestFunctionNameForOneItem(List<String> linesForOneItem);
 
     @Override
     protected void generateTestMethod(List<List<String>> filteredLines) {
         for (List<String> consecutiveLines : filteredLines) {
-            doGenerateTestMethod(consecutiveLines);
+            List<String> realLines = filter(consecutiveLines);
+            doGenerateTestMethod(realLines);
         }
     }
 
-    protected void doGenerateTestMethod(List<String> consecutiveLines) {
+    protected List<String> filter(List<String> consecutiveLines) {
+        return consecutiveLines;
+    }
+
+    private void doGenerateTestMethod(List<String> consecutiveLines) {
         printStream.printf("    @%s%n", Test.class.getSimpleName());
         String testFunctionName = buildTestFunctionNameForOneItem(consecutiveLines);
         printStream.printf("    public void %s() {%n", testFunctionName);

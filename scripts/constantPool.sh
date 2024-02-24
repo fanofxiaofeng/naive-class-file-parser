@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# Please run this script in the root directory of this project (you should see a pom.xml in this directory)
+# This script can compare the parse result for constant pool for this project VS the javap command
+
+# Please run this script in the root directory of this project
 
 # usage:
-# ./scripts/constantPool.sh ${THE RELATIVE PATH TO THE CLASS FILE}
+# ./scripts/constantPool.sh '${fully qualified class name}'
 
 # examples:
+# ./scripts/constantPool.sh 'java.lang.Object'
+# ./scripts/constantPool.sh 'java.util.ArrayList'
 # ./scripts/constantPool.sh 'com.study.parser.ParseResult'
 
 
@@ -39,9 +43,15 @@ printf '%-20s -> %s\n' '${TEMP_FILE}' ${TEMP_FILE}
 # use `sed` command to find these two lines
 # use grep to extract all lines between these two lines
 FILENAME=$(echo $1 | sed 's|\.|/|g')
-javap -v -p "target/classes/${FILENAME}.class" | sed -n '/^Constant pool:$/,/^{$/p' | grep '^ *#' > ${STANDARD_FILE}
 
-mvn compile exec:java -DthePath=$1
+# Please note that the following regex is not robust
+if [[ ${FILENAME} =~ ^java..*$ ]]; then
+  javap -v -p "${FILENAME}" | sed -n '/^Constant pool:$/,/^{$/p' | grep '^ *#' > ${STANDARD_FILE}
+else
+  javap -v -p "target/classes/${FILENAME}.class" | sed -n '/^Constant pool:$/,/^{$/p' | grep '^ *#' > ${STANDARD_FILE}
+fi
+
+mvn exec:java -DthePath=$1
 
 touch ${TEMP_FILE}
 sed -n '/^Constant pool:$/,/^{$/p' ${OUTPUT_FILE} | grep '^ *#' > ${TEMP_FILE}

@@ -5,14 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayListMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(ArrayList.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.util.ArrayList"));
     }
 
     @Test

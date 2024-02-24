@@ -1,5 +1,7 @@
 package com.study.signature;
 
+import com.study.util.ClassNameUtils;
+
 import java.util.List;
 
 public final class ClassTypeSignature extends ReferenceTypeSignature {
@@ -30,7 +32,7 @@ public final class ClassTypeSignature extends ReferenceTypeSignature {
     public String desc() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(packageSpecifier.replace('/', '.'));
+        builder.append(ClassNameUtils.slashToDot(packageSpecifier));
         builder.append(simpleClassTypeSignature.desc());
         classTypeSignatureSuffixList.forEach(classTypeSignatureSuffix -> {
             builder.append('.');

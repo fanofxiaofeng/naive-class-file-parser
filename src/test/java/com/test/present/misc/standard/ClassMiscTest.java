@@ -10,8 +10,8 @@ import java.util.List;
 public class ClassMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(Class.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Class"));
     }
 
     @Test

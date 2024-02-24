@@ -5,14 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 public class AnnotationMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(Annotation.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.annotation.Annotation"));
     }
 
     @Test

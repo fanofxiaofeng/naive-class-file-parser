@@ -10,8 +10,8 @@ import java.util.List;
 public class OverrideMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(Override.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Override"));
     }
 
     @Test

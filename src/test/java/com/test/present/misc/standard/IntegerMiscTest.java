@@ -10,8 +10,8 @@ import java.util.List;
 public class IntegerMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(Integer.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Integer"));
     }
 
     @Test

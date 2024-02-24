@@ -73,22 +73,13 @@ public class ClassFileAttributeTestGenerator extends AbstractTestGenerator<List<
 
     @Override
     protected void printBeforeMethod() {
-        boolean special = targetClass.getCanonicalName() == null;
-
         printStream.println();
         printStream.printf("    @%s%n", BeforeClass.class.getSimpleName());
-        if (special) {
-            printStream.printf("    public static void prepare() throws %s, %s {%n",
-                    IOException.class.getSimpleName(),
-                    ClassNotFoundException.class.getSimpleName()
-            );
-            printStream.printf("        buildRealLines(Class.forName(\"%s\"));%n", className);
-        } else {
-            printStream.printf("    public static void prepare() throws %s {%n",
-                    IOException.class.getSimpleName()
-            );
-            printStream.printf("        buildRealLines(%s.class);%n", extractSimpleName());
-        }
+        printStream.printf("    public static void prepare() throws %s, %s {%n",
+                IOException.class.getSimpleName(),
+                ClassNotFoundException.class.getSimpleName()
+        );
+        printStream.printf("        buildRealLines(Class.forName(\"%s\"));%n", className);
         printStream.printf("    }%n");
         printStream.println();
     }
@@ -173,17 +164,17 @@ public class ClassFileAttributeTestGenerator extends AbstractTestGenerator<List<
 
     public static void main(String[] args) throws Exception {
         Set<Class<?>> classes = Set.of(
-//                Character.class,
-//                Number.class,
-//                Integer.class,
-//                Long.class,
+                Character.class,
+                Number.class,
+                Integer.class,
+                Long.class,
 //                Float.class,
 //                Double.class,
 //                Math.class,
 //                String.class,
-//                Class.class,
-//                Enum.class,
-//                List.class,
+                Class.class,
+                Enum.class,
+                List.class,
                 ArrayList.class,
 //                LinkedList.class,
 //                Map.class,

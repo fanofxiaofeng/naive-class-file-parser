@@ -10,8 +10,8 @@ import java.util.List;
 public class NumberAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
-    public static void prepare() throws IOException {
-        buildRealLines(Number.class);
+    public static void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Number"));
     }
 
     @Test

@@ -5,14 +5,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import com.test.attribute.cases.BootstrapMethodsAttributeCase;
 import java.util.List;
 
 public class BootstrapMethodsAttributeCaseAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
-    public static void prepare() throws IOException {
-        buildRealLines(BootstrapMethodsAttributeCase.class);
+    public static void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("com.test.attribute.cases.BootstrapMethodsAttributeCase"));
     }
 
     @Test

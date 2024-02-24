@@ -10,8 +10,8 @@ import java.util.List;
 public class EnumMiscTest extends MiscPresenterTestBase {
 
     @Before
-    public void prepare() throws IOException {
-        buildRealLines(Enum.class);
+    public void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Enum"));
     }
 
     @Test

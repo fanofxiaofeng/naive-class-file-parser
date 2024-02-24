@@ -10,10 +10,16 @@ import java.util.List;
 public class CharacterAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
-    public static void prepare() throws IOException {
-        buildRealLines(Character.class);
+    public static void prepare() throws IOException, ClassNotFoundException {
+        buildRealLines(Class.forName("java.lang.Character"));
     }
 
+    @Test
+    public void test_for_Signature_Attribute() {
+        expectedConsecutiveLines = List.of(
+                "Signature: #590                         // Ljava/lang/Object;Ljava/io/Serializable;Ljava/lang/Comparable<Ljava/lang/Character;>;Ljava/lang/constant/Constable;"
+        );
+    }
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(

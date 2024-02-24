@@ -12,6 +12,7 @@ public final class VoidDescriptor {
     }
 
     public String desc() {
-        return "V";
+//        return "V";
+        return "void";
     }
 }

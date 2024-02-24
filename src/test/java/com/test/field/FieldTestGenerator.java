@@ -65,14 +65,6 @@ public class FieldTestGenerator extends ConsecutiveLinesTestGenerator {
         );
     }
 
-    /**
-     * Just process all fields
-     */
-    @Override
-    protected boolean shouldProcessThisItem(List<String> linesForOneItem) {
-        return true;
-    }
-
     @Override
     protected String buildTestFunctionNameForOneItem(List<String> linesForOneItem) {
         String firstLine = linesForOneItem.get(0);

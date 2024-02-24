@@ -5,8 +5,6 @@ import com.study.type.ItemsContainer;
 import com.study.type.info.MethodInfo;
 import com.study.util.PrintStreamWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 public class MethodsPresenter extends AbstractPresenter {
@@ -25,8 +23,6 @@ public class MethodsPresenter extends AbstractPresenter {
             return;
         }
 
-        List<String> descriptions = new ArrayList<>(methods.getCount());
-
         IntStream.range(0, count).forEach(index -> {
             if (index > 0) {
                 printStreamWrapper.println();
@@ -36,7 +32,5 @@ public class MethodsPresenter extends AbstractPresenter {
             MethodInfoPresenter methodInfoPresenter = new MethodInfoPresenter(result, printStreamWrapper, methodInfo);
             methodInfoPresenter.present();
         });
-
-        printStreamWrapper.batchPrintln(descriptions);
     }
 }

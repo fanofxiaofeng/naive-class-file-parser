@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 请在本项目顶层目录(即与 `pom.xml` 处于同一目录时)执行本脚本
+# Please run this script in the root directory of this project
 
 # usage:
 # ./scripts/fields.sh ${the relative path to the class file}

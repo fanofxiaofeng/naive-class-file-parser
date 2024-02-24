@@ -1,16 +1,20 @@
 package com.test.present;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public abstract class C33 {
-    private synchronized int f1(int a, int b) {
-        return -1;
+
+    abstract List<String> f0();
+
+    private synchronized void f1(List<Integer> a, List<Long>... b) {
+//        return Optional.of("");
     }
 
-    abstract long f2(long a, long b, long c, long... d);
+    abstract long f2(long a, long b, long c, long... d) throws MyException, IndexOutOfBoundsException, NullPointerException, ClassNotFoundException;
 
     abstract float f3(float... a);
 
@@ -68,4 +72,13 @@ public abstract class C33 {
 
     C33(String s, int[]... n) {
     }
+
+    class MyException extends Exception implements Iterable<String> {
+
+        @Override
+        public Iterator<String> iterator() {
+            return null;
+        }
+    }
 }
+

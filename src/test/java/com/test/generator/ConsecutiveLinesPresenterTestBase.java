@@ -1,14 +1,10 @@
 package com.test.generator;
 
-import com.study.constants.PresentKind;
 import com.test.present.PresenterTestBase;
 import org.junit.After;
 import org.junit.Assert;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 public abstract class ConsecutiveLinesPresenterTestBase extends PresenterTestBase {
@@ -16,10 +12,10 @@ public abstract class ConsecutiveLinesPresenterTestBase extends PresenterTestBas
     protected static List<String> realLines;
     protected List<String> expectedConsecutiveLines;
 
-    protected void buildRealLines(Class<?> clazz, Set<PresentKind> kinds) throws IOException {
-        String[] results = getResults(clazz, kinds);
-        realLines = Arrays.stream(results).toList();
-    }
+//    protected void buildRealLines(Class<?> clazz, Set<PresentKind> kinds) throws IOException {
+//        String[] results = getResults(clazz, kinds);
+//        realLines = Arrays.stream(results).toList();
+//    }
 
     @After
     public void validate() {

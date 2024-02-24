@@ -1,6 +1,8 @@
 package com.test.present.misc;
 
 import com.study.constants.PresentKind;
+import com.test.cases.misc.CaseInterface;
+import com.test.generator.AbstractTestGenerator;
 import com.test.generator.TestGenerator;
 import com.test.generator.UniqueLineTestGenerator;
 
@@ -8,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -83,18 +87,21 @@ public class MiscTestGenerator extends UniqueLineTestGenerator {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Set<Class<?>> classSet = Set.of(
-//                Object.class,
-//                Class.class,
-//                Enum.class,
-//                Record.class,
-//                java.lang.annotation.Annotation.class,
-//                List.class,
-//                ArrayList.class,
-//                Override.class,
-//                Function.class,
-//                Stream.class,
-//                Number.class,
-//                Integer.class,
+                Object.class,
+                Class.class,
+                Enum.class,
+                Record.class,
+                java.lang.annotation.Annotation.class,
+                List.class,
+                ArrayList.class,
+                Override.class,
+                Runnable.class,
+                Consumer.class,
+                Function.class,
+                BiFunction.class,
+                Stream.class,
+                Number.class,
+                Integer.class,
 //
                 com.test.cases.misc.Case1.C1.class,
                 com.test.cases.misc.Case1.C2.class,
@@ -109,8 +116,15 @@ public class MiscTestGenerator extends UniqueLineTestGenerator {
                 Class.forName("com.test.cases.misc.ClassFlags1$ClassFlags6"),
                 Class.forName("com.test.cases.misc.ClassFlags1$ClassFlags7"),
                 Class.forName("com.test.cases.misc.ClassFlags1$ClassFlags8"),
-                Class.forName("com.test.cases.misc.ClassFlags1$ClassFlags9")
+                Class.forName("com.test.cases.misc.ClassFlags1$ClassFlags9"),
+                CaseInterface.class,
+                Class.forName("com.test.cases.misc.C1"),
+                Class.forName("com.test.cases.misc.C2"),
+                Class.forName("com.test.cases.misc.C3")
         );
+
+        AbstractTestGenerator.overrideExistingFile = false;
+//
         for (Class<?> clazz : classSet) {
             String outputDirectory = buildOutputDirectory(clazz);
             TestGenerator testGenerator = new MiscTestGenerator(clazz, outputDirectory);

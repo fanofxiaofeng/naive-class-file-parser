@@ -85,4 +85,19 @@ public class MethodInfo extends AbstractInfo {
     public boolean isClassInit(ConstantPool constantPool) {
         return functionName(constantPool).equals("<clinit>");
     }
+
+    public String buildAccessFlagsLine() {
+        int mod = accessFlags.toInt();
+
+        StringJoiner joiner = new StringJoiner(", ");
+
+        Arrays.stream(MethodAccessFlags.values()).
+                filter(e -> (mod & e.getFlag()) > 0).
+                forEach(e -> joiner.add(e.toString()));
+
+        if (joiner.length() > 0) {
+            return String.format("flags: (0x%04x) %s", mod, joiner);
+        }
+        return String.format("flags: (0x%04x)", mod);
+    }
 }
