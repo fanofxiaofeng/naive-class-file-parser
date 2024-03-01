@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public class Case18 implements Case {
+public class Case18 {
     public Runnable f1() {
         return () -> {
         };

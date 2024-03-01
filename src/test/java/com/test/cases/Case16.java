@@ -2,7 +2,7 @@ package com.test.cases;
 
 import java.util.function.*;
 
-public class Case16 implements Case {
+public class Case16 {
 
     public BiConsumer<Integer, Integer> f1() {
         return (a, b) -> System.out.println(a + b);

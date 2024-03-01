@@ -1,13 +1,13 @@
 package com.study.type.info.attribute;
 
 import com.study.io.U1InputStream;
-import com.study.parser.ConstantPoolHolder;
 import com.study.parser.attribute.*;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.U4;
 
-public class AttributeInfo extends ConstantPoolHolder {
+public class AttributeInfo {
+
     protected U2 attributeNameIndex;
     protected U4 attributeLength;
 
@@ -21,7 +21,7 @@ public class AttributeInfo extends ConstantPoolHolder {
         this.attributeLength = rawAttributeInfo.getAttributeLength();
     }
 
-    private static AttributeInfo convert(RawAttributeInfo rawAttributeInfo) {
+    private static AttributeInfo convert(ConstantPool constantPool, RawAttributeInfo rawAttributeInfo) {
         U2 attributeNameIndex = rawAttributeInfo.attributeNameIndex;
         String name = constantPool.get(attributeNameIndex).desc();
 
@@ -32,7 +32,7 @@ public class AttributeInfo extends ConstantPoolHolder {
             case "Exceptions" -> new ExceptionsAttributeParser(rawAttributeInfo).parse();
             case "SourceFile" -> new SourceFileAttributeParser(rawAttributeInfo).parse();
             case "ConstantValue" -> new ConstantValueAttributeParser(rawAttributeInfo).parse();
-            case "Code" -> new CodeAttribute(rawAttributeInfo);
+            case "Code" -> new CodeAttributeParser(constantPool, rawAttributeInfo).parse();
             case "LineNumberTable" -> new LineNumberTableAttribute(rawAttributeInfo);
             case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttributeParser(rawAttributeInfo).parse();
             case "LocalVariableTable" -> new LocalVariableTableAttribute(rawAttributeInfo);
@@ -42,10 +42,10 @@ public class AttributeInfo extends ConstantPoolHolder {
         };
     }
 
-    public static AttributeInfo build(U1InputStream u1InputStream) {
+    public static AttributeInfo build(ConstantPool constantPool, U1InputStream u1InputStream) {
         U2 attributeNameIndex = u1InputStream.readU2();
         RawAttributeInfo rawAttributeInfo = new RawAttributeInfo(attributeNameIndex, u1InputStream);
-        return convert(rawAttributeInfo);
+        return convert(constantPool, rawAttributeInfo);
     }
 
 
@@ -57,10 +57,11 @@ public class AttributeInfo extends ConstantPoolHolder {
     // todo
     @Deprecated
     public String describe(int indent) {
-        return new StringBuilder().
-                append(constantPool.get(attributeNameIndex).desc()).
-                append(":").append("[请修改实现逻辑]").append('\n').
-                toString();
+//        return new StringBuilder().
+//                append(constantPool.get(attributeNameIndex).desc()).
+//                append(":").append("[请修改实现逻辑]").append('\n').
+//                toString();
+        return "todo...";
     }
 
     protected StringBuilder withIndent(int indent) {
@@ -74,7 +75,7 @@ public class AttributeInfo extends ConstantPoolHolder {
     }
 
     protected String buildName(ConstantPool constantPool) {
-        return constantPool.get(attributeNameIndex).desc();
+        return constantPool.desc(attributeNameIndex);
     }
 
     public U2 getAttributeNameIndex() {

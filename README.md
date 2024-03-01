@@ -15,7 +15,7 @@ The goal of this project is to generate similar output to that for `javap -v -p`
 Please execute the following command in the root directory of this project
 
 ```bash
-./scripts/constantPool.sh 'java.lang.Object'   
+./scripts/constantPool.sh 'java.lang.Object'
 ```
 Then you should be able to see the comparison for the parse result for the constant pool
 

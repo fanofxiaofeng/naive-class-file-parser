@@ -1,12 +1,19 @@
 package com.test.cfa.standard;
 
-import com.test.present.ClassFileAttributePresenterTestBase;
+import com.study.type.info.attribute.InnerClassesAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.study.type.info.attribute.SourceFileAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
+import com.test.cfa.ClassFileAttributeTestGenerator;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(ClassFileAttributeTestGenerator.class)
 public class CharacterAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
@@ -14,18 +21,23 @@ public class CharacterAttributeTest extends ClassFileAttributePresenterTestBase 
         buildRealLines(Class.forName("java.lang.Character"));
     }
 
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_Signature_Attribute() {
         expectedConsecutiveLines = List.of(
                 "Signature: #590                         // Ljava/lang/Object;Ljava/io/Serializable;Ljava/lang/Comparable<Ljava/lang/Character;>;Ljava/lang/constant/Constable;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SourceFileAttribute.class)
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(
                 "SourceFile: \"Character.java\""
         );
     }
+
+    @ExpectedPredefinedAttribute(InnerClassesAttribute.class)
     @Test
     public void test_for_InnerClasses_Attribute() {
         expectedConsecutiveLines = List.of(

@@ -20,6 +20,7 @@ public class LocalVariableTableAttribute extends AttributeInfo {
         }
     }
 
+    /*
     @Override
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent).append(constantPool.get(this.attributeNameIndex.toInt()).desc()).append(":\n");
@@ -40,6 +41,7 @@ public class LocalVariableTableAttribute extends AttributeInfo {
         }
         return stringBuilder.toString();
     }
+     */
 
     private class LocalVariableTable {
         private U2 startPc;

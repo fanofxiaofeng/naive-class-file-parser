@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case7 implements Case {
+public class Case7 {
     private static class Case7_1 {
     }
 

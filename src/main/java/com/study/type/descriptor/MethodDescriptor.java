@@ -66,4 +66,8 @@ public class MethodDescriptor {
                 );
         throw new IllegalArgumentException(message);
     }
+
+    public List<FieldType> getParameterDescriptors() {
+        return parameterDescriptors;
+    }
 }

@@ -1,12 +1,20 @@
 package com.test.cfa.specific;
 
-import com.test.present.ClassFileAttributePresenterTestBase;
+import com.study.type.info.attribute.EnclosingMethodAttribute;
+import com.study.type.info.attribute.InnerClassesAttribute;
+import com.study.type.info.attribute.NestHostAttribute;
+import com.study.type.info.attribute.SourceFileAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
+import com.test.cfa.ClassFileAttributeTestGenerator;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(ClassFileAttributeTestGenerator.class)
 public class EnclosingMethodAttributeCase$1AttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
@@ -14,18 +22,31 @@ public class EnclosingMethodAttributeCase$1AttributeTest extends ClassFileAttrib
         buildRealLines(Class.forName("com.test.attribute.cases.EnclosingMethodAttributeCase$1"));
     }
 
+    @ExpectedPredefinedAttribute(SourceFileAttribute.class)
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(
                 "SourceFile: \"EnclosingMethodAttributeCase.java\""
         );
     }
+
+    @ExpectedPredefinedAttribute(EnclosingMethodAttribute.class)
     @Test
     public void test_for_EnclosingMethod_Attribute() {
         expectedConsecutiveLines = List.of(
                 "EnclosingMethod: #40.#42                // com.test.attribute.cases.EnclosingMethodAttributeCase.f2"
         );
     }
+
+    @ExpectedPredefinedAttribute(NestHostAttribute.class)
+    @Test
+    public void test_for_NestHost_Attribute() {
+        expectedConsecutiveLines = List.of(
+                "NestHost: class com/test/attribute/cases/EnclosingMethodAttributeCase"
+        );
+    }
+
+    @ExpectedPredefinedAttribute(InnerClassesAttribute.class)
     @Test
     public void test_for_InnerClasses_Attribute() {
         expectedConsecutiveLines = List.of(

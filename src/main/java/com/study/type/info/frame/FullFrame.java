@@ -52,7 +52,7 @@ public class FullFrame extends StackMapFrame {
         for (VerificationTypeInfo local : this.locals) {
             joiner.add(local.desc());
         }
-        detail[1] = String.format("locals = [ %s ]", joiner.toString());
+        detail[1] = String.format("locals = [ %s ]", joiner);
 
         joiner = new StringJoiner(", ");
         for (VerificationTypeInfo local : this.stack) {

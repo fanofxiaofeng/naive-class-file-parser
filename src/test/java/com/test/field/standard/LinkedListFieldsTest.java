@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class LinkedListFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -22,6 +28,8 @@ public class LinkedListFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0080) ACC_TRANSIENT"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_first() {
         expectedConsecutiveLines = List.of(
@@ -31,6 +39,8 @@ public class LinkedListFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #242                         // Ljava/util/LinkedList$Node<TE;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_last() {
         expectedConsecutiveLines = List.of(
@@ -40,6 +50,8 @@ public class LinkedListFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #242                         // Ljava/util/LinkedList$Node<TE;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(

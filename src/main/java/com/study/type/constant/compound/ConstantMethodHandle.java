@@ -30,11 +30,6 @@ public class ConstantMethodHandle extends CompoundCpInfo {
     }
 
     @Override
-    public void validate(ConstantPool constantPool) {
-
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         String rawKind = MethodHandleInfo.referenceKindToString(referenceKind.toInt());
 

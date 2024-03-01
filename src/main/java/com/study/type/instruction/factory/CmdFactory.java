@@ -5,5 +5,5 @@ import com.study.type.U1;
 import com.study.type.instruction.AbstractCmd;
 
 public interface CmdFactory {
-    AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream);
+    AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream);
 }

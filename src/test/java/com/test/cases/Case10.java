@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case10 implements Case {
+public class Case10 {
 
     public Runnable f(int a, int b) {
         return () -> {

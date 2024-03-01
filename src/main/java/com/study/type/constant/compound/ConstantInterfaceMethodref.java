@@ -28,10 +28,6 @@ public class ConstantInterfaceMethodref extends CompoundCpInfo {
 
     @Override
     public void validate(ConstantPool constantPool) {
-        if (this.tag != ConstantKind.CONSTANT_InterfaceMethodref) {
-            throw new AssertionError();
-        }
-
         if (!(constantPool.get(classIndex) instanceof ConstantClass)) {
             throw new AssertionError();
         }

@@ -1,7 +1,6 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
-import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 
@@ -10,11 +9,12 @@ import java.util.List;
 
 
 /**
- * Format
- * <p>
+ * Format example:
  * #19 = Utf8               Lcom/study/parser/Naive;
+ * <p>
+ * Consider "Lcom/study/parser/Naive;" as the description (i.e. return value for {@link #desc()}) for this item
  */
-public class ConstantUtf8 extends LeafCpInfo {
+public final class ConstantUtf8 extends LeafCpInfo {
     private final U2 length;
     private final U1[] bytes;
 
@@ -78,9 +78,8 @@ public class ConstantUtf8 extends LeafCpInfo {
 
     @Override
     public String desc() {
-        String raw = desc(content);
         StringBuilder stringBuilder = new StringBuilder();
-        for (char c : raw.toCharArray()) {
+        for (char c : content) {
             switch (c) {
                 case '\b' ->
                     // U+0008
@@ -106,13 +105,6 @@ public class ConstantUtf8 extends LeafCpInfo {
             }
         }
         return stringBuilder.toString();
-    }
-
-    @Override
-    public void validate(ConstantPool constantPool) {
-        if (tag != ConstantKind.CONSTANT_Utf8) {
-            throw new AssertionError();
-        }
     }
 
     public char[] getContent() {

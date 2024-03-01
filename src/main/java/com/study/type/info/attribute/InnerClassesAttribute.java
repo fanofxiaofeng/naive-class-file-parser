@@ -13,20 +13,6 @@ public class InnerClassesAttribute extends AttributeInfo {
         this.classes = classes;
     }
 
-    @Override
-    public String describe(int indent) {
-        if (indent != 0) {
-            throw new AssertionError("indent should be 0, but in fact indent = " + indent);
-        }
-
-        StringBuilder stringBuilder = new StringBuilder(String.format("%s:\n", constantPool.get(this.attributeNameIndex).desc()));
-        for (int i = 0; i < classes.size(); i++) {
-            String line = String.format("%-40s// class %s\n", "#" + classes.get(i).innerClassInfoIndex.toInt() + ";", constantPool.get(classes.get(i).innerClassInfoIndex).detail());
-            stringBuilder.append("  ").append(line);
-        }
-        return stringBuilder.toString();
-    }
-
     public List<InnerClass> getClasses() {
         return classes;
     }

@@ -4,6 +4,8 @@ import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.U2;
 
+import java.util.Optional;
+
 public class ThreeByteCmd extends AbstractCmd {
     protected U1 b1;
     protected U1 b2;
@@ -27,12 +29,19 @@ public class ThreeByteCmd extends AbstractCmd {
     }
 
     @Override
-    public String desc(int index) {
-        return String.format("%10s: %-14s%s", index, name, combine().toInt());
-    }
-
-    @Override
     public int size() {
         return 3;
+    }
+
+    public static class ThreeByteCmdWithCpIndex extends ThreeByteCmd {
+
+        public ThreeByteCmdWithCpIndex(U1 ordinal, String name, CodeInputStream codeInputStream) {
+            super(ordinal, name, codeInputStream);
+        }
+
+        @Override
+        public Optional<String> operandDesc() {
+            return Optional.of("" + combine().toInt());
+        }
     }
 }

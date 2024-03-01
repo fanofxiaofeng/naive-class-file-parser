@@ -1,12 +1,17 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.RuntimeVisibleAnnotationsAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class EnumFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -22,6 +27,7 @@ public class EnumFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_ordinal() {
         expectedConsecutiveLines = List.of(
@@ -30,6 +36,8 @@ public class EnumFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
+    @ExpectedPredefinedAttribute(RuntimeVisibleAnnotationsAttribute.class)
     @Test
     public void test_for_field_hash() {
         expectedConsecutiveLines = List.of(

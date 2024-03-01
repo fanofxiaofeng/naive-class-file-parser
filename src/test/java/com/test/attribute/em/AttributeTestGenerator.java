@@ -1,8 +1,7 @@
 package com.test.attribute.em;
 
 import com.test.cfa.ClassFileAttributeTestGenerator;
-import com.test.present.ClassFileAttributePresenterTestBase;
-import org.junit.BeforeClass;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,19 +18,17 @@ public class AttributeTestGenerator extends ClassFileAttributeTestGenerator {
     }
 
     @Override
-    protected void printImportStatements() {
-        smartPrintImportStatement(ClassFileAttributePresenterTestBase.class);
-        smartPrintImportStatement(BeforeClass.class);
-        super.printImportStatements();
+    protected void collectOtherClassesForImportStatements() {
+        collectClassForImportStatement(ClassFileAttributePresenterTestBase.class);
     }
 
-    private static void generateSpecificTest() throws IOException, InterruptedException, ClassNotFoundException {
+    private static void generateSpecificTest() throws IOException, InterruptedException, ReflectiveOperationException {
         generateTest(Set.of(
                 Class.forName("com.test.attribute.cases.EnclosingMethodAttributeCase$1")
         ), "specific");
     }
 
-    private static void generateStandardTest() throws IOException, InterruptedException {
+    private static void generateStandardTest() throws IOException, InterruptedException, ReflectiveOperationException {
         Set<Class<?>> classes = Set.of(
                 Boolean.class,
 //                Short.class,
@@ -53,14 +50,13 @@ public class AttributeTestGenerator extends ClassFileAttributeTestGenerator {
         generateTest(classes, "standard");
     }
 
-    private static void generateTest(Set<Class<?>> classes, String dirName) throws IOException, InterruptedException {
+    private static void generateTest(Set<Class<?>> classes, String dirName) throws IOException, InterruptedException, ReflectiveOperationException {
         for (Class<?> clazz : classes) {
             new AttributeTestGenerator(clazz, dirName).generate();
-            Thread.sleep(500);
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, InterruptedException, ReflectiveOperationException {
 //        generateStandardTest();
         generateSpecificTest();
     }

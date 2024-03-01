@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class ClassFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.lang.Class"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_ANNOTATION() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 8192"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_ENUM() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 16384"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_SYNTHETIC() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +52,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 4096"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_cachedConstructor() {
         expectedConsecutiveLines = List.of(
@@ -50,6 +63,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1322                        // Ljava/lang/reflect/Constructor<TT;>;"
         );
     }
+
     @Test
     public void test_for_field_name() {
         expectedConsecutiveLines = List.of(
@@ -58,6 +72,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_module() {
         expectedConsecutiveLines = List.of(
@@ -66,6 +81,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_classLoader() {
         expectedConsecutiveLines = List.of(
@@ -74,6 +90,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_classData() {
         expectedConsecutiveLines = List.of(
@@ -82,6 +99,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_packageName() {
         expectedConsecutiveLines = List.of(
@@ -90,6 +108,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_componentType() {
         expectedConsecutiveLines = List.of(
@@ -99,6 +119,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1323                        // Ljava/lang/Class<*>;"
         );
     }
+
     @Test
     public void test_for_field_allPermDomain() {
         expectedConsecutiveLines = List.of(
@@ -107,6 +128,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_reflectionData() {
         expectedConsecutiveLines = List.of(
@@ -116,6 +139,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1324                        // Ljava/lang/ref/SoftReference<Ljava/lang/Class$ReflectionData<TT;>;>;"
         );
     }
+
     @Test
     public void test_for_field_classRedefinedCount() {
         expectedConsecutiveLines = List.of(
@@ -124,6 +148,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x00c2) ACC_PRIVATE, ACC_VOLATILE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_genericInfo() {
         expectedConsecutiveLines = List.of(
@@ -132,6 +157,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x00c2) ACC_PRIVATE, ACC_VOLATILE, ACC_TRANSIENT"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_EMPTY_CLASS_ARRAY() {
         expectedConsecutiveLines = List.of(
@@ -141,6 +168,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1325                        // [Ljava/lang/Class<*>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -150,6 +179,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long 3206093459760846163l"
         );
     }
+
     @Test
     public void test_for_field_serialPersistentFields() {
         expectedConsecutiveLines = List.of(
@@ -158,6 +188,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_reflectionFactory() {
         expectedConsecutiveLines = List.of(
@@ -166,6 +197,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_enumConstants() {
         expectedConsecutiveLines = List.of(
@@ -175,6 +208,8 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1330                        // [TT;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_enumConstantDirectory() {
         expectedConsecutiveLines = List.of(
@@ -184,6 +219,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #1331                        // Ljava/util/Map<Ljava/lang/String;TT;>;"
         );
     }
+
     @Test
     public void test_for_field_annotationData() {
         expectedConsecutiveLines = List.of(
@@ -192,6 +228,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x00c2) ACC_PRIVATE, ACC_VOLATILE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_annotationType() {
         expectedConsecutiveLines = List.of(
@@ -200,6 +237,7 @@ public class ClassFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x00c2) ACC_PRIVATE, ACC_VOLATILE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_classValueMap() {
         expectedConsecutiveLines = List.of(

@@ -11,7 +11,7 @@ public class C33MethodsTest extends MethodPresenterTestBase {
 
     @BeforeClass
     public static void prepare() throws IOException, ClassNotFoundException {
-        buildRealLines(Class.forName("com.test.present.C33"));
+        buildRealLines(Class.forName("com.test.presenter.C33"));
     }
 
     @Test
@@ -29,7 +29,10 @@ public class C33MethodsTest extends MethodPresenterTestBase {
                 "  private synchronized void f1(java.util.List<java.lang.Integer>, java.util.List<java.lang.Long>...);",
                 "    descriptor: (Ljava/util/List;[Ljava/util/List;)V",
                 "    flags: (0x00a2) ACC_PRIVATE, ACC_SYNCHRONIZED, ACC_VARARGS",
-                "    Signature: #27                          // (Ljava/util/List<Ljava/lang/Integer;>;[Ljava/util/List<Ljava/lang/Long;>;)V"
+                "    Code:",
+                "      stack=0, locals=3, args_size=3",
+                "         0: return",
+                "    Signature: #28                          // (Ljava/util/List<Ljava/lang/Integer;>;[Ljava/util/List<Ljava/lang/Long;>;)V"
         );
     }
     @Test
@@ -127,7 +130,11 @@ public class C33MethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  static java.util.List[][][][][][] f13(java.util.List[][][][][][], int[][][][][][][], boolean[][][][][][][], java.lang.Boolean[][][][][][][], java.lang.Integer[][][][][], java.util.function.Function[][][][], java.util.function.BiConsumer[][][], java.lang.Object...);",
                 "    descriptor: ([[[[[[Ljava/util/List;[[[[[[[I[[[[[[[Z[[[[[[[Ljava/lang/Boolean;[[[[[Ljava/lang/Integer;[[[[Ljava/util/function/Function;[[[Ljava/util/function/BiConsumer;[Ljava/lang/Object;)[[[[[[Ljava/util/List;",
-                "    flags: (0x0088) ACC_STATIC, ACC_VARARGS"
+                "    flags: (0x0088) ACC_STATIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=1, locals=8, args_size=8",
+                "         0: aconst_null",
+                "         1: areturn"
         );
     }
     @Test
@@ -135,7 +142,12 @@ public class C33MethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private com.test.present.C33(java.lang.String[]...);",
                 "    descriptor: ([[Ljava/lang/String;)V",
-                "    flags: (0x0082) ACC_PRIVATE, ACC_VARARGS"
+                "    flags: (0x0082) ACC_PRIVATE, ACC_VARARGS",
+                "    Code:",
+                "      stack=1, locals=2, args_size=2",
+                "         0: aload_0",
+                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
+                "         4: return"
         );
     }
     @Test
@@ -143,7 +155,12 @@ public class C33MethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public com.test.present.C33(java.lang.String...);",
                 "    descriptor: ([Ljava/lang/String;)V",
-                "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS"
+                "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=1, locals=2, args_size=2",
+                "         0: aload_0",
+                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
+                "         4: return"
         );
     }
     @Test
@@ -151,7 +168,12 @@ public class C33MethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  protected com.test.present.C33(java.lang.String);",
                 "    descriptor: (Ljava/lang/String;)V",
-                "    flags: (0x0004) ACC_PROTECTED"
+                "    flags: (0x0004) ACC_PROTECTED",
+                "    Code:",
+                "      stack=1, locals=2, args_size=2",
+                "         0: aload_0",
+                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
+                "         4: return"
         );
     }
     @Test
@@ -159,7 +181,12 @@ public class C33MethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  com.test.present.C33(java.lang.String, int[]...);",
                 "    descriptor: (Ljava/lang/String;[[I)V",
-                "    flags: (0x0080) ACC_VARARGS"
+                "    flags: (0x0080) ACC_VARARGS",
+                "    Code:",
+                "      stack=1, locals=3, args_size=3",
+                "         0: aload_0",
+                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
+                "         4: return"
         );
     }
 }

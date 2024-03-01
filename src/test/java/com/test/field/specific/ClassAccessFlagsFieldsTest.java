@@ -1,12 +1,15 @@
 package com.test.field.specific;
 
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -22,6 +25,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_FINAL() {
         expectedConsecutiveLines = List.of(
@@ -30,6 +34,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_SUPER() {
         expectedConsecutiveLines = List.of(
@@ -38,6 +43,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_INTERFACE() {
         expectedConsecutiveLines = List.of(
@@ -46,6 +52,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_ABSTRACT() {
         expectedConsecutiveLines = List.of(
@@ -54,6 +61,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_SYNTHETIC() {
         expectedConsecutiveLines = List.of(
@@ -62,6 +70,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_ANNOTATION() {
         expectedConsecutiveLines = List.of(
@@ -70,6 +79,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_ENUM() {
         expectedConsecutiveLines = List.of(
@@ -78,6 +88,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_ACC_MODULE() {
         expectedConsecutiveLines = List.of(
@@ -86,6 +97,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x4019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL, ACC_ENUM"
         );
     }
+
     @Test
     public void test_for_field_flag() {
         expectedConsecutiveLines = List.of(
@@ -94,6 +106,7 @@ public class ClassAccessFlagsFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_$VALUES() {
         expectedConsecutiveLines = List.of(

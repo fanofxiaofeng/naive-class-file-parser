@@ -64,11 +64,11 @@ public class MethodSignatureBuilder implements Builder<MethodSignature> {
         List<JavaTypeSignature> javaTypeSignatureList = new ArrayList<>();
         while (peekingIterator.peek() != RIGHT_PARENTHESIS) {
             JavaTypeSignature javaTypeSignature = builder.build(peekingIterator);
-            System.out.println(javaTypeSignatureList.size());
-            System.out.println("[" + javaTypeSignature.desc() + "]");
-            if (javaTypeSignatureList.size() > 30) {
-                throw new IllegalArgumentException("too long...");
-            }
+//            System.out.println(javaTypeSignatureList.size());
+//            System.out.println("[" + javaTypeSignature.desc() + "]");
+//            if (javaTypeSignatureList.size() > 30) {
+//                throw new IllegalArgumentException("too long...");
+//            }
             javaTypeSignatureList.add(javaTypeSignature);
         }
         dropExpectedItem(peekingIterator, RIGHT_PARENTHESIS);

@@ -2,8 +2,7 @@ package com.test.attribute.ic;
 
 import com.test.attribute.cases.InnerClassesAttributeCase;
 import com.test.cfa.ClassFileAttributeTestGenerator;
-import com.test.present.ClassFileAttributePresenterTestBase;
-import org.junit.BeforeClass;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,17 +20,15 @@ public class TestGenerator extends ClassFileAttributeTestGenerator {
     }
 
     @Override
-    protected void printImportStatements() {
-        smartPrintImportStatement(ClassFileAttributePresenterTestBase.class);
-        smartPrintImportStatement(BeforeClass.class);
-        super.printImportStatements();
+    protected void collectOtherClassesForImportStatements() {
+        collectClassForImportStatement(ClassFileAttributePresenterTestBase.class);
     }
 
-    private static void generateSpecificTest() throws IOException, InterruptedException {
+    private static void generateSpecificTest() throws Exception {
         generateTest(Set.of(InnerClassesAttributeCase.class), "specific");
     }
 
-    private static void generateStandardTest() throws IOException, InterruptedException {
+    private static void generateStandardTest() throws Exception {
         Set<Class<?>> classes = Set.of(
                 Boolean.class,
 //                Short.class,
@@ -52,14 +49,14 @@ public class TestGenerator extends ClassFileAttributeTestGenerator {
         generateTest(classes, "standard");
     }
 
-    private static void generateTest(Set<Class<?>> classes, String dirName) throws IOException, InterruptedException {
+    private static void generateTest(Set<Class<?>> classes, String dirName) throws Exception {
         for (Class<?> clazz : classes) {
             new TestGenerator(clazz, dirName).generate();
             Thread.sleep(500);
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
 //        AttributeTestGenerator.overrideExistingFile = false;
         generateStandardTest();
         generateSpecificTest();

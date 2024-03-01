@@ -1,12 +1,19 @@
 package com.test.cfa.specific;
 
-import com.test.present.ClassFileAttributePresenterTestBase;
+import com.study.type.info.attribute.InnerClassesAttribute;
+import com.study.type.info.attribute.PermittedSubclassesAttribute;
+import com.study.type.info.attribute.SourceFileAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
+import com.test.cfa.ClassFileAttributeTestGenerator;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(ClassFileAttributeTestGenerator.class)
 public class PermittedSubclassesCaseAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
@@ -14,12 +21,15 @@ public class PermittedSubclassesCaseAttributeTest extends ClassFileAttributePres
         buildRealLines(Class.forName("com.test.attribute.cases.PermittedSubclassesCase"));
     }
 
+    @ExpectedPredefinedAttribute(SourceFileAttribute.class)
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(
                 "SourceFile: \"PermittedSubclassesCase.java\""
         );
     }
+
+    @ExpectedPredefinedAttribute(PermittedSubclassesAttribute.class)
     @Test
     public void test_for_PermittedSubclasses_Attribute() {
         expectedConsecutiveLines = List.of(
@@ -30,6 +40,8 @@ public class PermittedSubclassesCaseAttributeTest extends ClassFileAttributePres
                 "  com/test/attribute/cases/PermittedSubclassesCase$C4"
         );
     }
+
+    @ExpectedPredefinedAttribute(InnerClassesAttribute.class)
     @Test
     public void test_for_InnerClasses_Attribute() {
         expectedConsecutiveLines = List.of(

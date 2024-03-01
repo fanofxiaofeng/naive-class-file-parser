@@ -1,6 +1,6 @@
 package com.test.generator;
 
-import com.test.present.PresenterTestBase;
+import com.test.presenter.PresenterTestBase;
 import org.junit.After;
 import org.junit.Assert;
 

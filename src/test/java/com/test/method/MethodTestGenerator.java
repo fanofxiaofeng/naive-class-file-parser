@@ -1,12 +1,9 @@
 package com.test.method;
 
-import com.test.cases.method.ParameterCase;
-import com.test.cases.method.ReturnValueCase;
-import com.test.cases.method.ThrowsCase;
+import com.test.cases.method.instruction.LoadAndStoreInstructionsIntCase;
 import com.test.generator.AbstractTestGenerator;
-import com.test.generator.ConsecutiveLinesTestGenerator;
+import com.test.generator.MemberTestGenerator;
 import com.test.generator.TestGeneratorContainer;
-import com.test.present.C33;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,12 +12,25 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public class MethodTestGenerator extends ConsecutiveLinesTestGenerator {
+public class MethodTestGenerator extends MemberTestGenerator {
 
     private int cnt = 0;
 
     public MethodTestGenerator(Class<?> clazz, String outputDirectory) {
         super(clazz, outputDirectory);
+    }
+
+    @Override
+    protected void visitHeaderLine() {
+        Class<?> parentClass = MethodPresenterTestBase.class;
+
+        testHolder.visitImportStatement(parentClass);
+        String headerLine = String.format(
+                "public class %sMethodsTest extends %s {%n",
+                extractSimpleName(),
+                parentClass.getSimpleName()
+        );
+        testHolder.visitHeaderLine(headerLine);
     }
 
     @Override
@@ -62,25 +72,14 @@ public class MethodTestGenerator extends ConsecutiveLinesTestGenerator {
     }
 
     @Override
-    protected void printHeaderLine() {
-        printStream.printf(
-                "public class %sMethodsTest extends %s {%n",
-                extractSimpleName(),
-                MethodPresenterTestBase.class.getSimpleName()
-        );
-    }
-
-    @Override
     protected String buildTestFunctionNameForOneItem(List<String> linesForOneItem) {
         return "test_for_method_" + (++cnt);
     }
 
     @Override
-    protected void printImportStatements() {
-        smartPrintImportStatement(MethodPresenterTestBase.class);
-        super.printImportStatements();
+    protected void collectOtherClassesForImportStatements() {
+        collectClassForImportStatement(MethodPresenterTestBase.class);
     }
-
 
     @Override
     protected List<String> filter(List<String> consecutiveLines) {
@@ -89,21 +88,53 @@ public class MethodTestGenerator extends ConsecutiveLinesTestGenerator {
             realLines.add(consecutiveLines.get(i));
         }
 
-        for (int i = 3; i < consecutiveLines.size(); i++) {
+        for (int i = 3; i < consecutiveLines.size(); ) {
             String line = consecutiveLines.get(i);
             if (line.startsWith("    Signature:")) {
                 realLines.add(line);
+                i++;
             } else if (line.equals("    Exceptions:")) {
                 realLines.add(line);
+                realLines.add(consecutiveLines.get(i + 1));
+                i += 2;
+            } else if (line.equals("    Code:")) {
+                realLines.add(line);
+                realLines.add(consecutiveLines.get(i + 1));
+                int delta = 2;
+                while (i + delta < consecutiveLines.size()) {
+                    String tempLine = consecutiveLines.get(i + delta);
+                    String strippedLine = tempLine.stripLeading();
+                    int index = strippedLine.indexOf(':');
+                    if (index < 0) {
+                        i += delta;
+                        break;
+                    }
+                    String numberCandidate = strippedLine.substring(0, index);
+                    boolean isNum = true;
+                    for (char c : numberCandidate.toCharArray()) {
+                        if (c >= '0' && c <= '9') {
+                            continue;
+                        }
+                        isNum = false;
+                        break;
+                    }
+                    if (isNum) {
+                        realLines.add(tempLine);
+                        delta++;
+                        continue;
+                    }
+                    i += delta;
+                    break;
+                }
+            } else {
                 i++;
-                realLines.add(consecutiveLines.get(i));
             }
         }
 
         return realLines;
     }
 
-    private static void generateStandardTest() throws IOException {
+    private static void generateStandardTest() throws IOException, ReflectiveOperationException {
         Set<Class<?>> classes = Set.of(
                 Object.class,
 //                Character.class,
@@ -114,9 +145,9 @@ public class MethodTestGenerator extends ConsecutiveLinesTestGenerator {
 //                Double.class,
 //                Math.class,
 //                String.class,
-                Class.class
-//                Enum.class,
-//                List.class,
+//                Class.class
+                Enum.class,
+                List.class
 //                ArrayList.class,
 //                LinkedList.class,
 //                Map.class,
@@ -129,28 +160,28 @@ public class MethodTestGenerator extends ConsecutiveLinesTestGenerator {
         generateTest(classes, "com/test/method/standard");
     }
 
-    private static void generateSpecificTest() throws IOException {
+    private static void generateSpecificTest() throws IOException, ReflectiveOperationException {
         Set<Class<?>> classes = Set.of(
-                ReturnValueCase.class,
-                ParameterCase.class,
-                ThrowsCase.class,
+//                ReturnValueCase.class,
+//                ParameterCase.class,
+//                ThrowsCase.class,
 //                ClassAccessFlags.class,
-                C33.class
+//                C33.class,
 //                MethodCase.class
         );
 
         generateTest(classes, "com/test/method/specific");
     }
 
-    private static void generateTest(Set<Class<?>> classes, String outputDirectory) throws IOException {
+    private static void generateTest(Set<Class<?>> classes, String outputDirectory) throws IOException, ReflectiveOperationException {
         TestGeneratorContainer testGeneratorContainer = new TestGeneratorContainer();
         testGeneratorContainer.process(classes, outputDirectory, MethodTestGenerator::new);
     }
 
     public static void main(String[] args) throws Exception {
-        AbstractTestGenerator.overrideExistingFile = false;
+        AbstractTestGenerator.overrideExistingFile = true;
 
-        generateStandardTest();
+//        generateStandardTest();
         generateSpecificTest();
     }
 }

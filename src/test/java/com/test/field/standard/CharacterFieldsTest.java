@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class CharacterFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.lang.Character"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_RADIX() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 2"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_RADIX() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 36"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_VALUE() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +52,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_VALUE() {
         expectedConsecutiveLines = List.of(
@@ -50,6 +63,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 65535"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_TYPE() {
         expectedConsecutiveLines = List.of(
@@ -59,6 +74,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #402                         // Ljava/lang/Class<Ljava/lang/Character;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_UNASSIGNED() {
         expectedConsecutiveLines = List.of(
@@ -68,6 +85,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_UPPERCASE_LETTER() {
         expectedConsecutiveLines = List.of(
@@ -77,6 +96,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_LOWERCASE_LETTER() {
         expectedConsecutiveLines = List.of(
@@ -86,6 +107,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 2"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_TITLECASE_LETTER() {
         expectedConsecutiveLines = List.of(
@@ -95,6 +118,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 3"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MODIFIER_LETTER() {
         expectedConsecutiveLines = List.of(
@@ -104,6 +129,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 4"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_OTHER_LETTER() {
         expectedConsecutiveLines = List.of(
@@ -113,6 +140,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 5"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_NON_SPACING_MARK() {
         expectedConsecutiveLines = List.of(
@@ -122,6 +151,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 6"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_ENCLOSING_MARK() {
         expectedConsecutiveLines = List.of(
@@ -131,6 +162,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 7"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_COMBINING_SPACING_MARK() {
         expectedConsecutiveLines = List.of(
@@ -140,6 +173,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 8"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DECIMAL_DIGIT_NUMBER() {
         expectedConsecutiveLines = List.of(
@@ -149,6 +184,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 9"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_LETTER_NUMBER() {
         expectedConsecutiveLines = List.of(
@@ -158,6 +195,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 10"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_OTHER_NUMBER() {
         expectedConsecutiveLines = List.of(
@@ -167,6 +206,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 11"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_SPACE_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -176,6 +217,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 12"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_LINE_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -185,6 +228,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 13"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PARAGRAPH_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -194,6 +239,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 14"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_CONTROL() {
         expectedConsecutiveLines = List.of(
@@ -203,6 +250,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 15"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_FORMAT() {
         expectedConsecutiveLines = List.of(
@@ -212,6 +261,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 16"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PRIVATE_USE() {
         expectedConsecutiveLines = List.of(
@@ -221,6 +272,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 18"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -230,6 +283,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 19"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DASH_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -239,6 +294,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 20"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_START_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -248,6 +305,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 21"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_END_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -257,6 +316,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 22"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_CONNECTOR_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -266,6 +327,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 23"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_OTHER_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -275,6 +338,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 24"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MATH_SYMBOL() {
         expectedConsecutiveLines = List.of(
@@ -284,6 +349,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 25"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_CURRENCY_SYMBOL() {
         expectedConsecutiveLines = List.of(
@@ -293,6 +360,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 26"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MODIFIER_SYMBOL() {
         expectedConsecutiveLines = List.of(
@@ -302,6 +371,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 27"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_OTHER_SYMBOL() {
         expectedConsecutiveLines = List.of(
@@ -311,6 +382,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 28"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_INITIAL_QUOTE_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -320,6 +393,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 29"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_FINAL_QUOTE_PUNCTUATION() {
         expectedConsecutiveLines = List.of(
@@ -329,6 +404,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 30"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_ERROR() {
         expectedConsecutiveLines = List.of(
@@ -338,6 +415,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int -1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_UNDEFINED() {
         expectedConsecutiveLines = List.of(
@@ -347,6 +426,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int -1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_LEFT_TO_RIGHT() {
         expectedConsecutiveLines = List.of(
@@ -356,6 +437,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_RIGHT_TO_LEFT() {
         expectedConsecutiveLines = List.of(
@@ -365,6 +448,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC() {
         expectedConsecutiveLines = List.of(
@@ -374,6 +459,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 2"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_EUROPEAN_NUMBER() {
         expectedConsecutiveLines = List.of(
@@ -383,6 +470,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 3"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -392,6 +481,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 4"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR() {
         expectedConsecutiveLines = List.of(
@@ -401,6 +492,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 5"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_ARABIC_NUMBER() {
         expectedConsecutiveLines = List.of(
@@ -410,6 +503,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 6"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_COMMON_NUMBER_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -419,6 +514,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 7"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_NONSPACING_MARK() {
         expectedConsecutiveLines = List.of(
@@ -428,6 +525,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 8"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_BOUNDARY_NEUTRAL() {
         expectedConsecutiveLines = List.of(
@@ -437,6 +536,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 9"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_PARAGRAPH_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -446,6 +547,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 10"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_SEGMENT_SEPARATOR() {
         expectedConsecutiveLines = List.of(
@@ -455,6 +558,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 11"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_WHITESPACE() {
         expectedConsecutiveLines = List.of(
@@ -464,6 +569,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 12"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_OTHER_NEUTRALS() {
         expectedConsecutiveLines = List.of(
@@ -473,6 +580,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 13"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING() {
         expectedConsecutiveLines = List.of(
@@ -482,6 +591,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 14"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE() {
         expectedConsecutiveLines = List.of(
@@ -491,6 +602,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 15"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING() {
         expectedConsecutiveLines = List.of(
@@ -500,6 +613,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 16"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE() {
         expectedConsecutiveLines = List.of(
@@ -509,6 +624,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 17"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_POP_DIRECTIONAL_FORMAT() {
         expectedConsecutiveLines = List.of(
@@ -518,6 +635,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 18"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE() {
         expectedConsecutiveLines = List.of(
@@ -527,6 +646,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 19"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE() {
         expectedConsecutiveLines = List.of(
@@ -536,6 +657,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 20"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_FIRST_STRONG_ISOLATE() {
         expectedConsecutiveLines = List.of(
@@ -545,6 +668,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 21"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DIRECTIONALITY_POP_DIRECTIONAL_ISOLATE() {
         expectedConsecutiveLines = List.of(
@@ -554,6 +679,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 22"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_HIGH_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -563,6 +690,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 55296"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_HIGH_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -572,6 +701,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 56319"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_LOW_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -581,6 +712,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 56320"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_LOW_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -590,6 +723,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 57343"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -599,6 +734,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 55296"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_SURROGATE() {
         expectedConsecutiveLines = List.of(
@@ -608,6 +745,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 57343"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_SUPPLEMENTARY_CODE_POINT() {
         expectedConsecutiveLines = List.of(
@@ -617,6 +756,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 65536"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_CODE_POINT() {
         expectedConsecutiveLines = List.of(
@@ -626,6 +767,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_CODE_POINT() {
         expectedConsecutiveLines = List.of(
@@ -635,6 +778,7 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1114111"
         );
     }
+
     @Test
     public void test_for_field_value() {
         expectedConsecutiveLines = List.of(
@@ -643,6 +787,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -652,6 +798,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long 3786198910865385080l"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_SIZE() {
         expectedConsecutiveLines = List.of(
@@ -661,6 +809,8 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 16"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_BYTES() {
         expectedConsecutiveLines = List.of(
@@ -670,6 +820,7 @@ public class CharacterFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 2"
         );
     }
+
     @Test
     public void test_for_field_$assertionsDisabled() {
         expectedConsecutiveLines = List.of(

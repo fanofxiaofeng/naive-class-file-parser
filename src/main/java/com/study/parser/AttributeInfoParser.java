@@ -38,7 +38,7 @@ public class AttributeInfoParser<I extends AttributeInfo> extends InfoHolderPars
             case "EnclosingMethod" -> new EnclosingMethodAttributeParser(that);
             case "Synthetic" -> new SyntheticAttributeParser(that);
             case "BootstrapMethods" -> new BootstrapMethodsAttributeParser(that);
-//            case "Code" -> new CodeAttribute(that);
+            case "Code" -> new CodeAttributeParser(constantPool, that);
 //            case "LineNumberTable" -> new LineNumberTableAttribute(that);
             case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttributeParser(that);
             case "RuntimeInvisibleAnnotations" -> new RuntimeInvisibleAnnotationsAttributeParser(that);
@@ -46,6 +46,8 @@ public class AttributeInfoParser<I extends AttributeInfo> extends InfoHolderPars
 //            case "StackMapTable" -> new StackMapTableAttribute(that);
             case "Signature" -> new SignatureAttributeParser(that);
             case "PermittedSubclasses" -> new PermittedSubclassesParser(that);
+            case "NestHost" -> new NestHostParser(that);
+            case "NestMembers" -> new NestMembersParser(that);
             default -> new AttributeParser<>(that) {
                 @Override
                 public AttributeInfo parse() {

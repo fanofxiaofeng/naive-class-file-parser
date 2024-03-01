@@ -21,7 +21,7 @@ public class ConstantPoolPresenter extends AbstractPresenter {
         ConstantPool constantPool = result.getConstantPool();
 
         for (Pair<Integer, CpInfo> pair : constantPool) {
-            new ItemPresenter(result, printStreamWrapper, pair).present();
+            new CpInfoPresenter(result, printStreamWrapper, pair).present();
         }
     }
 }

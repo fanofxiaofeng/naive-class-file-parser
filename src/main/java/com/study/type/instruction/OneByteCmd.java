@@ -8,6 +8,10 @@ public class OneByteCmd extends AbstractCmd {
         super(ordinal);
         this.name = name;
     }
+    public OneByteCmd(int ordinal, String name) {
+        super(new U1(ordinal));
+        this.name = name;
+    }
 
     @Override
     public int size() {

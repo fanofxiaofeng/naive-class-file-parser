@@ -25,10 +25,6 @@ public class ConstantMethodType extends CompoundCpInfo {
     }
 
     @Override
-    public void validate(ConstantPool constantPool) {
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         return constantPool.get(descriptorIndex, LeafCpInfo.class).desc();
     }

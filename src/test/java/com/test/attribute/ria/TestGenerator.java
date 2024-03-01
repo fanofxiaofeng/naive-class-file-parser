@@ -1,7 +1,6 @@
 package com.test.attribute.ria;
 
 import com.test.attribute.cases.ria.RuntimeInvisibleAnnotationsAttributeCase1;
-import com.test.field.FieldPresenterTestBase;
 import com.test.field.FieldTestGenerator;
 
 import java.io.FileNotFoundException;
@@ -23,13 +22,7 @@ public class TestGenerator extends FieldTestGenerator {
                 anyMatch(line -> line.startsWith("    RuntimeInvisibleAnnotations:"));
     }
 
-    @Override
-    protected void printImportStatements() {
-        smartPrintImportStatement(FieldPresenterTestBase.class);
-        super.printImportStatements();
-    }
-
-    private static void generateStandardTest() throws IOException, InterruptedException {
+    private static void generateStandardTest() throws IOException, InterruptedException, ReflectiveOperationException {
         String outputDirectory = BASE_DIR + "/standard";
         Set<Class<?>> classes = Set.of(
                 Throwable.class,
@@ -40,7 +33,7 @@ public class TestGenerator extends FieldTestGenerator {
         generateTest(classes, outputDirectory);
     }
 
-    private static void generateSpecificTest() throws IOException, InterruptedException {
+    private static void generateSpecificTest() throws IOException, InterruptedException, ReflectiveOperationException {
         String outputDirectory = BASE_DIR + "/specific";
         Set<Class<?>> classes = Set.of(
                 RuntimeInvisibleAnnotationsAttributeCase1.class
@@ -53,7 +46,7 @@ public class TestGenerator extends FieldTestGenerator {
         generateTest(classes, outputDirectory);
     }
 
-    private static void generateTest(Set<Class<?>> classes, String outputDirectory) throws IOException, InterruptedException {
+    private static void generateTest(Set<Class<?>> classes, String outputDirectory) throws IOException, InterruptedException, ReflectiveOperationException {
         for (Class<?> clazz : classes) {
             TestGenerator testGenerator = new TestGenerator(clazz, outputDirectory);
             testGenerator.generate();
@@ -61,7 +54,7 @@ public class TestGenerator extends FieldTestGenerator {
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ReflectiveOperationException {
 //        generateStandardTest();
         generateSpecificTest();
     }

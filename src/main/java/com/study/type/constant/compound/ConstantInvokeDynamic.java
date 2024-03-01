@@ -26,11 +26,6 @@ public class ConstantInvokeDynamic extends CompoundCpInfo {
     }
 
     @Override
-    public void validate(ConstantPool constantPool) {
-
-    }
-
-    @Override
     public String detail(ConstantPool constantPool) {
         String nameAndTypeDetail = constantPool.detail(nameAndTypeIndex);
 

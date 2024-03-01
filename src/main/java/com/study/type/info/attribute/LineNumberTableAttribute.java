@@ -21,6 +21,7 @@ public class LineNumberTableAttribute extends AttributeInfo {
         }
     }
 
+    /*
     @Override
     public String describe(int indent) {
         StringBuilder stringBuilder = withIndent(indent).append("LineNumberTable:\n");
@@ -32,6 +33,7 @@ public class LineNumberTableAttribute extends AttributeInfo {
         }
         return stringBuilder.toString();
     }
+     */
 
     private class LineNumberInfo {
         private U2 startPc;

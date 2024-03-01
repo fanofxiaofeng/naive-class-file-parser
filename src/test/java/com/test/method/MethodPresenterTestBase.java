@@ -1,7 +1,7 @@
 package com.test.method;
 
 import com.study.constants.PresentKind;
-import com.test.present.PresenterTestBase;
+import com.test.presenter.PresenterTestBase;
 import org.junit.After;
 import org.junit.Assert;
 
@@ -15,7 +15,7 @@ public class MethodPresenterTestBase extends PresenterTestBase {
     protected List<String> expectedConsecutiveLines;
 
     protected static void buildRealLines(Class<?> clazz) throws IOException {
-        String[] results = getResults(clazz, PresentKind.METHODS);
+        String[] results = getResults(clazz, EnumSet.of(PresentKind.METHODS, PresentKind.CONSTANT_POOL));
         List<String> realLines = Arrays.stream(results).toList();
         int startIndex = 0;
         while (!realLines.get(startIndex).equals("{")) {

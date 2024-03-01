@@ -50,11 +50,9 @@ public abstract class AbstractAttributePresenter<T> extends AbstractPresenter {
         }
         if (attribute instanceof EnclosingMethodAttribute specified) {
             return new EnclosingMethodAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
-
         }
         if (attribute instanceof SyntheticAttribute specified) {
             return new SyntheticAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
-
         }
         if (attribute instanceof BootstrapMethodsAttribute specified) {
             return new BootstrapMethodsAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
@@ -64,6 +62,15 @@ public abstract class AbstractAttributePresenter<T> extends AbstractPresenter {
         }
         if (attribute instanceof PermittedSubclassesAttribute specified) {
             return new PermittedSubclassesAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
+        if (attribute instanceof CodeAttribute specified) {
+            return new CodeAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
+        if (attribute instanceof NestHostAttribute specified) {
+            return new NestHostAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
+        if (attribute instanceof NestMembersAttribute specified) {
+            return new NestMembersAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
         }
 
         return () -> 0;

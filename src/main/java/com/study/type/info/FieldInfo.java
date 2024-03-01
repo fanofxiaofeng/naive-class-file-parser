@@ -36,7 +36,6 @@ public class FieldInfo extends AbstractInfo {
         return descAccessFlags();
     }
 
-
     public String buildHumanReadableTypeDesc(ConstantPool constantPool) {
         Optional<SignatureAttribute> optionalSignature = findSignatureAttribute();
 
@@ -72,8 +71,8 @@ public class FieldInfo extends AbstractInfo {
     /**
      * @return a string that shows accessFlags.
      * Some examples are shown as follows:
-     * "flags: (0x0002) ACC_PRIVATE"
-     * "flags: (0x1018) ACC_STATIC, ACC_FINAL, ACC_SYNTHETIC"
+     * 1. "flags: (0x0002) ACC_PRIVATE"
+     * 2. "flags: (0x1018) ACC_STATIC, ACC_FINAL, ACC_SYNTHETIC"
      */
     private String descAccessFlags() {
         int mod = accessFlags.toInt();

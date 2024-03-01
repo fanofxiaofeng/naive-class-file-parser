@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class FloatFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.lang.Float"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_POSITIVE_INFINITY() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float Infinityf"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_NEGATIVE_INFINITY() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float -Infinityf"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_NaN() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +52,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float NaNf"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_VALUE() {
         expectedConsecutiveLines = List.of(
@@ -50,6 +63,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float 3.4028235E38f"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_NORMAL() {
         expectedConsecutiveLines = List.of(
@@ -59,6 +74,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float 1.1754944E-38f"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_VALUE() {
         expectedConsecutiveLines = List.of(
@@ -68,6 +85,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float 1.4E-45f"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_SIZE() {
         expectedConsecutiveLines = List.of(
@@ -77,6 +96,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 32"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PRECISION() {
         expectedConsecutiveLines = List.of(
@@ -86,6 +107,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 24"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAX_EXPONENT() {
         expectedConsecutiveLines = List.of(
@@ -95,6 +118,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 127"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_EXPONENT() {
         expectedConsecutiveLines = List.of(
@@ -104,6 +129,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int -126"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_BYTES() {
         expectedConsecutiveLines = List.of(
@@ -113,6 +140,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 4"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_TYPE() {
         expectedConsecutiveLines = List.of(
@@ -122,6 +151,7 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #175                         // Ljava/lang/Class<Ljava/lang/Float;>;"
         );
     }
+
     @Test
     public void test_for_field_value() {
         expectedConsecutiveLines = List.of(
@@ -130,6 +160,8 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0012) ACC_PRIVATE, ACC_FINAL"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -139,6 +171,7 @@ public class FloatFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long -2671257302660747028l"
         );
     }
+
     @Test
     public void test_for_field_$assertionsDisabled() {
         expectedConsecutiveLines = List.of(

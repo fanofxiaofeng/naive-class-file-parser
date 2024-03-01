@@ -1,17 +1,22 @@
 package com.test.field.specific;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class C22FieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
     public static void prepare() throws IOException, ClassNotFoundException {
-        buildRealLines(Class.forName("com.test.present.C22"));
+        buildRealLines(Class.forName("com.test.presenter.C22"));
     }
 
     @Test
@@ -22,6 +27,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f2() {
         expectedConsecutiveLines = List.of(
@@ -30,6 +36,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f3() {
         expectedConsecutiveLines = List.of(
@@ -38,6 +45,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f4() {
         expectedConsecutiveLines = List.of(
@@ -46,6 +54,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f5() {
         expectedConsecutiveLines = List.of(
@@ -54,6 +63,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f6() {
         expectedConsecutiveLines = List.of(
@@ -62,6 +72,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f7() {
         expectedConsecutiveLines = List.of(
@@ -70,30 +81,34 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f8() {
         expectedConsecutiveLines = List.of(
-                "  private com.test.present.C22$Level2 f8;",
-                "    descriptor: Lcom/test/present/C22$Level2;",
+                "  private com.test.presenter.C22$Level2 f8;",
+                "    descriptor: Lcom/test/presenter/C22$Level2;",
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f9() {
         expectedConsecutiveLines = List.of(
-                "  private com.test.present.C22$Level2$Level3 f9;",
-                "    descriptor: Lcom/test/present/C22$Level2$Level3;",
+                "  private com.test.presenter.C22$Level2$Level3 f9;",
+                "    descriptor: Lcom/test/presenter/C22$Level2$Level3;",
                 "    flags: (0x0002) ACC_PRIVATE"
         );
     }
+
     @Test
     public void test_for_field_f10() {
         expectedConsecutiveLines = List.of(
-                "  private static com.test.present.C22$SC f10;",
-                "    descriptor: Lcom/test/present/C22$SC;",
+                "  private static com.test.presenter.C22$SC f10;",
+                "    descriptor: Lcom/test/presenter/C22$SC;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
         );
     }
+
     @Test
     public void test_for_field_f11() {
         expectedConsecutiveLines = List.of(
@@ -102,14 +117,16 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0000)"
         );
     }
+
     @Test
     public void test_for_field_f12() {
         expectedConsecutiveLines = List.of(
-                "  com.test.present.C22$Level2$Level3[][][][][][][][][][][] f12;",
-                "    descriptor: [[[[[[[[[[[Lcom/test/present/C22$Level2$Level3;",
+                "  com.test.presenter.C22$Level2$Level3[][][][][][][][][][][] f12;",
+                "    descriptor: [[[[[[[[[[[Lcom/test/presenter/C22$Level2$Level3;",
                 "    flags: (0x0000)"
         );
     }
+
     @Test
     public void test_for_field_f13() {
         expectedConsecutiveLines = List.of(
@@ -118,6 +135,8 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0000)"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_f14() {
         expectedConsecutiveLines = List.of(
@@ -127,6 +146,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
     @Test
     public void test_for_field_f15() {
         expectedConsecutiveLines = List.of(
@@ -135,6 +155,7 @@ public class C22FieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0004) ACC_PROTECTED"
         );
     }
+
     @Test
     public void test_for_field_f16() {
         expectedConsecutiveLines = List.of(

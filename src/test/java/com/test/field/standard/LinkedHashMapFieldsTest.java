@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.util.LinkedHashMap"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long 3801124242820219131l"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_head() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,8 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #213                         // Ljava/util/LinkedHashMap$Entry<TK;TV;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_tail() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +52,7 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #213                         // Ljava/util/LinkedHashMap$Entry<TK;TV;>;"
         );
     }
+
     @Test
     public void test_for_field_accessOrder() {
         expectedConsecutiveLines = List.of(
@@ -49,6 +61,8 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0010) ACC_FINAL"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PUT_NORM() {
         expectedConsecutiveLines = List.of(
@@ -58,6 +72,8 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PUT_FIRST() {
         expectedConsecutiveLines = List.of(
@@ -67,6 +83,8 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PUT_LAST() {
         expectedConsecutiveLines = List.of(
@@ -76,6 +94,7 @@ public class LinkedHashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 2"
         );
     }
+
     @Test
     public void test_for_field_putMode() {
         expectedConsecutiveLines = List.of(

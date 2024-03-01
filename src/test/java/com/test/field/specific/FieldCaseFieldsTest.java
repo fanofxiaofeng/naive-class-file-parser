@@ -1,12 +1,17 @@
 package com.test.field.specific;
 
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class FieldCaseFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +19,7 @@ public class FieldCaseFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("com.test.cases.FieldCase"));
     }
 
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_c2() {
         expectedConsecutiveLines = List.of(

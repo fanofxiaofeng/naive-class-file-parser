@@ -1,12 +1,17 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class ArrayListFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +19,7 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.util.ArrayList"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +29,8 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long 8683452581122892189l"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DEFAULT_CAPACITY() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +40,7 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 10"
         );
     }
+
     @Test
     public void test_for_field_EMPTY_ELEMENTDATA() {
         expectedConsecutiveLines = List.of(
@@ -40,6 +49,7 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_DEFAULTCAPACITY_EMPTY_ELEMENTDATA() {
         expectedConsecutiveLines = List.of(
@@ -48,6 +58,7 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_elementData() {
         expectedConsecutiveLines = List.of(
@@ -56,6 +67,7 @@ public class ArrayListFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0080) ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_size() {
         expectedConsecutiveLines = List.of(

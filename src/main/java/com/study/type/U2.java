@@ -12,6 +12,14 @@ public class U2 extends AbstractU implements Iterable<Integer> {
         fillDetail(a, b);
     }
 
+    public int toSignedInt() {
+        int raw = toInt();
+        if (raw > Short.MAX_VALUE) {
+            return raw - 0x10000;
+        }
+        return raw;
+    }
+
     @Override
     public Iterator<Integer> iterator() {
         return new Iterator<>() {

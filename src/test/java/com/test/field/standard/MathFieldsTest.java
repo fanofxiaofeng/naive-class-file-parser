@@ -1,12 +1,17 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class MathFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +19,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.lang.Math"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_E() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +29,8 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: double 2.718281828459045d"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_PI() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +40,8 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: double 3.141592653589793d"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_TAU() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +51,8 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: double 6.283185307179586d"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DEGREES_TO_RADIANS() {
         expectedConsecutiveLines = List.of(
@@ -50,6 +62,8 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: double 0.017453292519943295d"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_RADIANS_TO_DEGREES() {
         expectedConsecutiveLines = List.of(
@@ -59,6 +73,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: double 57.29577951308232d"
         );
     }
+
     @Test
     public void test_for_field_negativeZeroFloatBits() {
         expectedConsecutiveLines = List.of(
@@ -67,6 +82,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_negativeZeroDoubleBits() {
         expectedConsecutiveLines = List.of(
@@ -75,6 +91,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
     @Test
     public void test_for_field_twoToTheDoubleScaleUp() {
         expectedConsecutiveLines = List.of(
@@ -83,6 +100,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0008) ACC_STATIC"
         );
     }
+
     @Test
     public void test_for_field_twoToTheDoubleScaleDown() {
         expectedConsecutiveLines = List.of(
@@ -91,6 +109,7 @@ public class MathFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0008) ACC_STATIC"
         );
     }
+
     @Test
     public void test_for_field_$assertionsDisabled() {
         expectedConsecutiveLines = List.of(

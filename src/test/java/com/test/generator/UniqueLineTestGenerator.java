@@ -1,12 +1,11 @@
 package com.test.generator;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public abstract class UniqueLineTestGenerator extends AbstractTestGenerator<String> {
 
@@ -27,7 +26,7 @@ public abstract class UniqueLineTestGenerator extends AbstractTestGenerator<Stri
         return 0;
     }
 
-    protected List<String> hasSomeContent() throws IOException {
+    protected List<String> filterContent() throws IOException {
         List<String> lines = readLines();
         List<String> filteredLines = new ArrayList<>();
         for (int index = findStartIndex(lines); index < lines.size(); index++) {
@@ -44,54 +43,23 @@ public abstract class UniqueLineTestGenerator extends AbstractTestGenerator<Stri
         return filteredLines;
     }
 
-
     @Override
-    protected void printBeforeMethod() {
-        printStream.println();
-        printStream.printf("    @%s%n", Before.class.getSimpleName());
-        printStream.printf("    public void prepare() throws %s, %s {%n",
-                IOException.class.getSimpleName(),
-                ClassNotFoundException.class.getSimpleName()
-        );
-        printStream.printf("        buildRealLines(Class.forName(\"%s\"));%n", className);
-        printStream.printf("    }%n");
-        printStream.println();
+    protected void visitBeforeClassMethod() {
+        testHolder.visitBeforeClassMethod(className);
     }
-
-    @Override
-    protected void printImportStatements() {
-        smartPrintImportStatement(Before.class);
-        super.printImportStatements();
-    }
-
 
     protected abstract boolean shouldProcessThisItem(String line);
 
+    protected List<String> beforeVisitTestMethod(List<String> filteredLines) {
+        return List.of(String.format("    @%s%n", Test.class.getSimpleName()));
+    }
 
-    protected void generateTestMethod(List<String> filteredLines) {
-        printStream.printf("    @%s%n", Test.class.getSimpleName());
-        printStream.printf("    public void test() {%n");
-        printStream.printf("        expectedLines = List.of(%n");
-        int size = filteredLines.size();
-        IntStream.range(0, size).forEach(index -> {
-            String line = filteredLines.get(index);
-            printStream.print("                ");
-            printStream.print('"');
-            line.chars().forEach(c -> {
-                switch (c) {
-                    case '"' -> printStream.print("\\\"");
-                    case '\'' -> printStream.print("'");
-                    case '\\' -> printStream.print("\\\\");
-                    default -> printStream.print((char) c);
-                }
-            });
-            printStream.print("\"");
-            if (index + 1 < size) {
-                printStream.print(",");
-            }
-            printStream.println();
-        });
-        printStream.println("        );");
-        printStream.println("    }");
+    @Override
+    protected void visitTestMethods(List<String> filteredLines) {
+        List<String> pre = beforeVisitTestMethod(filteredLines);
+
+        String headerLine = String.format("    public void test() {%n");
+
+        testHolder.visitTestMethod(pre, headerLine, filteredLines, "expectedLines");
     }
 }

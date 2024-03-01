@@ -6,6 +6,7 @@ import com.study.type.U4;
 import com.study.type.constant.CpInfo;
 import com.study.type.constant.compound.ConstantString;
 import com.study.type.constant.leaf.*;
+import com.study.util.CpInfoUtils;
 
 import java.util.StringJoiner;
 
@@ -34,7 +35,7 @@ public class ConstantValueAttribute extends AttributeInfo {
         joiner.add("ConstantValue:");
         int index = constantValueIndex.toInt();
         CpInfo cpInfo = constantPool.get(index);
-        if (LeafCpInfo.isLeafCpInfo(cpInfo)) {
+        if (CpInfoUtils.isLeafCpInfo(cpInfo)) {
             if (cpInfo instanceof ConstantLong) {
                 joiner.add("long").add(cpInfo.desc());
             } else if (cpInfo instanceof ConstantFloat) {

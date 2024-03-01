@@ -28,6 +28,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.Class(java.lang.ClassLoader, java.lang.Class<?>);",
                 "    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/Class;)V",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=3, args_size=3",
                 "    Signature: #1342                        // (Ljava/lang/ClassLoader;Ljava/lang/Class<*>;)V"
         );
     }
@@ -36,7 +38,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String toString();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=1"
         );
     }
     @Test
@@ -44,7 +48,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String toGenericString();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=5, args_size=1"
         );
     }
     @Test
@@ -53,6 +59,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  static java.lang.String typeVarBounds(java.lang.reflect.TypeVariable<?>);",
                 "    descriptor: (Ljava/lang/reflect/TypeVariable;)Ljava/lang/String;",
                 "    flags: (0x0008) ACC_STATIC",
+                "    Code:",
+                "      stack=3, locals=2, args_size=1",
                 "    Signature: #1363                        // (Ljava/lang/reflect/TypeVariable<*>;)Ljava/lang/String;"
         );
     }
@@ -62,6 +70,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public static java.lang.Class<?> forName(java.lang.String) throws java.lang.ClassNotFoundException;",
                 "    descriptor: (Ljava/lang/String;)Ljava/lang/Class;",
                 "    flags: (0x0009) ACC_PUBLIC, ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.ClassNotFoundException",
                 "    Signature: #1370                        // (Ljava/lang/String;)Ljava/lang/Class<*>;"
@@ -73,6 +83,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static java.lang.Class<?> forName(java.lang.String, java.lang.Class<?>) throws java.lang.ClassNotFoundException;",
                 "    descriptor: (Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Class;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=4, locals=3, args_size=2",
                 "    Exceptions:",
                 "      throws java.lang.ClassNotFoundException",
                 "    Signature: #1373                        // (Ljava/lang/String;Ljava/lang/Class<*>;)Ljava/lang/Class<*>;"
@@ -84,6 +96,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public static java.lang.Class<?> forName(java.lang.String, boolean, java.lang.ClassLoader) throws java.lang.ClassNotFoundException;",
                 "    descriptor: (Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;",
                 "    flags: (0x0009) ACC_PUBLIC, ACC_STATIC",
+                "    Code:",
+                "      stack=4, locals=5, args_size=3",
                 "    Exceptions:",
                 "      throws java.lang.ClassNotFoundException",
                 "    Signature: #1381                        // (Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class<*>;"
@@ -95,6 +109,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static java.lang.Class<?> forName(java.lang.String, boolean, java.lang.ClassLoader, java.lang.Class<?>) throws java.lang.ClassNotFoundException;",
                 "    descriptor: (Ljava/lang/String;ZLjava/lang/ClassLoader;Ljava/lang/Class;)Ljava/lang/Class;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=4, locals=6, args_size=4",
                 "    Exceptions:",
                 "      throws java.lang.ClassNotFoundException",
                 "    Signature: #1383                        // (Ljava/lang/String;ZLjava/lang/ClassLoader;Ljava/lang/Class<*>;)Ljava/lang/Class<*>;"
@@ -117,6 +133,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public static java.lang.Class<?> forName(java.lang.Module, java.lang.String);",
                 "    descriptor: (Ljava/lang/Module;Ljava/lang/String;)Ljava/lang/Class;",
                 "    flags: (0x0009) ACC_PUBLIC, ACC_STATIC",
+                "    Code:",
+                "      stack=3, locals=4, args_size=2",
                 "    Signature: #1384                        // (Ljava/lang/Module;Ljava/lang/String;)Ljava/lang/Class<*>;"
         );
     }
@@ -126,6 +144,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static java.lang.Class<?> forName(java.lang.Module, java.lang.String, java.lang.Class<?>);",
                 "    descriptor: (Ljava/lang/Module;Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Class;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=3, locals=6, args_size=3",
                 "    Signature: #1389                        // (Ljava/lang/Module;Ljava/lang/String;Ljava/lang/Class<*>;)Ljava/lang/Class<*>;"
         );
     }
@@ -135,6 +155,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public T newInstance() throws java.lang.InstantiationException, java.lang.IllegalAccessException;",
                 "    descriptor: ()Ljava/lang/Object;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=5, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.InstantiationException, java.lang.IllegalAccessException",
                 "    Signature: #1396                        // ()TT;"
@@ -186,7 +208,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isAnnotation();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -194,7 +218,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isSynthetic();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -202,7 +228,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String getName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -218,7 +246,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.ClassLoader getClassLoader();",
                 "    descriptor: ()Ljava/lang/ClassLoader;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=3, args_size=1"
         );
     }
     @Test
@@ -226,7 +256,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  java.lang.ClassLoader getClassLoader0();",
                 "    descriptor: ()Ljava/lang/ClassLoader;",
-                "    flags: (0x0000)"
+                "    flags: (0x0000)",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -234,7 +266,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.Module getModule();",
                 "    descriptor: ()Ljava/lang/Module;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -242,7 +276,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  java.lang.Object getClassData();",
                 "    descriptor: ()Ljava/lang/Object;",
-                "    flags: (0x0000)"
+                "    flags: (0x0000)",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -251,6 +287,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.TypeVariable<java.lang.Class<T>>[] getTypeParameters();",
                 "    descriptor: ()[Ljava/lang/reflect/TypeVariable;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1",
                 "    Signature: #1406                        // ()[Ljava/lang/reflect/TypeVariable<Ljava/lang/Class<TT;>;>;"
         );
     }
@@ -268,7 +306,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.reflect.Type getGenericSuperclass();",
                 "    descriptor: ()Ljava/lang/reflect/Type;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -276,7 +316,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.Package getPackage();",
                 "    descriptor: ()Ljava/lang/Package;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=1"
         );
     }
     @Test
@@ -284,7 +326,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String getPackageName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=5, args_size=1"
         );
     }
     @Test
@@ -293,6 +337,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?>[] getInterfaces();",
                 "    descriptor: ()[Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1",
                 "    Signature: #1416                        // ()[Ljava/lang/Class<*>;"
         );
     }
@@ -302,6 +348,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.Class<?>[] getInterfaces(boolean);",
                 "    descriptor: (Z)[Ljava/lang/Class;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=4, args_size=2",
                 "    Signature: #1421                        // (Z)[Ljava/lang/Class<*>;"
         );
     }
@@ -319,7 +367,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.reflect.Type[] getGenericInterfaces();",
                 "    descriptor: ()[Ljava/lang/reflect/Type;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -328,6 +378,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> getComponentType();",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
         );
     }
@@ -337,6 +389,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.Class<?> elementType();",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
         );
     }
@@ -354,6 +408,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.util.Set<java.lang.reflect.AccessFlag> accessFlags();",
                 "    descriptor: ()Ljava/util/Set;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=1",
                 "    Signature: #1426                        // ()Ljava/util/Set<Ljava/lang/reflect/AccessFlag;>;"
         );
     }
@@ -379,6 +435,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Method getEnclosingMethod() throws java.lang.SecurityException;",
                 "    descriptor: ()Ljava/lang/reflect/Method;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=14, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException"
         );
@@ -396,7 +454,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.Class$EnclosingMethodInfo getEnclosingMethodInfo();",
                 "    descriptor: ()Ljava/lang/Class$EnclosingMethodInfo;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=2, args_size=1"
         );
     }
     @Test
@@ -405,6 +465,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static java.lang.Class<?> toClass(java.lang.reflect.Type);",
                 "    descriptor: (Ljava/lang/reflect/Type;)Ljava/lang/Class;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1",
                 "    Signature: #1446                        // (Ljava/lang/reflect/Type;)Ljava/lang/Class<*>;"
         );
     }
@@ -414,6 +476,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Constructor<?> getEnclosingConstructor() throws java.lang.SecurityException;",
                 "    descriptor: ()Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=13, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1452                        // ()Ljava/lang/reflect/Constructor<*>;"
@@ -425,6 +489,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> getDeclaringClass() throws java.lang.SecurityException;",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=3, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
@@ -445,6 +511,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> getEnclosingClass() throws java.lang.SecurityException;",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=4, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
@@ -455,7 +523,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String getSimpleName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=1"
         );
     }
     @Test
@@ -463,7 +533,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.String getSimpleName0();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=2, args_size=1"
         );
     }
     @Test
@@ -471,7 +543,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String getTypeName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=1"
         );
     }
     @Test
@@ -479,7 +553,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String getCanonicalName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=1"
         );
     }
     @Test
@@ -487,7 +563,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.String getCanonicalName0();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=4, locals=4, args_size=1"
         );
     }
     @Test
@@ -495,7 +573,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isUnnamedClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -503,7 +583,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isAnonymousClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -511,7 +593,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isLocalClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -519,7 +603,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isMemberClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -527,7 +613,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.String getSimpleBinaryName();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -543,7 +631,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private boolean isTopLevelClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -551,7 +641,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private boolean isLocalOrAnonymousClass();",
                 "    descriptor: ()Z",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -559,7 +651,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private boolean hasEnclosingMethodInfo();",
                 "    descriptor: ()Z",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -568,6 +662,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?>[] getClasses();",
                 "    descriptor: ()[Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Signature: #1416                        // ()[Ljava/lang/Class<*>;"
         );
     }
@@ -577,6 +673,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Field[] getFields() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Field;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException"
         );
@@ -587,6 +685,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Method[] getMethods() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Method;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException"
         );
@@ -597,6 +697,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Constructor<?>[] getConstructors() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1470                        // ()[Ljava/lang/reflect/Constructor<*>;"
@@ -608,6 +710,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Field getField(java.lang.String) throws java.lang.NoSuchFieldException, java.lang.SecurityException;",
                 "    descriptor: (Ljava/lang/String;)Ljava/lang/reflect/Field;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=4, args_size=2",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchFieldException, java.lang.SecurityException"
         );
@@ -618,6 +722,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
                 "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=5, locals=5, args_size=3",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchMethodException, java.lang.SecurityException",
                 "    Signature: #1475                        // (Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/lang/reflect/Method;"
@@ -629,6 +735,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Constructor<T> getConstructor(java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;",
                 "    descriptor: ([Ljava/lang/Class;)Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=5, locals=3, args_size=2",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchMethodException, java.lang.SecurityException",
                 "    Signature: #1478                        // ([Ljava/lang/Class<*>;)Ljava/lang/reflect/Constructor<TT;>;"
@@ -640,6 +748,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?>[] getDeclaredClasses() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1416                        // ()[Ljava/lang/Class<*>;"
@@ -651,6 +761,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Field[] getDeclaredFields() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Field;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException"
         );
@@ -660,7 +772,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.reflect.RecordComponent[] getRecordComponents();",
                 "    descriptor: ()[Ljava/lang/reflect/RecordComponent;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1"
         );
     }
     @Test
@@ -669,6 +783,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Method[] getDeclaredMethods() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Method;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException"
         );
@@ -679,6 +795,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Constructor<?>[] getDeclaredConstructors() throws java.lang.SecurityException;",
                 "    descriptor: ()[Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=2, args_size=1",
                 "    Exceptions:",
                 "      throws java.lang.SecurityException",
                 "    Signature: #1470                        // ()[Ljava/lang/reflect/Constructor<*>;"
@@ -690,6 +808,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Field getDeclaredField(java.lang.String) throws java.lang.NoSuchFieldException, java.lang.SecurityException;",
                 "    descriptor: (Ljava/lang/String;)Ljava/lang/reflect/Field;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=5, locals=4, args_size=2",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchFieldException, java.lang.SecurityException"
         );
@@ -700,6 +820,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Method getDeclaredMethod(java.lang.String, java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
                 "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=5, locals=5, args_size=3",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchMethodException, java.lang.SecurityException",
                 "    Signature: #1475                        // (Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/lang/reflect/Method;"
@@ -711,6 +833,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  java.util.List<java.lang.reflect.Method> getDeclaredPublicMethods(java.lang.String, java.lang.Class<?>...);",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/util/List;",
                 "    flags: (0x0080) ACC_VARARGS",
+                "    Code:",
+                "      stack=3, locals=10, args_size=3",
                 "    Signature: #1493                        // (Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/util/List<Ljava/lang/reflect/Method;>;"
         );
     }
@@ -720,6 +844,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.reflect.Constructor<T> getDeclaredConstructor(java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;",
                 "    descriptor: ([Ljava/lang/Class;)Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0081) ACC_PUBLIC, ACC_VARARGS",
+                "    Code:",
+                "      stack=5, locals=3, args_size=2",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchMethodException, java.lang.SecurityException",
                 "    Signature: #1478                        // ([Ljava/lang/Class<*>;)Ljava/lang/reflect/Constructor<TT;>;"
@@ -730,7 +856,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.io.InputStream getResourceAsStream(java.lang.String);",
                 "    descriptor: (Ljava/lang/String;)Ljava/io/InputStream;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=6, args_size=2"
         );
     }
     @Test
@@ -738,7 +866,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.net.URL getResource(java.lang.String);",
                 "    descriptor: (Ljava/lang/String;)Ljava/net/URL;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=6, args_size=2"
         );
     }
     @Test
@@ -747,6 +877,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private boolean isOpenToCaller(java.lang.String, java.lang.Class<?>);",
                 "    descriptor: (Ljava/lang/String;Ljava/lang/Class;)Z",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=6, args_size=3",
                 "    Signature: #1507                        // (Ljava/lang/String;Ljava/lang/Class<*>;)Z"
         );
     }
@@ -755,7 +887,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.security.ProtectionDomain getProtectionDomain();",
                 "    descriptor: ()Ljava/security/ProtectionDomain;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=1"
         );
     }
     @Test
@@ -763,7 +897,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  java.security.ProtectionDomain protectionDomain();",
                 "    descriptor: ()Ljava/security/ProtectionDomain;",
-                "    flags: (0x0000)"
+                "    flags: (0x0000)",
+                "    Code:",
+                "      stack=4, locals=3, args_size=1"
         );
     }
     @Test
@@ -789,6 +925,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private void checkMemberAccess(java.lang.SecurityManager, int, java.lang.Class<?>, boolean);",
                 "    descriptor: (Ljava/lang/SecurityManager;ILjava/lang/Class;Z)V",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=4, locals=7, args_size=5",
                 "    Signature: #1515                        // (Ljava/lang/SecurityManager;ILjava/lang/Class<*>;Z)V"
         );
     }
@@ -797,7 +935,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private void checkPackageAccess(java.lang.SecurityManager, java.lang.ClassLoader, boolean);",
                 "    descriptor: (Ljava/lang/SecurityManager;Ljava/lang/ClassLoader;Z)V",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=6, args_size=4"
         );
     }
     @Test
@@ -806,6 +946,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static void checkPackageAccessForPermittedSubclasses(java.lang.SecurityManager, java.lang.ClassLoader, java.lang.Class<?>[]);",
                 "    descriptor: (Ljava/lang/SecurityManager;Ljava/lang/ClassLoader;[Ljava/lang/Class;)V",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=4, locals=10, args_size=3",
                 "    Signature: #1520                        // (Ljava/lang/SecurityManager;Ljava/lang/ClassLoader;[Ljava/lang/Class<*>;)V"
         );
     }
@@ -814,7 +956,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.String resolveName(java.lang.String);",
                 "    descriptor: (Ljava/lang/String;)Ljava/lang/String;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=4, locals=5, args_size=2"
         );
     }
     @Test
@@ -823,6 +967,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.Class$ReflectionData<T> reflectionData();",
                 "    descriptor: ()Ljava/lang/Class$ReflectionData;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=4, args_size=1",
                 "    Signature: #1523                        // ()Ljava/lang/Class$ReflectionData<TT;>;"
         );
     }
@@ -832,6 +978,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.Class$ReflectionData<T> newReflectionData(java.lang.ref.SoftReference<java.lang.Class$ReflectionData<T>>, int);",
                 "    descriptor: (Ljava/lang/ref/SoftReference;I)Ljava/lang/Class$ReflectionData;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=5, locals=4, args_size=3",
                 "    Signature: #1525                        // (Ljava/lang/ref/SoftReference<Ljava/lang/Class$ReflectionData<TT;>;>;I)Ljava/lang/Class$ReflectionData<TT;>;"
         );
     }
@@ -848,7 +996,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private sun.reflect.generics.factory.GenericsFactory getFactory();",
                 "    descriptor: ()Lsun/reflect/generics/factory/GenericsFactory;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -856,7 +1006,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private sun.reflect.generics.repository.ClassRepository getGenericInfo();",
                 "    descriptor: ()Lsun/reflect/generics/repository/ClassRepository;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=3, args_size=1"
         );
     }
     @Test
@@ -880,7 +1032,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  static byte[] getExecutableTypeAnnotationBytes(java.lang.reflect.Executable);",
                 "    descriptor: (Ljava/lang/reflect/Executable;)[B",
-                "    flags: (0x0008) ACC_STATIC"
+                "    flags: (0x0008) ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -896,7 +1050,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.reflect.Field[] privateGetDeclaredFields(boolean);",
                 "    descriptor: (Z)[Ljava/lang/reflect/Field;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=4, args_size=2"
         );
     }
     @Test
@@ -904,7 +1060,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.reflect.Field[] privateGetPublicFields();",
                 "    descriptor: ()[Ljava/lang/reflect/Field;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=8, args_size=1"
         );
     }
     @Test
@@ -913,6 +1071,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static void addAll(java.util.Collection<java.lang.reflect.Field>, java.lang.reflect.Field[]);",
                 "    descriptor: (Ljava/util/Collection;[Ljava/lang/reflect/Field;)V",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=6, args_size=2",
                 "    Signature: #1539                        // (Ljava/util/Collection<Ljava/lang/reflect/Field;>;[Ljava/lang/reflect/Field;)V"
         );
     }
@@ -922,6 +1082,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.reflect.Constructor<T>[] privateGetDeclaredConstructors(boolean);",
                 "    descriptor: (Z)[Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=5, args_size=2",
                 "    Signature: #1542                        // (Z)[Ljava/lang/reflect/Constructor<TT;>;"
         );
     }
@@ -930,7 +1092,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.reflect.Method[] privateGetDeclaredMethods(boolean);",
                 "    descriptor: (Z)[Ljava/lang/reflect/Method;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=4, args_size=2"
         );
     }
     @Test
@@ -938,7 +1102,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.reflect.Method[] privateGetPublicMethods();",
                 "    descriptor: ()[Ljava/lang/reflect/Method;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=13, args_size=1"
         );
     }
     @Test
@@ -946,7 +1112,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static java.lang.reflect.Field searchFields(java.lang.reflect.Field[], java.lang.String);",
                 "    descriptor: ([Ljava/lang/reflect/Field;Ljava/lang/String;)Ljava/lang/reflect/Field;",
-                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
+                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=6, args_size=2"
         );
     }
     @Test
@@ -954,7 +1122,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.reflect.Field getField0(java.lang.String);",
                 "    descriptor: (Ljava/lang/String;)Ljava/lang/reflect/Field;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=8, args_size=2"
         );
     }
     @Test
@@ -963,6 +1133,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static java.lang.reflect.Method searchMethods(java.lang.reflect.Method[], java.lang.String, java.lang.Class<?>[]);",
                 "    descriptor: ([Ljava/lang/reflect/Method;Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=3, locals=9, args_size=3",
                 "    Signature: #1546                        // ([Ljava/lang/reflect/Method;Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/lang/reflect/Method;"
         );
     }
@@ -972,6 +1144,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.reflect.Method getMethod0(java.lang.String, java.lang.Class<?>[]);",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=4, locals=4, args_size=3",
                 "    Signature: #1475                        // (Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/lang/reflect/Method;"
         );
     }
@@ -981,6 +1155,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.PublicMethods$MethodList getMethodsRecursive(java.lang.String, java.lang.Class<?>[], boolean);",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;Z)Ljava/lang/PublicMethods$MethodList;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=5, locals=11, args_size=4",
                 "    Signature: #1549                        // (Ljava/lang/String;[Ljava/lang/Class<*>;Z)Ljava/lang/PublicMethods$MethodList;"
         );
     }
@@ -990,6 +1166,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.reflect.Constructor<T> getConstructor0(java.lang.Class<?>[], int) throws java.lang.NoSuchMethodException;",
                 "    descriptor: ([Ljava/lang/Class;I)Ljava/lang/reflect/Constructor;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=5, locals=9, args_size=3",
                 "    Exceptions:",
                 "      throws java.lang.NoSuchMethodException",
                 "    Signature: #1552                        // ([Ljava/lang/Class<*>;I)Ljava/lang/reflect/Constructor<TT;>;"
@@ -1000,7 +1178,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static boolean arrayContentsEq(java.lang.Object[], java.lang.Object[]);",
                 "    descriptor: ([Ljava/lang/Object;[Ljava/lang/Object;)Z",
-                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
+                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=2"
         );
     }
     @Test
@@ -1008,7 +1188,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static java.lang.reflect.Field[] copyFields(java.lang.reflect.Field[]);",
                 "    descriptor: ([Ljava/lang/reflect/Field;)[Ljava/lang/reflect/Field;",
-                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
+                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=5, locals=4, args_size=1"
         );
     }
     @Test
@@ -1016,7 +1198,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static java.lang.reflect.Method[] copyMethods(java.lang.reflect.Method[]);",
                 "    descriptor: ([Ljava/lang/reflect/Method;)[Ljava/lang/reflect/Method;",
-                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
+                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=5, locals=4, args_size=1"
         );
     }
     @Test
@@ -1025,6 +1209,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private static <U extends java.lang.Object> java.lang.reflect.Constructor<U>[] copyConstructors(java.lang.reflect.Constructor<U>[]);",
                 "    descriptor: ([Ljava/lang/reflect/Constructor;)[Ljava/lang/reflect/Constructor;",
                 "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=5, locals=4, args_size=1",
                 "    Signature: #1558                        // <U:Ljava/lang/Object;>([Ljava/lang/reflect/Constructor<TU;>;)[Ljava/lang/reflect/Constructor<TU;>;"
         );
     }
@@ -1084,6 +1270,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private java.lang.String methodToString(java.lang.String, java.lang.Class<?>[]);",
                 "    descriptor: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/String;",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=5, locals=3, args_size=3",
                 "    Signature: #1560                        // (Ljava/lang/String;[Ljava/lang/Class<*>;)Ljava/lang/String;"
         );
     }
@@ -1092,7 +1280,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean desiredAssertionStatus();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=4, args_size=1"
         );
     }
     @Test
@@ -1109,7 +1299,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isEnum();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -1117,7 +1309,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isRecord();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=1"
         );
     }
     @Test
@@ -1125,7 +1319,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static jdk.internal.reflect.ReflectionFactory getReflectionFactory();",
                 "    descriptor: ()Ljdk/internal/reflect/ReflectionFactory;",
-                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC"
+                "    flags: (0x000a) ACC_PRIVATE, ACC_STATIC",
+                "    Code:",
+                "      stack=2, locals=1, args_size=0"
         );
     }
     @Test
@@ -1134,6 +1330,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public T[] getEnumConstants();",
                 "    descriptor: ()[Ljava/lang/Object;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1",
                 "    Signature: #1562                        // ()[TT;"
         );
     }
@@ -1143,6 +1341,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  T[] getEnumConstantsShared();",
                 "    descriptor: ()[Ljava/lang/Object;",
                 "    flags: (0x0000)",
+                "    Code:",
+                "      stack=4, locals=4, args_size=1",
                 "    Signature: #1562                        // ()[TT;"
         );
     }
@@ -1152,6 +1352,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  java.util.Map<java.lang.String, T> enumConstantDirectory();",
                 "    descriptor: ()Ljava/util/Map;",
                 "    flags: (0x0000)",
+                "    Code:",
+                "      stack=4, locals=7, args_size=1",
                 "    Signature: #1570                        // ()Ljava/util/Map<Ljava/lang/String;TT;>;"
         );
     }
@@ -1161,6 +1363,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public T cast(java.lang.Object);",
                 "    descriptor: (Ljava/lang/Object;)Ljava/lang/Object;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=2, args_size=2",
                 "    Signature: #1573                        // (Ljava/lang/Object;)TT;"
         );
     }
@@ -1169,7 +1373,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.String cannotCastMsg(java.lang.Object);",
                 "    descriptor: (Ljava/lang/Object;)Ljava/lang/String;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2"
         );
     }
     @Test
@@ -1178,6 +1384,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public <U extends java.lang.Object> java.lang.Class<? extends U> asSubclass(java.lang.Class<U>);",
                 "    descriptor: (Ljava/lang/Class;)Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=2, args_size=2",
                 "    Signature: #1578                        // <U:Ljava/lang/Object;>(Ljava/lang/Class<TU;>;)Ljava/lang/Class<+TU;>;"
         );
     }
@@ -1187,6 +1395,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public <A extends java.lang.annotation.Annotation> A getAnnotation(java.lang.Class<A>);",
                 "    descriptor: (Ljava/lang/Class;)Ljava/lang/annotation/Annotation;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2",
                 "    Signature: #1583                        // <A::Ljava/lang/annotation/Annotation;>(Ljava/lang/Class<TA;>;)TA;"
         );
     }
@@ -1196,6 +1406,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);",
                 "    descriptor: (Ljava/lang/Class;)Z",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2",
                 "    Signature: #1585                        // (Ljava/lang/Class<+Ljava/lang/annotation/Annotation;>;)Z"
         );
     }
@@ -1205,6 +1417,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public <A extends java.lang.annotation.Annotation> A[] getAnnotationsByType(java.lang.Class<A>);",
                 "    descriptor: (Ljava/lang/Class;)[Ljava/lang/annotation/Annotation;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=2",
                 "    Signature: #1588                        // <A::Ljava/lang/annotation/Annotation;>(Ljava/lang/Class<TA;>;)[TA;"
         );
     }
@@ -1213,7 +1427,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.annotation.Annotation[] getAnnotations();",
                 "    descriptor: ()[Ljava/lang/annotation/Annotation;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1222,6 +1438,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public <A extends java.lang.annotation.Annotation> A getDeclaredAnnotation(java.lang.Class<A>);",
                 "    descriptor: (Ljava/lang/Class;)Ljava/lang/annotation/Annotation;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2",
                 "    Signature: #1583                        // <A::Ljava/lang/annotation/Annotation;>(Ljava/lang/Class<TA;>;)TA;"
         );
     }
@@ -1231,6 +1449,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public <A extends java.lang.annotation.Annotation> A[] getDeclaredAnnotationsByType(java.lang.Class<A>);",
                 "    descriptor: (Ljava/lang/Class;)[Ljava/lang/annotation/Annotation;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2",
                 "    Signature: #1588                        // <A::Ljava/lang/annotation/Annotation;>(Ljava/lang/Class<TA;>;)[TA;"
         );
     }
@@ -1239,7 +1459,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.annotation.Annotation[] getDeclaredAnnotations();",
                 "    descriptor: ()[Ljava/lang/annotation/Annotation;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1247,7 +1469,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.Class$AnnotationData annotationData();",
                 "    descriptor: ()Ljava/lang/Class$AnnotationData;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=3, locals=4, args_size=1"
         );
     }
     @Test
@@ -1255,7 +1479,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private java.lang.Class$AnnotationData createAnnotationData(int);",
                 "    descriptor: (I)Ljava/lang/Class$AnnotationData;",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=5, locals=9, args_size=2"
         );
     }
     @Test
@@ -1263,7 +1489,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  boolean casAnnotationType(sun.reflect.annotation.AnnotationType, sun.reflect.annotation.AnnotationType);",
                 "    descriptor: (Lsun/reflect/annotation/AnnotationType;Lsun/reflect/annotation/AnnotationType;)Z",
-                "    flags: (0x0000)"
+                "    flags: (0x0000)",
+                "    Code:",
+                "      stack=3, locals=3, args_size=3"
         );
     }
     @Test
@@ -1271,7 +1499,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  sun.reflect.annotation.AnnotationType getAnnotationType();",
                 "    descriptor: ()Lsun/reflect/annotation/AnnotationType;",
-                "    flags: (0x0000)"
+                "    flags: (0x0000)",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1280,6 +1510,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  java.util.Map<java.lang.Class<? extends java.lang.annotation.Annotation>, java.lang.annotation.Annotation> getDeclaredAnnotationMap();",
                 "    descriptor: ()Ljava/util/Map;",
                 "    flags: (0x0000)",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1",
                 "    Signature: #1606                        // ()Ljava/util/Map<Ljava/lang/Class<+Ljava/lang/annotation/Annotation;>;Ljava/lang/annotation/Annotation;>;"
         );
     }
@@ -1288,7 +1520,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.reflect.AnnotatedType getAnnotatedSuperclass();",
                 "    descriptor: ()Ljava/lang/reflect/AnnotatedType;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=1, args_size=1"
         );
     }
     @Test
@@ -1296,7 +1530,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.reflect.AnnotatedType[] getAnnotatedInterfaces();",
                 "    descriptor: ()[Ljava/lang/reflect/AnnotatedType;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=1, args_size=1"
         );
     }
     @Test
@@ -1314,6 +1550,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> getNestHost();",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=3, args_size=1",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
         );
     }
@@ -1323,6 +1561,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public boolean isNestmateOf(java.lang.Class<?>);",
                 "    descriptor: (Ljava/lang/Class;)Z",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2",
                 "    Signature: #1401                        // (Ljava/lang/Class<*>;)Z"
         );
     }
@@ -1341,6 +1581,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?>[] getNestMembers();",
                 "    descriptor: ()[Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=3, args_size=1",
                 "    Signature: #1416                        // ()[Ljava/lang/Class<*>;"
         );
     }
@@ -1349,7 +1591,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.String descriptorString();",
                 "    descriptor: ()Ljava/lang/String;",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=4, locals=3, args_size=1"
         );
     }
     @Test
@@ -1358,6 +1602,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> componentType();",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
         );
     }
@@ -1367,6 +1613,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?> arrayType();",
                 "    descriptor: ()Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=2, args_size=1",
                 "    Signature: #1423                        // ()Ljava/lang/Class<*>;"
         );
     }
@@ -1376,6 +1624,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.util.Optional<java.lang.constant.ClassDesc> describeConstable();",
                 "    descriptor: ()Ljava/util/Optional;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1",
                 "    Signature: #1619                        // ()Ljava/util/Optional<Ljava/lang/constant/ClassDesc;>;"
         );
     }
@@ -1393,6 +1643,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  public java.lang.Class<?>[] getPermittedSubclasses();",
                 "    descriptor: ()[Ljava/lang/Class;",
                 "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=3, locals=3, args_size=1",
                 "    Signature: #1416                        // ()[Ljava/lang/Class<*>;"
         );
     }
@@ -1402,6 +1654,8 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
                 "  private boolean isDirectSubType(java.lang.Class<?>);",
                 "    descriptor: (Ljava/lang/Class;)Z",
                 "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=2, locals=6, args_size=2",
                 "    Signature: #1401                        // (Ljava/lang/Class<*>;)Z"
         );
     }
@@ -1410,7 +1664,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public boolean isSealed();",
                 "    descriptor: ()Z",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1427,7 +1683,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private int getClassFileVersion();",
                 "    descriptor: ()I",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -1443,7 +1701,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private int getClassAccessFlagsRaw();",
                 "    descriptor: ()I",
-                "    flags: (0x0002) ACC_PRIVATE"
+                "    flags: (0x0002) ACC_PRIVATE",
+                "    Code:",
+                "      stack=1, locals=2, args_size=1"
         );
     }
     @Test
@@ -1459,7 +1719,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.invoke.TypeDescriptor$OfField arrayType();",
                 "    descriptor: ()Ljava/lang/invoke/TypeDescriptor$OfField;",
-                "    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC"
+                "    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1467,7 +1729,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public java.lang.invoke.TypeDescriptor$OfField componentType();",
                 "    descriptor: ()Ljava/lang/invoke/TypeDescriptor$OfField;",
-                "    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC"
+                "    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1475,7 +1739,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static java.lang.Class[] lambda$getPermittedSubclasses$2(int);",
                 "    descriptor: (I)[Ljava/lang/Class;",
-                "    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC"
+                "    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
     @Test
@@ -1483,7 +1749,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private boolean lambda$getPermittedSubclasses$1(java.lang.Class);",
                 "    descriptor: (Ljava/lang/Class;)Z",
-                "    flags: (0x1002) ACC_PRIVATE, ACC_SYNTHETIC"
+                "    flags: (0x1002) ACC_PRIVATE, ACC_SYNTHETIC",
+                "    Code:",
+                "      stack=2, locals=2, args_size=2"
         );
     }
     @Test
@@ -1491,7 +1759,9 @@ public class ClassMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  private static java.lang.String lambda$methodToString$0(java.lang.Class);",
                 "    descriptor: (Ljava/lang/Class;)Ljava/lang/String;",
-                "    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC"
+                "    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1"
         );
     }
 }

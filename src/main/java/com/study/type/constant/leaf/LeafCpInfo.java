@@ -3,29 +3,27 @@ package com.study.type.constant.leaf;
 import com.study.constants.ConstantKind;
 import com.study.type.constant.CpInfo;
 
-public abstract class LeafCpInfo extends CpInfo {
-
-    protected String desc(int value) {
-        return "" + value;
-    }
-
-    protected String desc(float value) {
-        return String.valueOf(value) + 'f';
-    }
-
-    protected String desc(long value) {
-        return String.valueOf(value) + 'l';
-    }
-
-    protected String desc(double value) {
-        return String.valueOf(value) + 'd';
-    }
+/**
+ * Subclass of {@link LeafCpInfo} don't refer to other CpInfo instances,
+ * so their instances can be considered as leaf nodes.
+ * <p>
+ * There are 5 subclasses for {@link LeafCpInfo} as shown below.
+ * 1. {@link ConstantUtf8}
+ * 2. {@link ConstantInteger}
+ * 3. {@link ConstantFloat}
+ * 4. {@link ConstantLong}
+ * 5. {@link ConstantDouble}
+ */
+public sealed abstract class LeafCpInfo
+        extends CpInfo
+        permits
+        ConstantUtf8,
+        ConstantInteger,
+        ConstantFloat,
+        ConstantLong,
+        ConstantDouble {
 
     protected LeafCpInfo(ConstantKind tag) {
         super(tag);
-    }
-
-    public static boolean isLeafCpInfo(CpInfo cpInfo) {
-        return cpInfo instanceof LeafCpInfo;
     }
 }

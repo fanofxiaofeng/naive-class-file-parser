@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case4 implements Case {
+public class Case4 {
     private float n1 = 42.0f;
 
     private float n2 = Float.MAX_VALUE;

@@ -27,10 +27,6 @@ public class ConstantNameAndType extends CompoundCpInfo {
 
     @Override
     public void validate(ConstantPool constantPool) {
-        if (this.tag != ConstantKind.CONSTANT_NameAndType) {
-            throw new AssertionError();
-        }
-
         if (!(constantPool.get(nameIndex) instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
@@ -38,7 +34,6 @@ public class ConstantNameAndType extends CompoundCpInfo {
         if (!(constantPool.get(descriptorIndex) instanceof ConstantUtf8)) {
             throw new AssertionError();
         }
-
     }
 
     @Override

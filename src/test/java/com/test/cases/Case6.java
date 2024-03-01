@@ -1,6 +1,6 @@
 package com.test.cases;
 
-public class Case6 implements Case {
+public class Case6 {
     private double n1 = 42.0d;
 
     private double n2 = Double.MAX_VALUE;

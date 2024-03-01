@@ -1,6 +1,6 @@
 package com.test.attribute.ic.standard;
 
-import com.test.present.ClassFileAttributePresenterTestBase;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -46,12 +46,10 @@ public class U1InputStream {
         return u1s;
     }
 
-    public U2[] readU2Array(int length) {
-        U2[] u2s = new U2[length];
-        for (int i = 0; i < length; i++) {
-            u2s[i] = readU2();
-        }
-        return u2s;
+    public List<U1> readU1List(int length) {
+        List<U1> u1List = new ArrayList<>(length);
+        IntStream.range(0, length).forEach(e -> u1List.add(readU1()));
+        return u1List;
     }
 
     public List<U2> readU2List(int length) {

@@ -10,6 +10,10 @@ import com.study.type.info.MethodInfo;
 
 import java.util.function.BiFunction;
 
+/**
+ * Please refer to the following link for more details for the structure of class file
+ * <a href="https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-4.html">4.1. The ClassFile Structure</a>
+ */
 public class MainParser implements Parser<ParseResult> {
 
     /**

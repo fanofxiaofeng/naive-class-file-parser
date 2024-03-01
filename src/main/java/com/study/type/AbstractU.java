@@ -1,6 +1,7 @@
 package com.study.type;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class AbstractU {
 
@@ -85,7 +86,7 @@ public class AbstractU {
 
         AbstractU abstractU = (AbstractU) o;
 
-        return bigInteger != null ? bigInteger.equals(abstractU.bigInteger) : abstractU.bigInteger == null;
+        return Objects.equals(bigInteger, abstractU.bigInteger);
     }
 
     @Override

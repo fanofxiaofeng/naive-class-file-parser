@@ -3,7 +3,7 @@ package com.study.type.info.attribute;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.U4;
-import com.study.util.PaddingUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class SignatureAttribute extends AttributeInfo {
     private final U2 signatureIndex;
@@ -14,17 +14,13 @@ public class SignatureAttribute extends AttributeInfo {
     }
 
     @Override
-    public String describe(int indent) {
-        return super.describe(indent);
-    }
-
-    @Override
     public String describe(ConstantPool constantPool) {
         String name = buildName(constantPool);
         String core = String.format("%s: #%s", name, signatureIndex.toInt());
 
         // todo: fix hard-coded value
-        return PaddingUtils.padAndAppend(core, 40, "// " + detail(constantPool));
+        core = StringUtils.rightPad(core, 39);
+        return String.format("%s // %s", core, detail(constantPool));
     }
 
     public String detail(ConstantPool constantPool) {

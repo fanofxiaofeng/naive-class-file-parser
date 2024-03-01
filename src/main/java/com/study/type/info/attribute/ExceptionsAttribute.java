@@ -3,6 +3,7 @@ package com.study.type.info.attribute;
 import com.study.type.ConstantPool;
 import com.study.type.U2;
 import com.study.type.U4;
+import com.study.util.ClassNameUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,9 @@ public class ExceptionsAttribute extends AttributeInfo {
         List<String> exceptionDescriptionList = new ArrayList<>(exceptionIndexTable.size());
 
         exceptionIndexTable.forEach(exceptionIndex -> {
-            System.out.println("exceptionIndex: " + exceptionIndex.toInt());
+//            System.out.println("exceptionIndex: " + exceptionIndex.toInt());
             String desc = constantPool.detail(exceptionIndex);
-            exceptionDescriptionList.add(desc.replaceAll("/", "."));
+            exceptionDescriptionList.add(ClassNameUtils.slashToDot(desc));
         });
 
         return String.format("throws %s", String.join(", ", exceptionDescriptionList));

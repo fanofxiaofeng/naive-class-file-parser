@@ -1,15 +1,15 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
-import com.study.type.ConstantPool;
 import com.study.type.U4;
 
 /**
- * Format
+ * Format example:
+ * #122 = Integer            -2147483647
  * <p>
- * #9 = Integer            1
+ * Consider "-2147483647" as the description (i.e. return value for {@link #desc()}) for this item
  */
-public class ConstantInteger extends LeafCpInfo {
+public final class ConstantInteger extends LeafCpInfo {
 
     private final U4 bytes;
 
@@ -27,10 +27,7 @@ public class ConstantInteger extends LeafCpInfo {
         return desc((int) value);
     }
 
-    @Override
-    public void validate(ConstantPool constantPool) {
-        if (tag != ConstantKind.CONSTANT_Integer) {
-            throw new AssertionError();
-        }
+    private String desc(int value) {
+        return "" + value;
     }
 }

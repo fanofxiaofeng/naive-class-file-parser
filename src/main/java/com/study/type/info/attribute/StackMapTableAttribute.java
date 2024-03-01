@@ -1,7 +1,7 @@
 package com.study.type.info.attribute;
 
+import com.study.type.ConstantPool;
 import com.study.type.U2;
-import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.frame.StackMapFrame;
 import com.study.type.info.frame.StackMapFrameFactory;
 
@@ -24,8 +24,9 @@ public class StackMapTableAttribute extends AttributeInfo {
     }
 
     @Override
-    public String describe(int indent) {
-        StringBuilder stringBuilder = withIndent(indent);
+    public String describe(ConstantPool constantPool) {
+        // todo: fix next line
+        StringBuilder stringBuilder = withIndent(0);
         stringBuilder.append(String.format("%s: number_of_entries = %s\n",
                 constantPool.get(attributeNameIndex).desc(),
                 numberOfEntries.toInt()

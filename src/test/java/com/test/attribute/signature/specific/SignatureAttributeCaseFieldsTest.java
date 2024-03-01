@@ -1,5 +1,9 @@
 package com.test.attribute.signature.specific;
 
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
+import com.test.attribute.signature.TestGenerator;
 import com.test.field.FieldPresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -7,6 +11,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(TestGenerator.class)
 public class SignatureAttributeCaseFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +19,7 @@ public class SignatureAttributeCaseFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("com.test.attribute.cases.SignatureAttributeCase"));
     }
 
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_f1() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +29,8 @@ public class SignatureAttributeCaseFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #12                          // [[[[[Ljava/lang/Class<+Ljava/lang/Number;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_f2() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +40,8 @@ public class SignatureAttributeCaseFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #15                          // Ljava/util/List<Ljava/util/Map<Ljava/util/List<-Ljava/lang/Number;>;[[[Ljava/util/Set<+Ljava/lang/String;>;>;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_f3() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +51,8 @@ public class SignatureAttributeCaseFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #18                          // Ljava/util/function/Supplier<Ljava/util/Map<-Ljava/lang/String;Ljava/lang/Object;>;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_f4() {
         expectedConsecutiveLines = List.of(

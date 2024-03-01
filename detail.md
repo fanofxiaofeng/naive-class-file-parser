@@ -1,6 +1,6 @@
-# class 文件格式
-根据 [4.1. The ClassFile Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.1) 的描述, 
-class 文件的格式如下
+# Class file structure
+According to [4.1. The ClassFile Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.1), 
+class file has the following structure.
 
 ```
 ClassFile {
@@ -22,23 +22,26 @@ ClassFile {
     attribute_info attributes[attributes_count];
 }
 ```
-本项目中用 [ParseResult.java](src/main/java/com/study/parser/ParseResult.java) 来表示一个 class 文件的解析结果
 
-## 常量池(The Constant Pool)
+In this project, we use [ParseResult.java](src/main/java/com/study/parser/ParseResult.java) to save the parse result of class files. 
+
+## The Constant Pool
 ### The CONSTANT_Class_info Structure
-根据 [4.4.1. The CONSTANT_Class_info Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.1) 中的描述
-CONSTANT_Class_info 的结构如下
+According to [4.4.1. The CONSTANT_Class_info Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.1),
+the structure of `CONSTANT_Class_info` is
 ```
 CONSTANT_Class_info {
     u1 tag; // The tag item has the value CONSTANT_Class (7).
     u2 name_index;
 }
 ```
-在本项目中用 [ConstantClass.java](src/main/java/com/study/type/constant/ConstantClass.java) 来表示
+
+We use [ConstantClass.java](src/main/java/com/study/type/constant/compound/ConstantClass.java) to save this structure.
 
 ### The CONSTANT_Fieldref_info, CONSTANT_Methodref_info, and CONSTANT_InterfaceMethodref_info Structures
-根据 [4.4.2. The CONSTANT_Fieldref_info, CONSTANT_Methodref_info, and CONSTANT_InterfaceMethodref_info Structures](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.2) 中的描述
-CONSTANT_Fieldref_info CONSTANT_Methodref_info CONSTANT_InterfaceMethodref_info 的结构如下
+According to [4.4.2. The CONSTANT_Fieldref_info, CONSTANT_Methodref_info, and CONSTANT_InterfaceMethodref_info Structures](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.2)
+the structure of `CONSTANT_Fieldref_info`, `CONSTANT_Methodref_info`, `CONSTANT_InterfaceMethodref_info` can be seen as follows.
+
 ```
 CONSTANT_Fieldref_info {
     u1 tag; // The tag item of a CONSTANT_Fieldref_info structure has the value CONSTANT_Fieldref (9).
@@ -58,27 +61,29 @@ CONSTANT_InterfaceMethodref_info {
     u2 name_and_type_index;
 }
 ```
-在本项目中分别用 
-[ConstantFieldref.java](src/main/java/com/study/type/constant/ConstantFieldref.java)
-[ConstantMethodref.java](src/main/java/com/study/type/constant/ConstantMethodref.java)
-[ConstantInterfaceMethodref.java](src/main/java/com/study/type/constant/ConstantInterfaceMethodref.java)
-来表示
+
+We use the following class to represent the corresponding structures.
+[ConstantFieldref.java](src/main/java/com/study/type/constant/compound/ConstantFieldref.java)
+[ConstantMethodref.java](src/main/java/com/study/type/constant/compound/ConstantMethodref.java)
+[ConstantInterfaceMethodref.java](src/main/java/com/study/type/constant/compound/ConstantInterfaceMethodref.java)
 
 ### The CONSTANT_String_info Structure
-根据 [4.4.3. The CONSTANT_String_info Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.3) 中的描述
-CONSTANT_String_info 的结构如下
+According to [4.4.3. The CONSTANT_String_info Structure](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.3),
+
+the structure of `CONSTANT_String_info` is
 ```
 CONSTANT_String_info {
     u1 tag; // The tag item of the CONSTANT_String_info structure has the value CONSTANT_String (8).
     u2 string_index;
 }
 ```
-在本项目中用 [ConstantString.java](src/main/java/com/study/type/constant/ConstantString.java) 来表示
 
-## 字段表(Fields)
-每个字段都由一个 field_info 来描述
-根据 [4.5. Fields](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.5) 中的描述
-field_info 的结构如下
+We use [ConstantString.java](src/main/java/com/study/type/constant/compound/ConstantString.java) for it.
+
+## Fields
+Each field is represented by `field_info`.
+According to [4.5. Fields](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.5),
+the structure of `field_info` is
 ```
 field_info {
     u2             access_flags;
@@ -88,14 +93,17 @@ field_info {
     attribute_info attributes[attributes_count];
 }
 ```
-在本项目中用 [FieldInfo.java](src/main/java/com/study/type/info/FieldInfo.java) 来表示
 
-# 运行指南
-javap 命令可以对 class 文件进行解析
-例如我们可以使用如下命令对 xx.class 进行解析
+We use [FieldInfo.java](src/main/java/com/study/type/info/FieldInfo.java) for it.
+
+# How to run
+`javap` command can parse class files.
+
+For example, we can run the following command to parse `xxx.class`
 ```
-javap -v -p xx.class
+javap -v -p xxx.class
 ```
+
 本项目的目标是输出内容与 `javap -v -p` 一致
 
 ## 比较完整结果

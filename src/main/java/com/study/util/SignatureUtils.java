@@ -11,5 +11,4 @@ public class SignatureUtils {
 
         return new String(data, 0, data.length);
     }
-
 }

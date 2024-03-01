@@ -6,12 +6,12 @@ import com.study.type.ItemsContainer;
 import com.study.type.U2;
 import com.study.type.constant.leaf.LeafCpInfo;
 import com.study.type.descriptor.MethodDescriptor;
+import com.study.type.descriptor.MethodDescriptorBuilder;
 import com.study.type.info.attribute.AttributeInfo;
-import com.study.type.info.attribute.SignatureAttribute;
+import com.study.type.info.attribute.CodeAttribute;
 
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.StringJoiner;
 
 public class MethodInfo extends AbstractInfo {
@@ -25,43 +25,17 @@ public class MethodInfo extends AbstractInfo {
 
     public MethodInfo(U2 accessFlags, U2 nameIndex, U2 descriptorIndex, ItemsContainer<AttributeInfo> attributes) {
         super(accessFlags, nameIndex, descriptorIndex, attributes);
-    }
-
-    public String toHumanReadable(MethodDescriptor methodDescriptor, ConstantPool constantPool) {
-        return String.format(
-                "%s %s%s",
-                methodDescriptor.buildReturnDescriptorDesc(),
-                constantPool.desc(nameIndex),
-                methodDescriptor.buildParameterDescriptorsDesc()
-        );
+        for (AttributeInfo attributeInfo : attributes.items()) {
+            if (attributeInfo instanceof CodeAttribute codeAttribute) {
+                codeAttribute.setMethodInfo(this);
+            }
+        }
     }
 
     public String buildDescriptorLine(ConstantPool constantPool) {
         LeafCpInfo descriptor = constantPool.get(descriptorIndex, LeafCpInfo.class);
         return String.format("descriptor: %s", descriptor.desc());
     }
-
-    public String toHumanReadable(SignatureAttribute signatureAttribute, ConstantPool constantPool) {
-        if (true) {
-            return "???";
-        }
-
-        String raw = signatureAttribute.detail(constantPool);
-//        Signature signature = new MethodSignatureBuilder().build(raw);
-//        List<String> descriptions = signature.desc();
-        List<String> descriptions = List.of(); // todo: remove this line
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(descriptions.get(0));
-
-        builder.append(" ").append(constantPool.desc(nameIndex));
-        builder.append('(');
-        descriptions.subList(1, descriptions.size()).forEach(builder::append);
-        builder.append(')');
-
-        return builder.toString();
-    }
-
 
     public String buildHumanReadableFlagsDesc() {
         StringJoiner joiner = new StringJoiner(" ");
@@ -99,5 +73,15 @@ public class MethodInfo extends AbstractInfo {
             return String.format("flags: (0x%04x) %s", mod, joiner);
         }
         return String.format("flags: (0x%04x)", mod);
+    }
+
+    public int calculateArgsSize(ConstantPool constantPool) {
+        MethodDescriptor methodDescriptor = new MethodDescriptorBuilder().build(constantPool, descriptorIndex);
+        int parameterCount = methodDescriptor.getParameterDescriptors().size();
+
+        if (getAccessFlags().isOn(MethodAccessFlags.ACC_STATIC.getFlag())) {
+            return parameterCount;
+        }
+        return parameterCount + 1;
     }
 }

@@ -28,8 +28,7 @@ public abstract class AbstractPresenter implements Presenter {
         return cnt2 - cnt1;
     }
 
-    public void doPresent() {
-    }
+    public abstract void doPresent();
 
     protected String buildHeaderLine(String... components) {
         StringJoiner joiner = new StringJoiner(" ");

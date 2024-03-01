@@ -10,29 +10,20 @@ public class ExtendedFactory implements CmdFactory {
 
     }
 
-    private static ExtendedFactory instance = new ExtendedFactory();
+    private static final ExtendedFactory instance = new ExtendedFactory();
 
     public static ExtendedFactory getInstance() {
         return instance;
     }
 
     @Override
-    public AbstractCmd build(U1 ordinal, CodeInputStream codeInputStream) {
+    public AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
-            case 0xc4: {
-                System.out.println("wide cmd found");
-                return new AbstractCmd(ordinal) {
-                    {
-                        name = "wide";
-                    }
-
-                    @Override
-                    public int size() {
-                        return 1;
-                    }
-                };
+            case 0xc4 -> {
+                System.out.println("wide instruction found");
+                throw new IllegalArgumentException("wide instruction should always be used together with some other instruction!");
             }
-            case 0xc5: {
+            case 0xc5 -> {
                 return new AbstractCmd(ordinal) {
                     {
                         name = "multianewarray";
@@ -47,13 +38,13 @@ public class ExtendedFactory implements CmdFactory {
                     }
                 };
             }
-            case 0xc6: {
+            case 0xc6 -> {
                 return new ThreeByteCmd(ordinal, "ifnull", codeInputStream);
             }
-            case 0xc7: {
+            case 0xc7 -> {
                 return new ThreeByteCmd(ordinal, "ifnonnull", codeInputStream);
             }
-            case 0xc8: {
+            case 0xc8 -> {
                 return new AbstractCmd(ordinal) {
                     {
                         name = "goto_w";
@@ -69,7 +60,7 @@ public class ExtendedFactory implements CmdFactory {
                     }
                 };
             }
-            case 0xc9: {
+            case 0xc9 -> {
                 return new AbstractCmd(ordinal) {
                     {
                         name = "jsr_w";
@@ -85,8 +76,7 @@ public class ExtendedFactory implements CmdFactory {
                     }
                 };
             }
-            default:
-                throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
+            default -> throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }
     }
 }

@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class TreeMapFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.util.TreeMap"));
     }
 
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_comparator() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #408                         // Ljava/util/Comparator<-TK;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_root() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,7 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #409                         // Ljava/util/TreeMap$Entry<TK;TV;>;"
         );
     }
+
     @Test
     public void test_for_field_size() {
         expectedConsecutiveLines = List.of(
@@ -40,6 +50,7 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_modCount() {
         expectedConsecutiveLines = List.of(
@@ -48,6 +59,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0082) ACC_PRIVATE, ACC_TRANSIENT"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_entrySet() {
         expectedConsecutiveLines = List.of(
@@ -57,6 +70,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #410                         // Ljava/util/TreeMap<TK;TV;>.EntrySet;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_navigableKeySet() {
         expectedConsecutiveLines = List.of(
@@ -66,6 +81,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #411                         // Ljava/util/TreeMap$KeySet<TK;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_descendingMap() {
         expectedConsecutiveLines = List.of(
@@ -75,6 +92,7 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #412                         // Ljava/util/NavigableMap<TK;TV;>;"
         );
     }
+
     @Test
     public void test_for_field_UNBOUNDED() {
         expectedConsecutiveLines = List.of(
@@ -83,6 +101,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_RED() {
         expectedConsecutiveLines = List.of(
@@ -92,6 +112,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 0"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_BLACK() {
         expectedConsecutiveLines = List.of(
@@ -101,6 +123,8 @@ public class TreeMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(

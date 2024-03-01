@@ -19,7 +19,12 @@ public class ReturnValueCaseMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public com.test.cases.method.ReturnValueCase();",
                 "    descriptor: ()V",
-                "    flags: (0x0001) ACC_PUBLIC"
+                "    flags: (0x0001) ACC_PUBLIC",
+                "    Code:",
+                "      stack=1, locals=1, args_size=1",
+                "         0: aload_0",
+                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
+                "         4: return"
         );
     }
     @Test

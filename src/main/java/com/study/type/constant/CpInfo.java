@@ -16,10 +16,6 @@ public abstract class CpInfo {
 
     public abstract String desc();
 
-    protected String desc(AbstractU u) {
-        return "#" + u.toInt();
-    }
-
     protected String desc(AbstractU u1, AbstractU u2) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('#');
@@ -34,11 +30,9 @@ public abstract class CpInfo {
         return stringBuilder.toString();
     }
 
-    protected String desc(char[] chars) {
-        return new String(chars);
-    }
+    public void validate(ConstantPool constantPool) {
 
-    public abstract void validate(ConstantPool constantPool);
+    }
 
     /**
      * Should use the following method instead

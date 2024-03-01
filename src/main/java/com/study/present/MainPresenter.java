@@ -67,9 +67,8 @@ public class MainPresenter extends AbstractPresenter {
         }
 
         if (presentKinds.contains(PresentKind.METHODS)) {
-            // There is always at least one method (i.e. a constructor),
-            // so if some fields have been presented, we need to print a line before presenting methods
-            if (cnt > 0) {
+            // If some fields have been presented, we need to print a line before presenting methods
+            if (cnt > 0 && !result.getMethods().items().isEmpty()) {
                 printStreamWrapper.println();
             }
             presentMethods();
@@ -132,15 +131,14 @@ public class MainPresenter extends AbstractPresenter {
     private void presentSomeClass(U2 someClass, String name) {
         String mainPart = String.format("%s: #%s", name, someClass.toInt());
 
-        String padded = StringUtils.rightPad(mainPart, 40);
+        String padded = StringUtils.rightPad(mainPart, 39);
 
         ConstantPool constantPool = result.getConstantPool();
         String detail = constantPool.detail(someClass);
 
-        String content = String.format("%s// %s", padded, detail);
+        String content = String.format("%s // %s", padded, detail);
         printStreamWrapper.printlnWithIndentLevel(content, DEFAULT_INDENT_LEVEL);
     }
-
 
     private void presentCount() {
         String content = String.format("interfaces: %d, fields: %d, methods: %d, attributes: %d",

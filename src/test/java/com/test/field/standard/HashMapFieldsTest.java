@@ -1,12 +1,18 @@
 package com.test.field.standard;
 
+import com.study.type.info.attribute.ConstantValueAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
 import com.test.field.FieldPresenterTestBase;
+import com.test.field.FieldTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(FieldTestGenerator.class)
 public class HashMapFieldsTest extends FieldPresenterTestBase {
 
     @BeforeClass
@@ -14,6 +20,7 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
         buildRealLines(Class.forName("java.util.HashMap"));
     }
 
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_serialVersionUID() {
         expectedConsecutiveLines = List.of(
@@ -23,6 +30,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: long 362498820763181265l"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DEFAULT_INITIAL_CAPACITY() {
         expectedConsecutiveLines = List.of(
@@ -32,6 +41,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 16"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MAXIMUM_CAPACITY() {
         expectedConsecutiveLines = List.of(
@@ -41,6 +52,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 1073741824"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_DEFAULT_LOAD_FACTOR() {
         expectedConsecutiveLines = List.of(
@@ -50,6 +63,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: float 0.75f"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_TREEIFY_THRESHOLD() {
         expectedConsecutiveLines = List.of(
@@ -59,6 +74,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 8"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_UNTREEIFY_THRESHOLD() {
         expectedConsecutiveLines = List.of(
@@ -68,6 +85,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 6"
         );
     }
+
+    @ExpectedPredefinedAttribute(ConstantValueAttribute.class)
     @Test
     public void test_for_field_MIN_TREEIFY_CAPACITY() {
         expectedConsecutiveLines = List.of(
@@ -77,6 +96,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    ConstantValue: int 64"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_table() {
         expectedConsecutiveLines = List.of(
@@ -86,6 +107,8 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #412                         // [Ljava/util/HashMap$Node<TK;TV;>;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_field_entrySet() {
         expectedConsecutiveLines = List.of(
@@ -95,6 +118,7 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    Signature: #413                         // Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;"
         );
     }
+
     @Test
     public void test_for_field_size() {
         expectedConsecutiveLines = List.of(
@@ -103,6 +127,7 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0080) ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_modCount() {
         expectedConsecutiveLines = List.of(
@@ -111,6 +136,7 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0080) ACC_TRANSIENT"
         );
     }
+
     @Test
     public void test_for_field_threshold() {
         expectedConsecutiveLines = List.of(
@@ -119,6 +145,7 @@ public class HashMapFieldsTest extends FieldPresenterTestBase {
                 "    flags: (0x0000)"
         );
     }
+
     @Test
     public void test_for_field_loadFactor() {
         expectedConsecutiveLines = List.of(

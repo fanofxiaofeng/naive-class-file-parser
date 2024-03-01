@@ -26,10 +26,6 @@ public class ConstantMethodref extends CompoundCpInfo {
 
     @Override
     public void validate(ConstantPool constantPool) {
-        if (tag != ConstantKind.CONSTANT_Methodref) {
-            throw new AssertionError();
-        }
-
         if (!(constantPool.get(classIndex) instanceof ConstantClass)) {
             throw new AssertionError();
         }

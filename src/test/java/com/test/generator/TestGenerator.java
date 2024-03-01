@@ -4,5 +4,9 @@ import java.io.IOException;
 
 @FunctionalInterface
 public interface TestGenerator {
-    void generate() throws IOException;
+
+    /**
+     * Generate a test class and save it to some file
+     */
+    void generate() throws IOException, ReflectiveOperationException;
 }

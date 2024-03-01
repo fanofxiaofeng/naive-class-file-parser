@@ -1,10 +1,14 @@
 package com.study.type.constant.leaf;
 
 import com.study.constants.ConstantKind;
-import com.study.type.ConstantPool;
 import com.study.type.U4;
 
-public class ConstantLong extends LeafCpInfo {
+/**
+ * Format example:
+ * #172 = Long               -4294967296l
+ * Consider "-4294967296l" as the description (i.e. return value for {@link #desc()}) for this item
+ */
+public final class ConstantLong extends LeafCpInfo {
     private final U4 highBytes;
     private final U4 lowBytes;
 
@@ -18,15 +22,12 @@ public class ConstantLong extends LeafCpInfo {
     public String desc() {
         long high = highBytes.toLong();
         long low = lowBytes.toLong();
-        // todo 有待确认
+        // todo: check whether next line is correct
         long value = (high << 32) + low;
         return desc(value);
     }
 
-    @Override
-    public void validate(ConstantPool constantPool) {
-        if (tag != ConstantKind.CONSTANT_Long) {
-            throw new AssertionError();
-        }
+    private String desc(long value) {
+        return String.valueOf(value) + 'l';
     }
 }

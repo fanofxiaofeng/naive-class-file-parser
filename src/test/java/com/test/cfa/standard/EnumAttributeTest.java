@@ -1,12 +1,20 @@
 package com.test.cfa.standard;
 
-import com.test.present.ClassFileAttributePresenterTestBase;
+import com.study.type.info.attribute.BootstrapMethodsAttribute;
+import com.study.type.info.attribute.InnerClassesAttribute;
+import com.study.type.info.attribute.SignatureAttribute;
+import com.study.type.info.attribute.SourceFileAttribute;
+import com.test.annotations.ExpectedPredefinedAttribute;
+import com.test.annotations.GeneratedBy;
+import com.test.cfa.ClassFileAttributeTestGenerator;
+import com.test.presenter.ClassFileAttributePresenterTestBase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(ClassFileAttributeTestGenerator.class)
 public class EnumAttributeTest extends ClassFileAttributePresenterTestBase {
 
     @BeforeClass
@@ -14,18 +22,23 @@ public class EnumAttributeTest extends ClassFileAttributePresenterTestBase {
         buildRealLines(Class.forName("java.lang.Enum"));
     }
 
+    @ExpectedPredefinedAttribute(SignatureAttribute.class)
     @Test
     public void test_for_Signature_Attribute() {
         expectedConsecutiveLines = List.of(
                 "Signature: #180                         // <E:Ljava/lang/Enum<TE;>;>Ljava/lang/Object;Ljava/lang/constant/Constable;Ljava/lang/Comparable<TE;>;Ljava/io/Serializable;"
         );
     }
+
+    @ExpectedPredefinedAttribute(SourceFileAttribute.class)
     @Test
     public void test_for_SourceFile_Attribute() {
         expectedConsecutiveLines = List.of(
                 "SourceFile: \"Enum.java\""
         );
     }
+
+    @ExpectedPredefinedAttribute(BootstrapMethodsAttribute.class)
     @Test
     public void test_for_BootstrapMethods_Attribute() {
         expectedConsecutiveLines = List.of(
@@ -37,6 +50,8 @@ public class EnumAttributeTest extends ClassFileAttributePresenterTestBase {
                 "      #189 (Ljava/lang/constant/ClassDesc;)Ljava/lang/Enum$EnumDesc;"
         );
     }
+
+    @ExpectedPredefinedAttribute(InnerClassesAttribute.class)
     @Test
     public void test_for_InnerClasses_Attribute() {
         expectedConsecutiveLines = List.of(

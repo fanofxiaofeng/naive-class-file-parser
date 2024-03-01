@@ -11,13 +11,6 @@ public class SourceFileAttribute extends AttributeInfo {
         this.sourceFileIndex = sourceFileIndex;
     }
 
-    @Override
-    public String describe(int indent) {
-        StringBuilder stringBuilder = withIndent(indent).append("SourceFile: ");
-        stringBuilder.append(String.format("\"%s\"\n", constantPool.get(sourceFileIndex.toInt()).desc()));
-        return stringBuilder.toString();
-    }
-
     public U2 getSourceFileIndex() {
         return sourceFileIndex;
     }
