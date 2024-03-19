@@ -1,6 +1,8 @@
 package com.study.type.info;
 
+import com.study.constants.ClassAccessFlags;
 import com.study.constants.MethodAccessFlags;
+import com.study.parser.ParseResult;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
@@ -37,13 +39,25 @@ public class MethodInfo extends AbstractInfo {
         return String.format("descriptor: %s", descriptor.desc());
     }
 
-    public String buildHumanReadableFlagsDesc() {
+    private boolean isDefaultMethodInInterface(ParseResult result) {
+        // todo: please check whether the logic is correct
+        return result.getAccessFlags().isOn(ClassAccessFlags.ACC_INTERFACE.getFlag()) &&
+                !accessFlags.isOn(MethodAccessFlags.ACC_ABSTRACT.getFlag()) &&
+                !accessFlags.isOn(MethodAccessFlags.ACC_STATIC.getFlag()) &&
+                accessFlags.isOn(MethodAccessFlags.ACC_PUBLIC.getFlag());
+    }
+
+    public String buildHumanReadableFlagsDesc(ParseResult result) {
         StringJoiner joiner = new StringJoiner(" ");
 
         Arrays.stream(MethodAccessFlags.values()).
                 filter(e -> !skippedFlags.contains(e)).
                 filter(e -> accessFlags.isOn(e.getFlag())).
                 forEach(e -> joiner.add(e.getSimpleName()));
+
+        if (isDefaultMethodInInterface(result)) {
+            joiner.add("default");
+        }
 
         return joiner.toString();
     }

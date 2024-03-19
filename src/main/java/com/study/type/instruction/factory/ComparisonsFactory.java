@@ -2,11 +2,11 @@ package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
-import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.OneByteCmd;
-import com.study.type.instruction.ThreeByteCmd;
+import com.study.type.instruction.AbstractInstruction;
+import com.study.type.instruction.OneByteInstruction;
+import com.study.type.instruction.ThreeByteInstruction;
 
-public class ComparisonsFactory implements CmdFactory {
+public class ComparisonsFactory implements InstructionFactory {
     private ComparisonsFactory() {
 
     }
@@ -18,64 +18,39 @@ public class ComparisonsFactory implements CmdFactory {
     }
 
     @Override
-    public AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
+    public AbstractInstruction build(int startIndex, boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
             case 0x94 -> {
-                return new OneByteCmd(ordinal, "lcmp");
+                return new OneByteInstruction(startIndex, ordinal, "lcmp");
             }
             case 0x95 -> {
-                return new OneByteCmd(ordinal, "fcmpl");
+                return new OneByteInstruction(startIndex, ordinal, "fcmpl");
             }
             case 0x96 -> {
-                return new OneByteCmd(ordinal, "fcmpg");
+                return new OneByteInstruction(startIndex, ordinal, "fcmpg");
             }
             case 0x97 -> {
-                return new OneByteCmd(ordinal, "dcmpl");
+                return new OneByteInstruction(startIndex, ordinal, "dcmpl");
             }
             case 0x98 -> {
-                return new OneByteCmd(ordinal, "dcmpg");
+                return new OneByteInstruction(startIndex, ordinal, "dcmpg");
             }
-            case 0x99 -> {
-                return new ThreeByteCmd(ordinal, "ifeq", codeInputStream);
+            case 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e -> {
+                String[] nameCandidates = new String[]{"ifeq", "ifne", "iflt", "ifge", "ifgt", "ifle"};
+                return new ThreeByteInstruction.Condition(startIndex, ordinal, nameCandidates[ordinal.toInt() - 0x99], codeInputStream);
             }
-            case 0x9a -> {
-                return new ThreeByteCmd(ordinal, "ifne", codeInputStream);
-            }
-            case 0x9b -> {
-                return new ThreeByteCmd(ordinal, "iflt", codeInputStream);
-            }
-            case 0x9c -> {
-                return new ThreeByteCmd(ordinal, "ifge", codeInputStream);
-            }
-            case 0x9d -> {
-                return new ThreeByteCmd(ordinal, "ifgt", codeInputStream);
-            }
-            case 0x9e -> {
-                return new ThreeByteCmd(ordinal, "ifle", codeInputStream);
-            }
-            case 0x9f -> {
-                return new ThreeByteCmd(ordinal, "if_icmpeq", codeInputStream);
-            }
-            case 0xa0 -> {
-                return new ThreeByteCmd(ordinal, "if_icmpne", codeInputStream);
-            }
-            case 0xa1 -> {
-                return new ThreeByteCmd(ordinal, "if_icmplt", codeInputStream);
-            }
-            case 0xa2 -> {
-                return new ThreeByteCmd(ordinal, "if_icmpge", codeInputStream);
-            }
-            case 0xa3 -> {
-                return new ThreeByteCmd(ordinal, "if_icmpgt", codeInputStream);
-            }
-            case 0xa4 -> {
-                return new ThreeByteCmd(ordinal, "if_icmple", codeInputStream);
-            }
-            case 0xa5 -> {
-                return new ThreeByteCmd(ordinal, "if_acmpeq", codeInputStream);
-            }
-            case 0xa6 -> {
-                return new ThreeByteCmd(ordinal, "if_acmpne", codeInputStream);
+            case 0x9f, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6 -> {
+                String[] nameCandidates = new String[]{
+                        "if_icmpeq",
+                        "if_icmpne",
+                        "if_icmplt",
+                        "if_icmpge",
+                        "if_icmpgt",
+                        "if_icmple",
+                        "if_acmpeq",
+                        "if_acmpne"
+                };
+                return new ThreeByteInstruction.Condition(startIndex, ordinal, nameCandidates[ordinal.toInt() - 0x9f], codeInputStream);
             }
             default -> throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }

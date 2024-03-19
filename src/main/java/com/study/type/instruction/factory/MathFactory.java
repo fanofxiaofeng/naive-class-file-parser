@@ -3,13 +3,13 @@ package com.study.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.U2;
-import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.OneByteCmd;
-import com.study.type.instruction.ThreeByteCmd;
+import com.study.type.instruction.AbstractInstruction;
+import com.study.type.instruction.OneByteInstruction;
+import com.study.type.instruction.ThreeByteInstruction;
 
 import java.util.Optional;
 
-public class MathFactory implements CmdFactory {
+public class MathFactory implements InstructionFactory {
     private static final MathFactory instance = new MathFactory();
 
     private MathFactory() {
@@ -21,119 +21,119 @@ public class MathFactory implements CmdFactory {
     }
 
     @Override
-    public AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
+    public AbstractInstruction build(int startIndex, boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
             case 0x60 -> {
-                return new OneByteCmd(ordinal, "iadd");
+                return new OneByteInstruction(startIndex, ordinal, "iadd");
             }
             case 0x61 -> {
-                return new OneByteCmd(ordinal, "ladd");
+                return new OneByteInstruction(startIndex, ordinal, "ladd");
             }
             case 0x62 -> {
-                return new OneByteCmd(ordinal, "fadd");
+                return new OneByteInstruction(startIndex, ordinal, "fadd");
             }
             case 0x63 -> {
-                return new OneByteCmd(ordinal, "dadd");
+                return new OneByteInstruction(startIndex, ordinal, "dadd");
             }
             case 0x64 -> {
-                return new OneByteCmd(ordinal, "isub");
+                return new OneByteInstruction(startIndex, ordinal, "isub");
             }
             case 0x65 -> {
-                return new OneByteCmd(ordinal, "lsub");
+                return new OneByteInstruction(startIndex, ordinal, "lsub");
             }
             case 0x66 -> {
-                return new OneByteCmd(ordinal, "fsub");
+                return new OneByteInstruction(startIndex, ordinal, "fsub");
             }
             case 0x67 -> {
-                return new OneByteCmd(ordinal, "dsub");
+                return new OneByteInstruction(startIndex, ordinal, "dsub");
             }
             case 0x68 -> {
-                return new OneByteCmd(ordinal, "imul");
+                return new OneByteInstruction(startIndex, ordinal, "imul");
             }
             case 0x69 -> {
-                return new OneByteCmd(ordinal, "lmul");
+                return new OneByteInstruction(startIndex, ordinal, "lmul");
             }
             case 0x6a -> {
-                return new OneByteCmd(ordinal, "fmul");
+                return new OneByteInstruction(startIndex, ordinal, "fmul");
             }
             case 0x6b -> {
-                return new OneByteCmd(ordinal, "dmul");
+                return new OneByteInstruction(startIndex, ordinal, "dmul");
             }
             case 0x6c -> {
-                return new OneByteCmd(ordinal, "idiv");
+                return new OneByteInstruction(startIndex,ordinal, "idiv");
             }
             case 0x6d -> {
-                return new OneByteCmd(ordinal, "ldiv");
+                return new OneByteInstruction(startIndex, ordinal, "ldiv");
             }
             case 0x6e -> {
-                return new OneByteCmd(ordinal, "fdiv");
+                return new OneByteInstruction(startIndex, ordinal, "fdiv");
             }
             case 0x6f -> {
-                return new OneByteCmd(ordinal, "ddiv");
+                return new OneByteInstruction(startIndex, ordinal, "ddiv");
             }
             case 0x70 -> {
-                return new OneByteCmd(ordinal, "irem");
+                return new OneByteInstruction(startIndex, ordinal, "irem");
             }
             case 0x71 -> {
-                return new OneByteCmd(ordinal, "lrem");
+                return new OneByteInstruction(startIndex, ordinal, "lrem");
             }
             case 0x72 -> {
-                return new OneByteCmd(ordinal, "frem");
+                return new OneByteInstruction(startIndex, ordinal, "frem");
             }
             case 0x73 -> {
-                return new OneByteCmd(ordinal, "drem");
+                return new OneByteInstruction(startIndex, ordinal, "drem");
             }
             case 0x74 -> {
-                return new OneByteCmd(ordinal, "ineg");
+                return new OneByteInstruction(startIndex, ordinal, "ineg");
             }
             case 0x75 -> {
-                return new OneByteCmd(ordinal, "lneg");
+                return new OneByteInstruction(startIndex, ordinal, "lneg");
             }
             case 0x76 -> {
-                return new OneByteCmd(ordinal, "fneg");
+                return new OneByteInstruction(startIndex, ordinal, "fneg");
             }
             case 0x77 -> {
-                return new OneByteCmd(ordinal, "dneg");
+                return new OneByteInstruction(startIndex, ordinal, "dneg");
             }
             case 0x78 -> {
-                return new OneByteCmd(ordinal, "ishl");
+                return new OneByteInstruction(startIndex, ordinal, "ishl");
             }
             case 0x79 -> {
-                return new OneByteCmd(ordinal, "lshl");
+                return new OneByteInstruction(startIndex, ordinal, "lshl");
             }
             case 0x7a -> {
-                return new OneByteCmd(ordinal, "ishr");
+                return new OneByteInstruction(startIndex, ordinal, "ishr");
             }
             case 0x7b -> {
-                return new OneByteCmd(ordinal, "lshr");
+                return new OneByteInstruction(startIndex, ordinal, "lshr");
             }
             case 0x7c -> {
-                return new OneByteCmd(ordinal, "iushr");
+                return new OneByteInstruction(startIndex, ordinal, "iushr");
             }
             case 0x7d -> {
-                return new OneByteCmd(ordinal, "lushr");
+                return new OneByteInstruction(startIndex, ordinal, "lushr");
             }
             case 0x7e -> {
-                return new OneByteCmd(ordinal, "iand");
+                return new OneByteInstruction(startIndex, ordinal, "iand");
             }
             case 0x7f -> {
-                return new OneByteCmd(ordinal, "land");
+                return new OneByteInstruction(startIndex, ordinal, "land");
             }
             case 0x80 -> {
-                return new OneByteCmd(ordinal, "ior");
+                return new OneByteInstruction(startIndex, ordinal, "ior");
             }
             case 0x81 -> {
-                return new OneByteCmd(ordinal, "lor");
+                return new OneByteInstruction(startIndex, ordinal, "lor");
             }
             case 0x82 -> {
-                return new OneByteCmd(ordinal, "ixor");
+                return new OneByteInstruction(startIndex, ordinal, "ixor");
             }
             case 0x83 -> {
-                return new OneByteCmd(ordinal, "lxor");
+                return new OneByteInstruction(startIndex, ordinal, "lxor");
             }
             case 0x84 -> {
                 if (isWide) {
-                    return new AbstractCmd(ordinal) {
+                    return new AbstractInstruction(startIndex, ordinal) {
                         final U1 indexByte1;
                         final U1 indexByte2;
                         final U1 constByte1;
@@ -164,10 +164,10 @@ public class MathFactory implements CmdFactory {
                         }
                     };
                 } else {
-                    return new ThreeByteCmd(ordinal, "iinc", codeInputStream) {
+                    return new ThreeByteInstruction(startIndex, ordinal, "iinc", codeInputStream) {
                         @Override
                         public Optional<String> operandDesc() {
-                            return Optional.of(String.format("%s, %s", b1.toInt(), b2.toInt()));
+                            return Optional.of(String.format("%s, %s", b1.toInt(), b2.toSignedInt()));
                         }
                     };
                 }

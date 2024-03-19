@@ -24,8 +24,4 @@ public class ExceptionsAttributePresenter extends AbstractAttributePresenter<Exc
         String description = attribute.buildDesc(result.getConstantPool());
         printStreamWrapper.printlnWithIndentLevel(description, baseIndentLevel + 1);
     }
-
-    private void presentHeaderLine() {
-        printStreamWrapper.printlnWithIndentLevel("Exceptions:", baseIndentLevel);
-    }
 }

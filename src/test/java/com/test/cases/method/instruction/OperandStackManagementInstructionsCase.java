@@ -2,8 +2,17 @@ package com.test.cases.method.instruction;
 
 import java.util.function.Supplier;
 
-public final class StackInstructionsCase implements InstructionAnalyzer {
-
+/**
+ * Please refer to the following link for more details
+ * <a href="https://docs.oracle.com/javase/specs/jvms/se22/html/jvms-2.html#jvms-2.11.6">2.11.6. Operand Stack Management Instructions</a>
+ */
+// A number of instructions are provided for the direct manipulation of the operand stack:
+// pop, pop2,
+// dup, dup2,
+// dup_x1, dup2_x1,
+// dup_x2, dup2_x2,
+// swap.
+public class OperandStackManagementInstructionsCase implements InstructionAnalyzer {
     private int a;
     private long b;
 
@@ -29,21 +38,5 @@ public final class StackInstructionsCase implements InstructionAnalyzer {
     @Instruction(value = 0x5a, name = "dup_x1")
     public int test_0x5a() {
         return a++;
-    }
-
-
-    // todo
-    // dup_x2 = 91 (0x5b)
-//    @Instruction(value = 0x5b, name = "dup_x2",needMoreWork = true)
-    public long test_0x5b() {
-        return b--;
-    }
-
-    // todo
-    // dup2 = 92 (0x5c)
-//    @Instruction(value = 0x5c, name = "dup2", needMoreWork = true)
-    public int test_0x5c(int x) {
-        int y = x;
-        return y;
     }
 }

@@ -1,8 +1,9 @@
 package com.test.generator;
 
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 @FunctionalInterface
 public interface SuiteGenerator {
-    String generate() throws FileNotFoundException;
+    Optional<String> generate() throws FileNotFoundException;
 }

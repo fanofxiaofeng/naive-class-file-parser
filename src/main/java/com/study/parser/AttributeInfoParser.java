@@ -39,7 +39,7 @@ public class AttributeInfoParser<I extends AttributeInfo> extends InfoHolderPars
             case "Synthetic" -> new SyntheticAttributeParser(that);
             case "BootstrapMethods" -> new BootstrapMethodsAttributeParser(that);
             case "Code" -> new CodeAttributeParser(constantPool, that);
-//            case "LineNumberTable" -> new LineNumberTableAttribute(that);
+            case "LineNumberTable" -> new LineNumberTableAttributeParser(that);
             case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttributeParser(that);
             case "RuntimeInvisibleAnnotations" -> new RuntimeInvisibleAnnotationsAttributeParser(that);
 //            case "LocalVariableTable" -> new LocalVariableTableAttribute(that);

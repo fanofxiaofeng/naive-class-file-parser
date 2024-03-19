@@ -2,8 +2,7 @@ package com.study.io;
 
 import com.study.type.U1;
 import com.study.type.U4;
-import com.study.type.instruction.AbstractCmd;
-import org.apache.commons.lang3.tuple.Pair;
+import com.study.type.instruction.AbstractInstruction;
 
 import java.util.Iterator;
 import java.util.List;
@@ -51,21 +50,17 @@ import java.util.List;
  * stack, math, conversions,
  * comparisons, conversions, control, references, extended, reserved]
  */
-public class CodeInputStream implements Iterable<Pair<Integer, AbstractCmd>> {
+public class CodeInputStream implements Iterable<AbstractInstruction> {
 
     private int index = 0;
-    private U1[] code;
+    private final List<U1> code;
 
-    public CodeInputStream(U1[] code) {
+    public CodeInputStream(List<U1> code) {
         this.code = code;
     }
 
-    public CodeInputStream(List<U1> code) {
-        this.code = code.toArray(new U1[]{});
-    }
-
     public U1 readU1() {
-        return code[index++];
+        return code.get(index++);
     }
 
     public U4 readU4() {
@@ -77,15 +72,15 @@ public class CodeInputStream implements Iterable<Pair<Integer, AbstractCmd>> {
     }
 
     private boolean canRead() {
-        return index < code.length;
+        return index < code.size();
     }
 
-    public final int getIndex() {
-        return this.index;
+    public int getIndex() {
+        return index;
     }
 
     @Override
-    public Iterator<Pair<Integer, AbstractCmd>> iterator() {
+    public Iterator<AbstractInstruction> iterator() {
         return new Iterator<>() {
             @Override
             public boolean hasNext() {
@@ -93,10 +88,8 @@ public class CodeInputStream implements Iterable<Pair<Integer, AbstractCmd>> {
             }
 
             @Override
-            public Pair<Integer, AbstractCmd> next() {
-                int currentIndex = index;
-                AbstractCmd cmd = AbstractCmd.build(CodeInputStream.this);
-                return Pair.of(currentIndex, cmd);
+            public AbstractInstruction next() {
+                return AbstractInstruction.build(CodeInputStream.this);
             }
         };
     }

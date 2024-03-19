@@ -1,20 +1,18 @@
 package com.study.type.instruction.factory;
 
+import com.study.constants.ArrayTypeCode;
 import com.study.io.CodeInputStream;
 import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 import com.study.type.constant.compound.ConstantFieldref;
-import com.study.type.constant.compound.ConstantInterfaceMethodref;
-import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.OneByteCmd;
-import com.study.type.instruction.ThreeByteCmd;
-import com.study.type.instruction.TwoByteCmd;
+import com.study.type.constant.compound.ConstantMethodref;
+import com.study.type.instruction.*;
 
 import java.util.Optional;
 
 
-public class ReferencesFactory implements CmdFactory {
+public class ReferencesFactory implements InstructionFactory {
     private ReferencesFactory() {
 
     }
@@ -26,141 +24,33 @@ public class ReferencesFactory implements CmdFactory {
     }
 
     @Override
-    public AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
+    public AbstractInstruction build(int startIndex, boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
-            case 0xb2 -> {
-                U1 b1 = codeInputStream.readU1();
-                U1 b2 = codeInputStream.readU1();
-                return new ThreeByteCmd(ordinal, "getstatic", b1, b2) {
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        return Optional.of(String.format("Field %s", constantPool.detail(combine())));
-                    }
-                };
-            }
-            case 0xb3 -> {
-                U1 b1 = codeInputStream.readU1();
-                U1 b2 = codeInputStream.readU1();
-                return new ThreeByteCmd(ordinal, "putstatic", b1, b2) {
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        return Optional.of(String.format("Field %s", constantPool.detail(combine())));
-                    }
-                };
-            }
-            case 0xb4 -> {
-                U1 b1 = codeInputStream.readU1();
-                U1 b2 = codeInputStream.readU1();
-                return new ThreeByteCmd(ordinal, "getfield", b1, b2) {
-                    @Override
-                    public Optional<String> operandDesc() {
-                        return Optional.of("#" + combine().toInt());
-                    }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        ConstantFieldref constantFieldref = constantPool.get(combine(), ConstantFieldref.class);
-                        return Optional.of(String.format("Field %s", constantPool.detail(constantFieldref.getNameAndTypeIndex())));
-                    }
-                };
-            }
-            case 0xb5 -> {
-                U1 b1 = codeInputStream.readU1();
-                U1 b2 = codeInputStream.readU1();
-                return new ThreeByteCmd(ordinal, "putfield", b1, b2) {
-                    @Override
-                    public Optional<String> operandDesc() {
-                        return Optional.of("#" + combine().toInt());
-                    }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        ConstantFieldref constantFieldref = constantPool.get(combine(), ConstantFieldref.class);
-                        U2 nameAndTypeIndex = constantFieldref.getNameAndTypeIndex();
-                        return Optional.of(String.format("Field %s", constantPool.detail(nameAndTypeIndex)));
-                    }
-                };
-            }
-            case 0xb6 -> {
-                return new ThreeByteCmd(ordinal, "invokevirtual", codeInputStream) {
+            case 0xb2, 0xb3, 0xb4, 0xb5 -> {
+                String[] nameCandidates = new String[]{"getstatic", "putstatic", "getfield", "putfield"};
+                return new ThreeByteInstruction(startIndex, ordinal, nameCandidates[ordinal.toInt() - 0xb2], codeInputStream) {
 
                     @Override
                     public Optional<String> operandDesc() {
                         return Optional.of("#" + combine().toInt());
                     }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        return Optional.of(String.format("Method %s", constantPool.detail(combine())));
-                    }
                 };
             }
-            case 0xb7 -> {
-                return new ThreeByteCmd(ordinal, "invokespecial", codeInputStream) {
+            case 0xb6, 0xb7, 0xb8 -> {
+                String[] nameCandidates = new String[]{"invokevirtual", "invokespecial", "invokestatic"};
+                return new ThreeByteInstruction(startIndex, ordinal, nameCandidates[ordinal.toInt() - 0xb6], codeInputStream) {
 
                     @Override
                     public Optional<String> operandDesc() {
                         return Optional.of("#" + combine().toInt());
-                    }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        return Optional.of(String.format("Method %s", constantPool.detail(combine())));
-                    }
-                };
-            }
-            case 0xb8 -> {
-                return new ThreeByteCmd(ordinal, "invokestatic", codeInputStream) {
-                    @Override
-                    public Optional<String> operandDesc() {
-                        return Optional.of("#" + combine().toInt());
-                    }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        return Optional.of(String.format("Method %s", constantPool.detail(combine())));
                     }
                 };
             }
             case 0xb9 -> {
-                return new AbstractCmd(ordinal) {
-
-                    final U1 indexByte1;
-                    final U1 indexByte2;
-                    final U1 count;
-
-                    {
-                        name = "invokeinterface";
-                        indexByte1 = codeInputStream.readU1();
-                        indexByte2 = codeInputStream.readU1();
-                        count = codeInputStream.readU1();
-                        U1 _zero = codeInputStream.readU1();
-                        if (_zero.toInt() != 0) {
-                            throw new AssertionError();
-                        }
-                    }
-
-                    @Override
-                    public Optional<String> operandDesc() {
-                        return Optional.of(String.format("#%s,  %s", new U2(indexByte1, indexByte2).toInt(), count.toInt()));
-                    }
-
-                    @Override
-                    public Optional<String> detail(ConstantPool constantPool) {
-                        ConstantInterfaceMethodref constantInterfaceMethodref = constantPool.get(new U2(indexByte1, indexByte2), ConstantInterfaceMethodref.class);
-                        return Optional.of("InterfaceMethod " + constantInterfaceMethodref.detail(constantPool));
-                    }
-
-                    @Override
-                    public int size() {
-                        return 5;
-                    }
-                };
+                return new InvokeInterfaceInstruction(startIndex, ordinal, codeInputStream);
             }
             case 0xba -> {
-                return new AbstractCmd(ordinal) {
+                return new AbstractInstruction(startIndex, ordinal) {
 
                     final U1 indexByte1;
                     final U1 indexByte2;
@@ -196,7 +86,7 @@ public class ReferencesFactory implements CmdFactory {
 
             // 0xbb
             case 0xbb -> {
-                return new ThreeByteCmd(ordinal, "new", codeInputStream) {
+                return new ThreeByteInstruction(startIndex, ordinal, "new", codeInputStream) {
 
                     @Override
                     public Optional<String> operandDesc() {
@@ -210,12 +100,21 @@ public class ReferencesFactory implements CmdFactory {
                 };
             }
             case 0xbc -> {
-                // todo 逻辑有待确认
                 U1 _byte = codeInputStream.readU1();
-                return new TwoByteCmd(ordinal, "newarray", _byte);
+                return new TwoByteInstruction(startIndex, ordinal, "newarray", _byte) {
+                    @Override
+                    public Optional<String> operandDesc() {
+                        return Optional.of(" " + ArrayTypeCode.toArrayTypeCode(_byte.toInt()));
+                    }
+                };
             }
             case 0xbd -> {
-                return new ThreeByteCmd(ordinal, "anewarray", codeInputStream) {
+                return new ThreeByteInstruction(startIndex, ordinal, "anewarray", codeInputStream) {
+
+                    @Override
+                    public Optional<String> operandDesc() {
+                        return Optional.of("#" + combine().toInt());
+                    }
 
                     @Override
                     public Optional<String> detail(ConstantPool constantPool) {
@@ -224,22 +123,46 @@ public class ReferencesFactory implements CmdFactory {
                 };
             }
             case 0xbe -> {
-                return new OneByteCmd(ordinal, "arraylength");
+                return new OneByteInstruction(startIndex, ordinal, "arraylength");
             }
             case 0xbf -> {
-                return new OneByteCmd(ordinal, "athrow");
+                return new OneByteInstruction(startIndex, ordinal, "athrow");
             }
             case 0xc0 -> {
-                return new ThreeByteCmd(ordinal, "checkcast", codeInputStream);
+                return new ThreeByteInstruction(startIndex, ordinal, "checkcast", codeInputStream) {
+                    @Override
+                    public Optional<String> operandDesc() {
+                        String desc = "#" + combine().toInt();
+                        return Optional.of(desc);
+                    }
+
+                    @Override
+                    public Optional<String> detail(ConstantPool constantPool) {
+                        String detail = String.format("class %s", constantPool.detail(combine()));
+                        return Optional.of(detail);
+                    }
+                };
             }
             case 0xc1 -> {
-                return new ThreeByteCmd(ordinal, "instanceof", codeInputStream);
+                return new ThreeByteInstruction(startIndex, ordinal, "instanceof", codeInputStream) {
+                    @Override
+                    public Optional<String> operandDesc() {
+                        String desc = "#" + combine().toInt();
+                        return Optional.of(desc);
+                    }
+
+                    @Override
+                    public Optional<String> detail(ConstantPool constantPool) {
+                        String detail = String.format("class %s", constantPool.detail(combine()));
+                        return Optional.of(detail);
+                    }
+                };
             }
             case 0xc2 -> {
-                return new OneByteCmd(ordinal, "monitorenter");
+                return new OneByteInstruction(startIndex, ordinal, "monitorenter");
             }
             case 0xc3 -> {
-                return new OneByteCmd(ordinal, "monitorexit");
+                return new OneByteInstruction(startIndex, ordinal, "monitorexit");
             }
             default -> throw new RuntimeException(String.format("ordinal: %s is not found!", ordinal));
         }

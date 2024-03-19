@@ -1,8 +1,9 @@
 package com.study.type;
 
-public class U1 extends AbstractU {
+public final class U1 extends AbstractU {
 
     public U1(int a) {
+        rangeCheck(a);
         fillDetail(a);
     }
 

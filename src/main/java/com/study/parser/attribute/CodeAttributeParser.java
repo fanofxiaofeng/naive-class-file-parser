@@ -40,8 +40,6 @@ public class CodeAttributeParser extends AttributeParser<CodeAttribute> {
      * u2 attributes_count;
      * attribute_info attributes[attributes_count];
      * }
-     *
-     * @return
      */
     @Override
     public CodeAttribute parse() {

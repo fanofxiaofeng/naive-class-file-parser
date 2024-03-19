@@ -44,7 +44,7 @@ public class MethodHeaderLinePresenter extends AbstractPresenter {
         MethodDescriptor methodDescriptor = methodDescriptorBuilder.build(constantPool, methodInfo.getDescriptorIndex());
 
         Optional<MethodSignature> methodSignature = buildMethodSignature();
-        String humanReadableFlagsDesc = methodInfo.buildHumanReadableFlagsDesc();
+        String humanReadableFlagsDesc = methodInfo.buildHumanReadableFlagsDesc(result);
         String returnTypeDesc =
                 methodSignature.isPresent() ?
                         buildReturnTypeDesc(methodSignature.get(), constantPool) :
@@ -119,8 +119,8 @@ public class MethodHeaderLinePresenter extends AbstractPresenter {
         }
 
         boolean varargs = methodInfo.getAccessFlags().isOn(MethodAccessFlags.ACC_VARARGS.getFlag());
-        boolean enumConstructor = result.getAccessFlags().isOn(ClassAccessFlags.ACC_ENUM.getFlag()) && methodInfo.isConstructor(constantPool);
-        return methodSignature.buildParameterDescriptorsForCornerCases(varargs, enumConstructor);
+//        boolean enumConstructor = result.getAccessFlags().isOn(ClassAccessFlags.ACC_ENUM.getFlag()) && methodInfo.isConstructor(constantPool);
+        return methodSignature.buildParameterDescriptorsForCornerCases(varargs);
     }
 
     private String buildName(ConstantPool constantPool) {

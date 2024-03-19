@@ -12,8 +12,9 @@ public class GeneratedClassClassLoader extends ClassLoader {
     private static final Logger logger = LoggerFactory.getLogger(GeneratedClassClassLoader.class);
 
     private byte[] getBytes(String className) {
-        try {
-            return new FileInputStream("src/test/resources/" + className.replace('.', '/') + ".class").readAllBytes();
+        String fileName = "src/test/resources/" + className.replace('.', '/') + ".class";
+        try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
+            return fileInputStream.readAllBytes();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -26,8 +27,12 @@ public class GeneratedClassClassLoader extends ClassLoader {
             return super.defineClass(StringUtils.removeEnd(name, ".class"), bytes, 0, bytes.length);
         }
 
-        logger.warn("You are probably using a wrong class loader for class: {}, please check", name);
+        logger.error("You are probably using a wrong class loader for class: {}, please check", name);
+        throw new ClassNotFoundException(String.format("Class not found: [%s]", name));
+    }
 
-        return super.findClass(name);
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class<?> clazz = new GeneratedClassClassLoader().loadClass("com.generated.attribute.synthetic.Generated");
+        logger.info("name of clazz: {}", clazz.getCanonicalName());
     }
 }

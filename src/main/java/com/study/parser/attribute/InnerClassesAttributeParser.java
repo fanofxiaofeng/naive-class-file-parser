@@ -9,7 +9,6 @@ import java.util.List;
 
 public class InnerClassesAttributeParser extends AttributeParser<InnerClassesAttribute> {
 
-
     public InnerClassesAttributeParser(RawAttributeInfo rawAttributeInfo) {
         super(rawAttributeInfo);
     }

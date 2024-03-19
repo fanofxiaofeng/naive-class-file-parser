@@ -20,7 +20,6 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
 
     @Instruction(value = 0x0e, name = "dconst_0")
     @Instruction(value = 0x0f, name = "dconst_1")
-    @Instruction(value = 0x48, name = "dstore_1")
     @Test
     public void test_0xe_to_0xf() {
         expectedConsecutiveLines = List.of(
@@ -33,7 +32,15 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
                 "         1: dstore_1",
                 "         2: dconst_1",
                 "         3: dstore_1",
-                "         4: return"
+                "         4: return",
+                "      LineNumberTable:",
+                "        line 21: 0",
+                "        line 22: 2",
+                "        line 23: 4",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       5     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsDoubleCase;",
+                "            2       3     1     a   D"
         );
     }
 
@@ -53,7 +60,14 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
                 "         2: dadd",
                 "         3: dload         4",
                 "         5: dadd",
-                "         6: dreturn"
+                "         6: dreturn",
+                "      LineNumberTable:",
+                "        line 34: 0",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       7     0    n1   D",
+                "            0       7     2    n2   D",
+                "            0       7     4    n3   D"
         );
     }
 
@@ -70,11 +84,17 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
                 "         0: dload_1",
                 "         1: dload_3",
                 "         2: dadd",
-                "         3: dreturn"
+                "         3: dreturn",
+                "      LineNumberTable:",
+                "        line 40: 0",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       4     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsDoubleCase;",
+                "            0       4     1    n1   D",
+                "            0       4     3    n2   D"
         );
     }
 
-    @Instruction(value = 0x0f, name = "dconst_1")
     @Instruction(value = 0x39, name = "dstore")
     @Instruction(value = 0x47, name = "dstore_0")
     @Instruction(value = 0x49, name = "dstore_2")
@@ -92,11 +112,20 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
                 "         3: dstore_2",
                 "         4: dconst_1",
                 "         5: dstore        4",
-                "         7: return"
+                "         7: return",
+                "      LineNumberTable:",
+                "        line 52: 0",
+                "        line 53: 2",
+                "        line 54: 4",
+                "        line 55: 7",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       8     0    n1   D",
+                "            0       8     2    n2   D",
+                "            0       8     4    n3   D"
         );
     }
 
-    @Instruction(value = 0x0f, name = "dconst_1")
     @Instruction(value = 0x48, name = "dstore_1")
     @Instruction(value = 0x4a, name = "dstore_3")
     @Test
@@ -111,7 +140,16 @@ public class LoadAndStoreInstructionsDoubleCaseInstructionsTest extends MethodPr
                 "         1: dstore_1",
                 "         2: dconst_1",
                 "         3: dstore_3",
-                "         4: return"
+                "         4: return",
+                "      LineNumberTable:",
+                "        line 60: 0",
+                "        line 61: 2",
+                "        line 62: 4",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       5     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsDoubleCase;",
+                "            0       5     1    n1   D",
+                "            0       5     3    n2   D"
         );
     }
 }

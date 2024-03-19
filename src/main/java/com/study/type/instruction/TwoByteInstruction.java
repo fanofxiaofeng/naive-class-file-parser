@@ -4,11 +4,11 @@ import com.study.type.U1;
 
 import java.util.Optional;
 
-public class TwoByteCmd extends AbstractCmd {
+public class TwoByteInstruction extends AbstractInstruction {
     protected U1 _byte;
 
-    public TwoByteCmd(U1 ordinal, String name, U1 _byte) {
-        super(ordinal);
+    public TwoByteInstruction(int startIndex, U1 ordinal, String name, U1 _byte) {
+        super(startIndex, ordinal);
         this.name = name;
         this._byte = _byte;
     }
@@ -18,16 +18,16 @@ public class TwoByteCmd extends AbstractCmd {
         return 2;
     }
 
-    public static class TwoByteCmdWithCpIndex extends TwoByteCmd {
+    public static class TwoByteCmdWithCpIndex extends TwoByteInstruction {
 
         private final boolean signed;
 
-        public TwoByteCmdWithCpIndex(U1 ordinal, String name, U1 _byte) {
-            this(ordinal, name, _byte, false);
+        public TwoByteCmdWithCpIndex(int startIndex, U1 ordinal, String name, U1 _byte) {
+            this(startIndex, ordinal, name, _byte, false);
         }
 
-        public TwoByteCmdWithCpIndex(U1 ordinal, String name, U1 _byte, boolean signed) {
-            super(ordinal, name, _byte);
+        public TwoByteCmdWithCpIndex(int startIndex, U1 ordinal, String name, U1 _byte, boolean signed) {
+            super(startIndex, ordinal, name, _byte);
             this.signed = signed;
         }
 

@@ -1,15 +1,15 @@
 package com.test.method;
 
-import com.test.cases.method.instruction.LoadAndStoreInstructionsIntCase;
+import com.study.constants.ClassAccessFlags;
+import com.test.cases.method.*;
 import com.test.generator.AbstractTestGenerator;
 import com.test.generator.MemberTestGenerator;
 import com.test.generator.TestGeneratorContainer;
+import com.test.presenter.C33;
+import org.apache.commons.collections4.iterators.PeekingIterator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class MethodTestGenerator extends MemberTestGenerator {
@@ -81,53 +81,85 @@ public class MethodTestGenerator extends MemberTestGenerator {
         collectClassForImportStatement(MethodPresenterTestBase.class);
     }
 
+    private List<String> processCodeAttribute(PeekingIterator<String> peekingIterator) {
+        List<String> result = new ArrayList<>();
+
+        result.add(peekingIterator.next());
+        result.add(peekingIterator.next());
+
+        while (peekingIterator.hasNext()) {
+            String originalLine = peekingIterator.peek();
+            String strippedLine = originalLine.stripLeading();
+            int colonIndex = strippedLine.indexOf(':');
+            if (colonIndex < 0) {
+                break;
+            }
+
+            String numberCandidate = strippedLine.substring(0, colonIndex);
+            if (isNum(numberCandidate)) {
+                String instructionName = findInstructionName(strippedLine);
+                result.add(peekingIterator.next());
+                if (isVariableLengthInstruction(instructionName)) {
+                    while (!peekingIterator.peek().endsWith("}")) {
+                        result.add(peekingIterator.next());
+                    }
+                    result.add(peekingIterator.next());
+                }
+            } else {
+                break;
+            }
+        }
+
+        if ("      Exception table:".equals(peekingIterator.peek())) {
+            result.add(peekingIterator.next());
+            while (peekingIterator.hasNext() && !peekingIterator.peek().contains(":")) {
+                result.add(peekingIterator.next());
+            }
+        }
+
+        while (peekingIterator.hasNext()) {
+            String peek = peekingIterator.peek();
+            if (peek.equals("      LineNumberTable:")) {
+                result.add(peekingIterator.next());
+                while (peekingIterator.hasNext() && peekingIterator.peek().stripLeading().startsWith("line ")) {
+                    result.add(peekingIterator.next());
+                }
+            } else if (peek.equals("      LocalVariableTable:") || peek.equals("      LocalVariableTypeTable:")) {
+                result.add(peekingIterator.next());
+                result.add(peekingIterator.next());
+                while (peekingIterator.hasNext() && isNum(peekingIterator.peek().stripLeading().split(" +")[0])) {
+                    result.add(peekingIterator.next());
+                }
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
     @Override
     protected List<String> filter(List<String> consecutiveLines) {
         List<String> realLines = new ArrayList<>();
+
+        // 0: header, 1: descriptor, 2: flags
+        PeekingIterator<String> peekingIterator = new PeekingIterator<>(consecutiveLines.iterator());
         for (int i = 0; i < 3; i++) {
-            realLines.add(consecutiveLines.get(i));
+            realLines.add(peekingIterator.next());
         }
 
-        for (int i = 3; i < consecutiveLines.size(); ) {
-            String line = consecutiveLines.get(i);
+        while (peekingIterator.hasNext()) {
+            String line = peekingIterator.peek();
             if (line.startsWith("    Signature:")) {
-                realLines.add(line);
-                i++;
+                realLines.add(peekingIterator.next());
             } else if (line.equals("    Exceptions:")) {
-                realLines.add(line);
-                realLines.add(consecutiveLines.get(i + 1));
-                i += 2;
+                realLines.add(peekingIterator.next());
+                realLines.add(peekingIterator.next());
             } else if (line.equals("    Code:")) {
-                realLines.add(line);
-                realLines.add(consecutiveLines.get(i + 1));
-                int delta = 2;
-                while (i + delta < consecutiveLines.size()) {
-                    String tempLine = consecutiveLines.get(i + delta);
-                    String strippedLine = tempLine.stripLeading();
-                    int index = strippedLine.indexOf(':');
-                    if (index < 0) {
-                        i += delta;
-                        break;
-                    }
-                    String numberCandidate = strippedLine.substring(0, index);
-                    boolean isNum = true;
-                    for (char c : numberCandidate.toCharArray()) {
-                        if (c >= '0' && c <= '9') {
-                            continue;
-                        }
-                        isNum = false;
-                        break;
-                    }
-                    if (isNum) {
-                        realLines.add(tempLine);
-                        delta++;
-                        continue;
-                    }
-                    i += delta;
-                    break;
-                }
+                List<String> codeLines = processCodeAttribute(peekingIterator);
+//                realLines.addAll(codeLines);
             } else {
-                i++;
+                peekingIterator.next();
             }
         }
 
@@ -162,11 +194,14 @@ public class MethodTestGenerator extends MemberTestGenerator {
 
     private static void generateSpecificTest() throws IOException, ReflectiveOperationException {
         Set<Class<?>> classes = Set.of(
-//                ReturnValueCase.class,
-//                ParameterCase.class,
-//                ThrowsCase.class,
-//                ClassAccessFlags.class,
-//                C33.class,
+                InterfaceCase.class,
+                CodeCase.class,
+                ReturnValueCase.class,
+                ParameterCase.class,
+                ThrowsCase.class,
+                ClassAccessFlags.class,
+                C33.class,
+                EnumCase.Temp.class
 //                MethodCase.class
         );
 
@@ -181,7 +216,7 @@ public class MethodTestGenerator extends MemberTestGenerator {
     public static void main(String[] args) throws Exception {
         AbstractTestGenerator.overrideExistingFile = true;
 
-//        generateStandardTest();
+        generateStandardTest();
         generateSpecificTest();
     }
 }

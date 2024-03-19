@@ -59,6 +59,19 @@ public abstract class MemberTestGenerator extends AbstractTestGenerator<List<Str
     protected void beforeAdd(List<String> consecutiveLines) {
     }
 
+    protected boolean isVariableLengthInstruction(String instructionName) {
+        return instructionName.equals("tableswitch") ||
+                instructionName.equals("lookupswitch");
+    }
+
+    protected String findInstructionName(String strippedLine) {
+        return strippedLine.split(" +")[1];
+    }
+
+    protected boolean isNum(String numberCandidate) {
+        return numberCandidate.codePoints().allMatch(c -> c >= '0' && c <= '9');
+    }
+
     @Override
     protected void visitBeforeClassMethod() {
         testHolder.visitBeforeClassMethod(className);
@@ -78,7 +91,7 @@ public abstract class MemberTestGenerator extends AbstractTestGenerator<List<Str
     protected abstract String buildTestFunctionNameForOneItem(List<String> linesForOneItem);
 
     @Override
-    protected void visitTestMethods(List<List<String>> filteredLines) {
+    protected void visitTestMethods(List<List<String>> filteredLines) throws NoSuchMethodException {
         for (List<String> consecutiveLines : filteredLines) {
             List<String> realLines = filter(consecutiveLines);
             if (!realLines.isEmpty()) {
@@ -87,7 +100,7 @@ public abstract class MemberTestGenerator extends AbstractTestGenerator<List<Str
         }
     }
 
-    protected List<String> beforeGenerateTestMethod(List<String> realLines) {
+    protected List<String> beforeGenerateTestMethod(List<String> realLines) throws NoSuchMethodException {
         return List.of(String.format("    @%s%n", Test.class.getSimpleName()));
     }
 
@@ -95,7 +108,7 @@ public abstract class MemberTestGenerator extends AbstractTestGenerator<List<Str
         return consecutiveLines;
     }
 
-    private void doGenerateTestMethod(List<String> consecutiveLines) {
+    private void doGenerateTestMethod(List<String> consecutiveLines) throws NoSuchMethodException {
         List<String> linesBeforeHeader = beforeGenerateTestMethod(consecutiveLines);
         String testFunctionName = buildTestFunctionNameForOneItem(consecutiveLines);
         String headerLine = String.format("    public void %s() {%n", testFunctionName);

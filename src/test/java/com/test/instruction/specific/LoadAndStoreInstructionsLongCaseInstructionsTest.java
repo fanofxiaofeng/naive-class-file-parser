@@ -20,7 +20,6 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
 
     @Instruction(value = 0x09, name = "lconst_0")
     @Instruction(value = 0x0a, name = "lconst_1")
-    @Instruction(value = 0x40, name = "lstore_1")
     @Test
     public void test_0x9_to_0xa() {
         expectedConsecutiveLines = List.of(
@@ -33,7 +32,15 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
                 "         1: lstore_1",
                 "         2: lconst_1",
                 "         3: lstore_1",
-                "         4: return"
+                "         4: return",
+                "      LineNumberTable:",
+                "        line 21: 0",
+                "        line 22: 2",
+                "        line 23: 4",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       5     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsLongCase;",
+                "            2       3     1     a   J"
         );
     }
 
@@ -55,7 +62,15 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
                 "         5: ladd",
                 "         6: lload         6",
                 "         8: ladd",
-                "         9: lreturn"
+                "         9: lreturn",
+                "      LineNumberTable:",
+                "        line 29: 0",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      10     0    n1   J",
+                "            0      10     2    n2   J",
+                "            0      10     4    n3   J",
+                "            0      10     6    n4   J"
         );
     }
 
@@ -72,11 +87,17 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
                 "         0: lload_1",
                 "         1: lload_3",
                 "         2: ladd",
-                "         3: lreturn"
+                "         3: lreturn",
+                "      LineNumberTable:",
+                "        line 35: 0",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       4     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsLongCase;",
+                "            0       4     1    n1   J",
+                "            0       4     3    n2   J"
         );
     }
 
-    @Instruction(value = 0x0a, name = "lconst_1")
     @Instruction(value = 0x37, name = "lstore")
     @Instruction(value = 0x40, name = "lstore_1")
     @Instruction(value = 0x42, name = "lstore_3")
@@ -94,11 +115,21 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
                 "         3: lstore_3",
                 "         4: lconst_1",
                 "         5: lstore        5",
-                "         7: return"
+                "         7: return",
+                "      LineNumberTable:",
+                "        line 47: 0",
+                "        line 48: 2",
+                "        line 49: 4",
+                "        line 50: 7",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       8     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsLongCase;",
+                "            0       8     1    n1   J",
+                "            0       8     3    n2   J",
+                "            0       8     5    n3   J"
         );
     }
 
-    @Instruction(value = 0x0a, name = "lconst_1")
     @Instruction(value = 0x3f, name = "lstore_0")
     @Instruction(value = 0x41, name = "lstore_2")
     @Test
@@ -113,7 +144,15 @@ public class LoadAndStoreInstructionsLongCaseInstructionsTest extends MethodPres
                 "         1: lstore_0",
                 "         2: lconst_1",
                 "         3: lstore_2",
-                "         4: return"
+                "         4: return",
+                "      LineNumberTable:",
+                "        line 55: 0",
+                "        line 56: 2",
+                "        line 57: 4",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       5     0    n1   J",
+                "            0       5     2    n2   J"
         );
     }
 }

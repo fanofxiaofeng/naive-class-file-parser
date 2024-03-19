@@ -3,23 +3,24 @@ package com.test.type.instruction.factory;
 import com.study.io.CodeInputStream;
 import com.study.type.U1;
 import com.study.type.constant.CpInfo;
-import com.study.type.instruction.AbstractCmd;
+import com.study.type.instruction.AbstractInstruction;
 import com.study.type.instruction.factory.ConstantsFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ConstantsFactoryTest {
     private ConstantsFactory factory = ConstantsFactory.getInstance();
     private CpInfo[] constantPool;
-    private U1[] code;
+    private List<U1> code;
 
-    private AbstractCmd common(int value) {
+    private AbstractInstruction common(int value) {
         constantPool = new CpInfo[1];
-        code = new U1[1];
-        code[0] = new U1(value);
+        code = List.of(new U1(value));
         CodeInputStream stream = new CodeInputStream(code);
         U1 ordinal = stream.readU1();
-        return factory.build(false, ordinal, stream);
+        return factory.build(0, false, ordinal, stream);
     }
 
     @Test
@@ -79,11 +80,9 @@ public class ConstantsFactoryTest {
     @Test
     public void build0x10() {
         constantPool = new CpInfo[1];
-        code = new U1[2];
-        code[0] = new U1(0x10);
-        code[1] = new U1(0x42);
+        code = List.of(new U1(0x10), new U1(0x42));
         CodeInputStream stream = new CodeInputStream(code);
         U1 ordinal = stream.readU1();
-        AbstractCmd cmd = factory.build(false, ordinal, stream);
+        AbstractInstruction cmd = factory.build(0,false, ordinal, stream);
     }
 }

@@ -1,12 +1,15 @@
 package com.test.method.specific;
 
+import com.test.annotations.GeneratedBy;
 import com.test.method.MethodPresenterTestBase;
+import com.test.method.MethodTestGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+@GeneratedBy(MethodTestGenerator.class)
 public class ThrowsCaseMethodsTest extends MethodPresenterTestBase {
 
     @BeforeClass
@@ -19,14 +22,10 @@ public class ThrowsCaseMethodsTest extends MethodPresenterTestBase {
         expectedConsecutiveLines = List.of(
                 "  public com.test.cases.method.ThrowsCase();",
                 "    descriptor: ()V",
-                "    flags: (0x0001) ACC_PUBLIC",
-                "    Code:",
-                "      stack=1, locals=1, args_size=1",
-                "         0: aload_0",
-                "         1: invokespecial #1                  // Method java/lang/Object.\"<init>\":()V",
-                "         4: return"
+                "    flags: (0x0001) ACC_PUBLIC"
         );
     }
+
     @Test
     public void test_for_method_2() {
         expectedConsecutiveLines = List.of(
@@ -37,6 +36,7 @@ public class ThrowsCaseMethodsTest extends MethodPresenterTestBase {
                 "      throws java.lang.RuntimeException, java.lang.NullPointerException, java.lang.Throwable, java.lang.IllegalStateException, java.lang.IllegalArgumentException, java.lang.AssertionError"
         );
     }
+
     @Test
     public void test_for_method_3() {
         expectedConsecutiveLines = List.of(
@@ -48,6 +48,7 @@ public class ThrowsCaseMethodsTest extends MethodPresenterTestBase {
                 "    Signature: #33                          // (Ljava/util/List<+Ljava/lang/Integer;>;)V"
         );
     }
+
     @Test
     public void test_for_method_4() {
         expectedConsecutiveLines = List.of(

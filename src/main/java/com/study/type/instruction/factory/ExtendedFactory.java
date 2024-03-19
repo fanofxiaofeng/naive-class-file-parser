@@ -1,11 +1,15 @@
 package com.study.type.instruction.factory;
 
 import com.study.io.CodeInputStream;
+import com.study.type.ConstantPool;
 import com.study.type.U1;
-import com.study.type.instruction.AbstractCmd;
-import com.study.type.instruction.ThreeByteCmd;
+import com.study.type.U2;
+import com.study.type.instruction.AbstractInstruction;
+import com.study.type.instruction.ThreeByteInstruction;
 
-public class ExtendedFactory implements CmdFactory {
+import java.util.Optional;
+
+public class ExtendedFactory implements InstructionFactory {
     private ExtendedFactory() {
 
     }
@@ -17,19 +21,34 @@ public class ExtendedFactory implements CmdFactory {
     }
 
     @Override
-    public AbstractCmd build(boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
+    public AbstractInstruction build(int startIndex, boolean isWide, U1 ordinal, CodeInputStream codeInputStream) {
         switch (ordinal.toInt()) {
             case 0xc4 -> {
                 System.out.println("wide instruction found");
                 throw new IllegalArgumentException("wide instruction should always be used together with some other instruction!");
             }
             case 0xc5 -> {
-                return new AbstractCmd(ordinal) {
+                return new AbstractInstruction(startIndex, ordinal) {
+                    private final U1 indexByte1;
+                    private final U1 indexByte2;
+                    private final U1 dimensions;
+
                     {
                         name = "multianewarray";
-                        U1 indexByte1 = codeInputStream.readU1();
-                        U1 indexByte2 = codeInputStream.readU1();
-                        U1 dimensions = codeInputStream.readU1();
+                        indexByte1 = codeInputStream.readU1();
+                        indexByte2 = codeInputStream.readU1();
+                        dimensions = codeInputStream.readU1();
+                    }
+
+                    @Override
+                    public Optional<String> operandDesc() {
+                        String desc = String.format("#%s,  %s", new U2(indexByte1, indexByte2).toInt(), dimensions.toInt());
+                        return Optional.of(desc);
+                    }
+
+                    @Override
+                    public Optional<String> detail(ConstantPool constantPool) {
+                        return Optional.of(String.format("class %s", constantPool.detail(new U2(indexByte1, indexByte2))));
                     }
 
                     @Override
@@ -38,14 +57,12 @@ public class ExtendedFactory implements CmdFactory {
                     }
                 };
             }
-            case 0xc6 -> {
-                return new ThreeByteCmd(ordinal, "ifnull", codeInputStream);
-            }
-            case 0xc7 -> {
-                return new ThreeByteCmd(ordinal, "ifnonnull", codeInputStream);
+            case 0xc6, 0xc7 -> {
+                String[] nameCandidates = new String[]{"ifnull", "ifnonnull"};
+                return new ThreeByteInstruction.Condition(startIndex, ordinal, nameCandidates[ordinal.toInt() - 0xc6], codeInputStream);
             }
             case 0xc8 -> {
-                return new AbstractCmd(ordinal) {
+                return new AbstractInstruction(startIndex, ordinal) {
                     {
                         name = "goto_w";
                         U1 branchByte1 = codeInputStream.readU1();
@@ -61,7 +78,7 @@ public class ExtendedFactory implements CmdFactory {
                 };
             }
             case 0xc9 -> {
-                return new AbstractCmd(ordinal) {
+                return new AbstractInstruction(startIndex, ordinal) {
                     {
                         name = "jsr_w";
                         U1 branchByte1 = codeInputStream.readU1();

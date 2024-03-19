@@ -3,13 +3,22 @@ package com.study.type;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class AbstractU {
+public sealed class AbstractU permits U1, U2, U4 {
 
     protected int[] detail;
 
     private BigInteger bigInteger;
 
     private final BigInteger _256 = new BigInteger("256");
+
+    protected void rangeCheck(int... numbers) {
+        for (int number : numbers) {
+            if (number < 0 || number > 0xFF) {
+                String message = String.format("number: %s should be inside [0, 255], please check!", number);
+                throw new IllegalArgumentException(message);
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -33,10 +42,7 @@ public class AbstractU {
     }
 
     public long toLong() {
-        if (getClass() == U1.class || getClass() == U2.class || getClass() == U4.class) {
-            return Long.parseLong(toString(10));
-        }
-        throw new RuntimeException("Unsupported type!");
+        return Long.parseLong(toString(10));
     }
 
     public boolean isOn(int mask) {

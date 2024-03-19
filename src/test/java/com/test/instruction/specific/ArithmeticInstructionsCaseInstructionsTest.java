@@ -54,7 +54,22 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        37: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        40: dadd",
                 "        41: dstore        7",
-                "        43: return"
+                "        43: return",
+                "      LineNumberTable:",
+                "        line 13: 0",
+                "        line 14: 10",
+                "        line 15: 21",
+                "        line 16: 32",
+                "        line 17: 43",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      44     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      44     1    n1   Ljava/lang/Number;",
+                "            0      44     2    n2   Ljava/lang/Number;",
+                "           10      34     3  ans1   I",
+                "           21      23     4  ans2   J",
+                "           32      12     6  ans3   F",
+                "           43       1     7  ans4   D"
         );
     }
 
@@ -94,7 +109,22 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        37: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        40: dsub",
                 "        41: dstore        7",
-                "        43: return"
+                "        43: return",
+                "      LineNumberTable:",
+                "        line 25: 0",
+                "        line 26: 10",
+                "        line 27: 21",
+                "        line 28: 32",
+                "        line 29: 43",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      44     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      44     1    n1   Ljava/lang/Number;",
+                "            0      44     2    n2   Ljava/lang/Number;",
+                "           10      34     3  ans1   I",
+                "           21      23     4  ans2   J",
+                "           32      12     6  ans3   F",
+                "           43       1     7  ans4   D"
         );
     }
 
@@ -134,7 +164,22 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        37: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        40: dmul",
                 "        41: dstore        7",
-                "        43: return"
+                "        43: return",
+                "      LineNumberTable:",
+                "        line 37: 0",
+                "        line 38: 10",
+                "        line 39: 21",
+                "        line 40: 32",
+                "        line 41: 43",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      44     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      44     1    n1   Ljava/lang/Number;",
+                "            0      44     2    n2   Ljava/lang/Number;",
+                "           10      34     3  ans1   I",
+                "           21      23     4  ans2   J",
+                "           32      12     6  ans3   F",
+                "           43       1     7  ans4   D"
         );
     }
 
@@ -174,7 +219,22 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        37: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        40: ddiv",
                 "        41: dstore        7",
-                "        43: return"
+                "        43: return",
+                "      LineNumberTable:",
+                "        line 49: 0",
+                "        line 50: 10",
+                "        line 51: 21",
+                "        line 52: 32",
+                "        line 53: 43",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      44     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      44     1    n1   Ljava/lang/Number;",
+                "            0      44     2    n2   Ljava/lang/Number;",
+                "           10      34     3  ans1   I",
+                "           21      23     4  ans2   J",
+                "           32      12     6  ans3   F",
+                "           43       1     7  ans4   D"
         );
     }
 
@@ -214,7 +274,22 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        37: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        40: drem",
                 "        41: dstore        7",
-                "        43: return"
+                "        43: return",
+                "      LineNumberTable:",
+                "        line 61: 0",
+                "        line 62: 10",
+                "        line 63: 21",
+                "        line 64: 32",
+                "        line 65: 43",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      44     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      44     1    n1   Ljava/lang/Number;",
+                "            0      44     2    n2   Ljava/lang/Number;",
+                "           10      34     3  ans1   I",
+                "           21      23     4  ans2   J",
+                "           32      12     6  ans3   F",
+                "           43       1     7  ans4   D"
         );
     }
 
@@ -246,7 +321,21 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        20: invokevirtual #21                 // Method java/lang/Number.doubleValue:()D",
                 "        23: dneg",
                 "        24: dstore        6",
-                "        26: return"
+                "        26: return",
+                "      LineNumberTable:",
+                "        line 73: 0",
+                "        line 74: 6",
+                "        line 75: 12",
+                "        line 76: 19",
+                "        line 77: 26",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      27     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      27     1     n   Ljava/lang/Number;",
+                "            6      21     2  ans1   I",
+                "           12      15     3  ans2   J",
+                "           19       8     5  ans3   F",
+                "           26       1     6  ans4   D"
         );
     }
 
@@ -294,7 +383,25 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        42: iconst_1",
                 "        43: lushr",
                 "        44: lstore        9",
-                "        46: return"
+                "        46: return",
+                "      LineNumberTable:",
+                "        line 88: 0",
+                "        line 89: 7",
+                "        line 90: 14",
+                "        line 91: 22",
+                "        line 92: 30",
+                "        line 93: 38",
+                "        line 94: 46",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      47     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      47     1     n   Ljava/lang/Number;",
+                "            7      40     2  ans1   I",
+                "           14      33     3  ans2   J",
+                "           22      25     5  ans3   I",
+                "           30      17     6  ans4   J",
+                "           38       9     8  ans5   I",
+                "           46       1     9  ans6   J"
         );
     }
 
@@ -348,7 +455,26 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        59: invokevirtual #13                 // Method java/lang/Number.longValue:()J",
                 "        62: lxor",
                 "        63: lstore        10",
-                "        65: return"
+                "        65: return",
+                "      LineNumberTable:",
+                "        line 106: 0",
+                "        line 107: 10",
+                "        line 108: 21",
+                "        line 109: 32",
+                "        line 110: 43",
+                "        line 111: 54",
+                "        line 112: 65",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      66     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      66     1    n1   Ljava/lang/Number;",
+                "            0      66     2    n2   Ljava/lang/Number;",
+                "           10      56     3  ans1   I",
+                "           21      45     4  ans2   J",
+                "           32      34     6  ans3   I",
+                "           43      23     7  ans4   J",
+                "           54      12     9  ans5   I",
+                "           65       1    10  ans6   J"
         );
     }
 
@@ -364,7 +490,18 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "         0: iinc          1, 1",
                 "         3: iinc_w        2, 256",
                 "         9: iinc_w        3, -255",
-                "        15: return"
+                "        15: return",
+                "      LineNumberTable:",
+                "        line 117: 0",
+                "        line 118: 3",
+                "        line 119: 9",
+                "        line 120: 15",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      16     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      16     1     a   I",
+                "            0      16     2     b   I",
+                "            0      16     3     c   I"
         );
     }
 
@@ -426,7 +563,23 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "        80: goto          84",
                 "        83: iconst_0",
                 "        84: istore        6",
-                "        86: return"
+                "        86: return",
+                "      LineNumberTable:",
+                "        line 129: 0",
+                "        line 130: 17",
+                "        line 131: 33",
+                "        line 132: 50",
+                "        line 133: 68",
+                "        line 134: 86",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      87     0  this   Lcom/test/cases/method/instruction/ArithmeticInstructionsCase;",
+                "            0      87     1     n   Ljava/lang/Number;",
+                "           17      70     2  ans1   Z",
+                "           33      54     3  ans2   Z",
+                "           50      37     4  ans3   Z",
+                "           68      19     5  ans4   Z",
+                "           86       1     6  ans5   Z"
         );
     }
 }

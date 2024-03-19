@@ -6,33 +6,32 @@ import com.test.generator.MemberTestGenerator;
 import com.test.generator.TestGeneratorContainer;
 import com.test.method.MethodPresenterTestBase;
 import com.test.util.GeneratedClassClassLoader;
+import com.test.util.InstructionUtils;
 import com.test.util.Instructions;
+import com.test.util.WideDecoratedInstructionUtils;
 import org.apache.commons.collections4.SetUtils;
+import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class InstructionTestGenerator extends MemberTestGenerator {
 
+    private final boolean isSpecificClass;
     private final Set<String> instructionNames = new HashSet<>();
 
-    private final Map<Integer, Instruction> instructionMap = new HashMap<>();
-    private final Map<Integer, WideDecoratedInstruction> wideDecoratedInstructionMap = new HashMap<>();
+    private final Map<String, String> testMethodNameForNormalClass = new HashMap<>();
+    private int cnt;
 
     public InstructionTestGenerator(Class<?> clazz, String outputDirectory) {
         super(clazz, outputDirectory);
-    }
-
-    @Override
-    protected void prepare() throws ReflectiveOperationException {
-        if (InstructionAnalyzer.class.isAssignableFrom(targetClass)) {
-            instructionMap.putAll(((InstructionAnalyzer) targetClass.getDeclaredConstructor().newInstance()).buildInstructionMap());
-            wideDecoratedInstructionMap.putAll(((InstructionAnalyzer) targetClass.getDeclaredConstructor().newInstance()).buildWideDecoratedInstructionMap());
-        }
+        isSpecificClass = (InstructionAnalyzer.class.isAssignableFrom(targetClass));
     }
 
     @Override
@@ -83,6 +82,13 @@ public class InstructionTestGenerator extends MemberTestGenerator {
     }
 
     private Optional<String> findMethodName(String headerLine) {
+        if (!isSpecificClass) {
+            if (!testMethodNameForNormalClass.containsKey(headerLine)) {
+                cnt++;
+                testMethodNameForNormalClass.put(headerLine, "test_" + (cnt));
+            }
+            return Optional.of(testMethodNameForNormalClass.get(headerLine));
+        }
         // should be something like this
         // "  public static void test_0x3b_to_0x3e(int, int, int, int);",
         int index = headerLine.indexOf('(');
@@ -106,6 +112,64 @@ public class InstructionTestGenerator extends MemberTestGenerator {
         return Optional.empty();
     }
 
+    private List<String> processCodeAttribute(PeekingIterator<String> peekingIterator) {
+        List<String> result = new ArrayList<>();
+
+        result.add(peekingIterator.next());
+        result.add(peekingIterator.next());
+
+        while (peekingIterator.hasNext()) {
+            String originalLine = peekingIterator.peek();
+            String strippedLine = originalLine.stripLeading();
+            int colonIndex = strippedLine.indexOf(':');
+            if (colonIndex < 0) {
+                break;
+            }
+
+            String numberCandidate = strippedLine.substring(0, colonIndex);
+            if (isNum(numberCandidate)) {
+                String instructionName = findInstructionName(strippedLine);
+                instructionNames.add(instructionName);
+                result.add(peekingIterator.next());
+                if (isVariableLengthInstruction(instructionName)) {
+                    while (!peekingIterator.peek().endsWith("}")) {
+                        result.add(peekingIterator.next());
+                    }
+                    result.add(peekingIterator.next());
+                }
+            } else {
+                break;
+            }
+        }
+
+        if ("      Exception table:".equals(peekingIterator.peek())) {
+            result.add(peekingIterator.next());
+            while (peekingIterator.hasNext() && !peekingIterator.peek().contains(":")) {
+                result.add(peekingIterator.next());
+            }
+        }
+
+        while (peekingIterator.hasNext()) {
+            String peek = peekingIterator.peek();
+            if (peek.equals("      LineNumberTable:")) {
+                result.add(peekingIterator.next());
+                while (peekingIterator.hasNext() && peekingIterator.peek().stripLeading().startsWith("line ")) {
+                    result.add(peekingIterator.next());
+                }
+            } else if (peek.equals("      LocalVariableTable:") || peek.equals("      LocalVariableTypeTable:")) {
+                result.add(peekingIterator.next());
+                result.add(peekingIterator.next());
+                while (peekingIterator.hasNext() && isNum(peekingIterator.peek().stripLeading().split(" +")[0])) {
+                    result.add(peekingIterator.next());
+                }
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
     @Override
     protected List<String> filter(List<String> consecutiveLines) {
         List<String> realLines = new ArrayList<>();
@@ -113,102 +177,78 @@ public class InstructionTestGenerator extends MemberTestGenerator {
         if (methodName.isEmpty()) {
             return Collections.emptyList();
         }
+
+        // 0: header, 1: descriptor, 2: flags
+        PeekingIterator<String> peekingIterator = new PeekingIterator<>(consecutiveLines.iterator());
         for (int i = 0; i < 3; i++) {
-            realLines.add(consecutiveLines.get(i));
+            realLines.add(peekingIterator.next());
         }
 
-        for (int i = 3; i < consecutiveLines.size(); ) {
-            String line = consecutiveLines.get(i);
+        while (peekingIterator.hasNext()) {
+            String line = peekingIterator.peek();
             if (line.startsWith("    Signature:")) {
-                realLines.add(line);
-                i++;
+                realLines.add(peekingIterator.next());
             } else if (line.equals("    Exceptions:")) {
-                realLines.add(line);
-                realLines.add(consecutiveLines.get(i + 1));
-                i += 2;
+                realLines.add(peekingIterator.next());
+                realLines.add(peekingIterator.next());
             } else if (line.equals("    Code:")) {
-                realLines.add(line);
-                realLines.add(consecutiveLines.get(i + 1));
-                int delta = 2;
-                while (i + delta < consecutiveLines.size()) {
-                    String tempLine = consecutiveLines.get(i + delta);
-                    String strippedLine = tempLine.stripLeading();
-                    int index = strippedLine.indexOf(':');
-                    if (index < 0) {
-                        i += delta;
-                        break;
-                    }
-                    String numberCandidate = strippedLine.substring(0, index);
-                    boolean isNum = true;
-                    for (char c : numberCandidate.toCharArray()) {
-                        if (c >= '0' && c <= '9') {
-                            continue;
-                        }
-                        isNum = false;
-                        break;
-                    }
-                    if (isNum) {
-                        realLines.add(tempLine);
-                        String instructionName = findInstructionName(tempLine);
-                        instructionNames.add(instructionName);
-                        delta++;
-                        continue;
-                    }
-                    i += delta;
-                    break;
-                }
+                List<String> codeLines = processCodeAttribute(peekingIterator);
+                realLines.addAll(codeLines);
             } else {
-                i++;
+                peekingIterator.next();
             }
         }
 
         return realLines;
     }
 
-
     @Override
     protected List<String> beforeGenerateTestMethod(List<String> realLines) {
-        int start = 0;
-        boolean found = false;
-        for (int i = 0; i < realLines.size(); i++) {
-            String line = realLines.get(i);
-            if (line.equals("    Code:")) {
-                start = i;
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
+        OptionalInt codeStartIndex = IntStream.range(0, realLines.size()).
+                filter(index -> realLines.get(index).equals("    Code:")).
+                findFirst();
+        if (codeStartIndex.isEmpty()) {
             testHolder.visitImportStatement(Test.class);
             return List.of(String.format("    @Test%n"));
         }
 
         List<String> result = new ArrayList<>();
         Map<Integer, String> appearedInstructions = new TreeMap<>();
-        for (int current = start + 2; current < realLines.size(); current++) {
-            String tempLine = realLines.get(current);
-            String strippedLine = tempLine.stripLeading();
+        for (int current = codeStartIndex.getAsInt() + 2; current < realLines.size(); current++) {
+            String originalLine = realLines.get(current);
+            String strippedLine = originalLine.stripLeading();
             int colonIndex = strippedLine.indexOf(':');
             if (colonIndex < 0) {
                 break;
             }
 
             String numberCandidate = strippedLine.substring(0, colonIndex);
-            boolean isNum = true;
-            for (char c : numberCandidate.toCharArray()) {
-                if (c >= '0' && c <= '9') {
-                    continue;
+            if (isNum(numberCandidate)) {
+                String instructionName = findInstructionName(strippedLine);
+                if (isVariableLengthInstruction(instructionName)) {
+                    // Advance to the end line for tableswitch/lookupswitch instruction
+                    while (!realLines.get(current).endsWith("}")) {
+                        current++;
+                    }
                 }
-                isNum = false;
-                break;
-            }
-            if (isNum) {
-//                realLines.add(tempLine);
-                String instructionName = findInstructionName(tempLine);
                 int order = Instructions.getOrder(instructionName);
-                if (instructionMap.containsKey(order)) {
-                    appearedInstructions.put(order, instructionName);
-                } else if (wideDecoratedInstructionMap.containsKey(order)) {
+                if (isSpecificClass) {
+                    Optional<String> methodName = findMethodName(realLines.get(0));
+                    if (methodName.isEmpty()) {
+                        throw new IllegalArgumentException("Failed to find methods name...");
+                    }
+                    System.out.printf("Method name is: %s%n", methodName.get());
+                    Method[] methods = targetClass.getDeclaredMethods();
+                    Method method = Arrays.stream(methods).filter(e -> e.getName().equals(methodName.get())).findAny().orElseThrow();
+                    Map<Integer, Instruction> instructionMap = InstructionUtils.analyze(method);
+                    Map<Integer, WideDecoratedInstruction> wideDecoratedInstructionMap = WideDecoratedInstructionUtils.analyze(method);
+
+                    if (instructionMap.containsKey(order)) {
+                        appearedInstructions.put(order, instructionName);
+                    } else if (wideDecoratedInstructionMap.containsKey(order)) {
+                        appearedInstructions.put(order, instructionName);
+                    }
+                } else {
                     appearedInstructions.put(order, instructionName);
                 }
             }
@@ -226,13 +266,13 @@ public class InstructionTestGenerator extends MemberTestGenerator {
         return result;
     }
 
-    private String findInstructionName(String tempLine) {
-        return tempLine.stripLeading().split(" ")[1];
-    }
-
     @Override
     protected void postGenerate() {
         if (!InstructionAnalyzer.class.isAssignableFrom(targetClass)) {
+            return;
+        }
+
+        if (targetClass.isInterface()) {
             return;
         }
 
@@ -269,8 +309,8 @@ public class InstructionTestGenerator extends MemberTestGenerator {
         Set<Class<?>> classes = Set.of(
                 Object.class,
 //                Character.class,
-//                Number.class,
-//                Integer.class,
+                Number.class,
+                Integer.class,
 //                Long.class,
 //                Float.class,
 //                Double.class,
@@ -278,7 +318,7 @@ public class InstructionTestGenerator extends MemberTestGenerator {
 //                String.class,
 //                Class.class
                 Enum.class,
-                List.class
+                List.class,
 //                ArrayList.class,
 //                LinkedList.class,
 //                Map.class,
@@ -286,23 +326,44 @@ public class InstructionTestGenerator extends MemberTestGenerator {
 //                LinkedHashMap.class,
 //                TreeMap.class,
 //                EnumSet.class
+                Stream.class
+
+//                CodeCase.class
         );
 
         generateTest(classes, "com/test/instruction/standard");
     }
 
     private static void generateSpecificTest() throws IOException, ReflectiveOperationException {
+        ClassLoader generatedClassClassLoader = new GeneratedClassClassLoader();
         Set<Class<?>> classes = Set.of(
                 LoadAndStoreInstructionsIntCase.class,
                 LoadAndStoreInstructionsLongCase.class,
                 LoadAndStoreInstructionsFloatCase.class,
                 LoadAndStoreInstructionsDoubleCase.class,
                 LoadAndStoreInstructionsObjectCase.class,
-                new GeneratedClassClassLoader().loadClass("com.generated.cases.method.instruction.DupX2Case"),
-                new GeneratedClassClassLoader().loadClass("com.generated.cases.method.instruction.Dup2Case"),
                 LoadAndStoreInstructionsWideCase.class,
-                StackInstructionsCase.class,
-                ArithmeticInstructionsCase.class
+                OperandStackManagementInstructionsCase.class,
+                ArithmeticInstructionsCase.class,
+                TypeConversionInstructionsCase.class,
+                ObjectCreationAndManipulationInstructionsCase.class,
+
+                ControlTransferInstructionsCase.class,
+                TableSwitchInstructionCase.class,
+                TableSwitchInstructionSpecialCase.class,
+                LookupSwitchInstructionCase.class,
+                LookupSwitchInstructionSpecialCase.class,
+                MethodInvocationAndReturnInstructionsCase.class,
+                InvokeInterfaceInstructionCase.class,
+                generatedClassClassLoader.loadClass("com.generated.cases.method.instruction.Dup2Case"),
+                generatedClassClassLoader.loadClass("com.generated.cases.method.instruction.Dup2X1Case"),
+                generatedClassClassLoader.loadClass("com.generated.cases.method.instruction.Dup2X2Case"),
+                generatedClassClassLoader.loadClass("com.generated.cases.method.instruction.DupX2Case"),
+                generatedClassClassLoader.loadClass("com.generated.cases.method.instruction.SwapCase"),
+
+                ThrowingExceptionsInstructionCase.class,
+                SynchronizationInstructionsCase.class
+
 //                NopContainer.class
         );
 
@@ -317,7 +378,7 @@ public class InstructionTestGenerator extends MemberTestGenerator {
     public static void main(String[] args) throws Exception {
         AbstractTestGenerator.overrideExistingFile = true;
 
-//        generateStandardTest();
+        generateStandardTest();
         generateSpecificTest();
     }
 }

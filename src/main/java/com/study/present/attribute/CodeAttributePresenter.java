@@ -3,16 +3,16 @@ package com.study.present.attribute;
 import com.study.io.CodeInputStream;
 import com.study.parser.ParseResult;
 import com.study.present.AbstractPresenter;
+import com.study.present.Presenter;
+import com.study.present.instruction.DelegateInstructionPresenter;
 import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.info.attribute.CodeAttribute;
-import com.study.type.instruction.AbstractCmd;
+import com.study.type.instruction.AbstractInstruction;
 import com.study.util.PrintStreamWrapper;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CodeAttributePresenter extends AbstractAttributePresenter<CodeAttribute> {
 
@@ -22,9 +22,9 @@ public class CodeAttributePresenter extends AbstractAttributePresenter<CodeAttri
 
     @Override
     public void doPresent() {
+        presentHeaderLine();
+
         ConstantPool constantPool = result.getConstantPool();
-        String headerLine = constantPool.desc(attribute.getAttributeNameIndex()) + ":";
-        printStreamWrapper.printlnWithIndentLevel(headerLine, baseIndentLevel);
         String countInfo = String.format("stack=%s, locals=%s, args_size=%s",
                 attribute.getMaxStack().toInt(),
                 attribute.getMaxLocals().toInt(),
@@ -33,13 +33,60 @@ public class CodeAttributePresenter extends AbstractAttributePresenter<CodeAttri
         printStreamWrapper.printlnWithIndentLevel(countInfo, baseIndentLevel + 1);
         InstructionsPresenter instructionsPresenter = new InstructionsPresenter(result, printStreamWrapper, attribute.getCode());
         instructionsPresenter.present();
+
+        ExceptionTablePresenter exceptionTablePresenter = new ExceptionTablePresenter(result, printStreamWrapper, attribute.getExceptionTableList());
+        exceptionTablePresenter.present();
+
+        attribute.getAttributes().forEach(attributeInfo -> {
+            Presenter presenter =
+                    AbstractAttributePresenter.build(
+                            result,
+                            printStreamWrapper,
+                            attributeInfo,
+                            baseIndentLevel + 1
+                    );
+            presenter.present();
+        });
     }
 
     private int calculateArgsSize(ConstantPool constantPool) {
         return attribute.getMethodInfo().calculateArgsSize(constantPool);
     }
 
-    class InstructionsPresenter extends AbstractPresenter {
+    static class ExceptionTablePresenter extends AbstractPresenter {
+
+        private final List<CodeAttribute.ExceptionTable> exceptionTableList;
+
+        private ExceptionTablePresenter(ParseResult result, PrintStreamWrapper printStreamWrapper, List<CodeAttribute.ExceptionTable> exceptionTableList) {
+            super(result, printStreamWrapper);
+            this.exceptionTableList = exceptionTableList;
+        }
+
+        @Override
+        public void doPresent() {
+            if (exceptionTableList.isEmpty()) {
+                return;
+            }
+
+            printStreamWrapper.printlnWithIndentLevel("Exception table:", 3);
+            printStreamWrapper.printlnWithIndentLevel("   from    to  target type", 3);
+            ConstantPool constantPool = result.getConstantPool();
+            exceptionTableList.forEach(exceptionTable -> {
+                String classDesc = (exceptionTable.catchType().toInt() == 0) ?
+                        "any" :
+                        ("Class " + constantPool.detail(exceptionTable.catchType()));
+                printStreamWrapper.printlnWithIndentLevel(
+                        String.format("   %s %s %s   %s",
+                                StringUtils.leftPad("" + exceptionTable.startPc().toInt(), 5),
+                                StringUtils.leftPad("" + exceptionTable.endPc().toInt(), 5),
+                                StringUtils.leftPad("" + exceptionTable.handlerPc().toInt(), 5),
+                                classDesc
+                        ), 3);
+            });
+        }
+    }
+
+    static class InstructionsPresenter extends AbstractPresenter {
 
         private final List<U1> code;
 
@@ -50,48 +97,10 @@ public class CodeAttributePresenter extends AbstractAttributePresenter<CodeAttri
 
         @Override
         public void doPresent() {
-            ConstantPool constantPool = result.getConstantPool();
             CodeInputStream codeInputStream = new CodeInputStream(code);
-            for (Pair<Integer, AbstractCmd> pair : codeInputStream) {
-                int currentIndex = pair.getKey();
-                AbstractCmd cmd = pair.getValue();
-                String indexPart = buildIndexPart(currentIndex);
-                String namePart = cmd.getName();
-                switch (cmd.size()) {
-                    case 1 ->
-                            printStreamWrapper.printlnWithIndentLevel(String.format("%s: %s", indexPart, namePart), baseIndentLevel + 1);
-                    case 2, 3, 5 -> {
-                        Optional<String> operandDesc = cmd.operandDesc();
-                        if (operandDesc.isPresent()) {
-                            namePart = StringUtils.rightPad(namePart, 13);
-                            Optional<String> detail = cmd.detail(constantPool);
-                            if (detail.isPresent()) {
-                                String temp =
-                                        StringUtils.rightPad(
-                                                String.format("%s %s", namePart, operandDesc.get()),
-                                                33);
-                                printStreamWrapper.printlnWithIndentLevel(
-                                        String.format("%s: %s // %s",
-                                                indexPart,
-                                                temp,
-                                                detail.get()
-                                        ),
-                                        baseIndentLevel + 1
-                                );
-                            } else {
-                                printStreamWrapper.printlnWithIndentLevel(String.format("%s: %s %s", indexPart, namePart, operandDesc.get()), baseIndentLevel + 1);
-                            }
-                        } else {
-                            printStreamWrapper.printlnWithIndentLevel("todo...??", baseIndentLevel + 1);
-                        }
-                    }
-                    default -> printStreamWrapper.printlnWithIndentLevel("todo...", baseIndentLevel + 1);
-                }
+            for (AbstractInstruction instruction : codeInputStream) {
+                new DelegateInstructionPresenter(result, printStreamWrapper, instruction).present();
             }
-        }
-
-        private String buildIndexPart(int currentIndex) {
-            return StringUtils.leftPad("" + currentIndex, 4, ' ');
         }
     }
 }

@@ -16,11 +16,9 @@ public class NestMembersAttributePresenter extends AbstractAttributePresenter<Ne
 
     @Override
     public void doPresent() {
+        presentHeaderLine();
+
         ConstantPool constantPool = result.getConstantPool();
-        printStreamWrapper.printlnWithIndentLevel(
-                constantPool.desc(attribute.getAttributeNameIndex()) + ":",
-                INDENT_LEVEL
-        );
         for (U2 u2 : attribute.getClasses()) {
             printStreamWrapper.printlnWithIndentLevel(constantPool.detail(u2), INDENT_LEVEL + 1);
         }

@@ -2,7 +2,6 @@ package com.study.present.attribute;
 
 import com.study.parser.ParseResult;
 import com.study.type.ConstantPool;
-import com.study.type.U2;
 import com.study.type.info.attribute.PermittedSubclassesAttribute;
 import com.study.util.PrintStreamWrapper;
 
@@ -18,12 +17,9 @@ public class PermittedSubclassesAttributePresenter extends AbstractAttributePres
 
     @Override
     public void doPresent() {
-        ConstantPool constantPool = result.getConstantPool();
-        printStreamWrapper.printlnWithIndentLevel(
-                constantPool.desc(attribute.getAttributeNameIndex()) + ":",
-                baseIndentLevel
-        );
+        presentHeaderLine();
 
+        ConstantPool constantPool = result.getConstantPool();
         attribute.getClasses().forEach(
                 classIndex -> printStreamWrapper.printlnWithIndentLevel(
                         constantPool.detail(classIndex),

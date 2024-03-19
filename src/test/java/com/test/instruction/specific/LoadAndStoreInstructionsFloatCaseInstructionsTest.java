@@ -21,7 +21,6 @@ public class LoadAndStoreInstructionsFloatCaseInstructionsTest extends MethodPre
     @Instruction(value = 0x0b, name = "fconst_0")
     @Instruction(value = 0x0c, name = "fconst_1")
     @Instruction(value = 0x0d, name = "fconst_2")
-    @Instruction(value = 0x44, name = "fstore_1")
     @Test
     public void test_0xb_to_0xd() {
         expectedConsecutiveLines = List.of(
@@ -36,7 +35,16 @@ public class LoadAndStoreInstructionsFloatCaseInstructionsTest extends MethodPre
                 "         3: fstore_1",
                 "         4: fconst_2",
                 "         5: fstore_1",
-                "         6: return"
+                "         6: return",
+                "      LineNumberTable:",
+                "        line 22: 0",
+                "        line 23: 2",
+                "        line 24: 4",
+                "        line 25: 6",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0       7     0  this   Lcom/test/cases/method/instruction/LoadAndStoreInstructionsFloatCase;",
+                "            2       5     1     a   F"
         );
     }
 
@@ -45,7 +53,6 @@ public class LoadAndStoreInstructionsFloatCaseInstructionsTest extends MethodPre
     @Instruction(value = 0x23, name = "fload_1")
     @Instruction(value = 0x24, name = "fload_2")
     @Instruction(value = 0x25, name = "fload_3")
-    @Instruction(value = 0x38, name = "fstore")
     @Test
     public void test_0x17_0x22_to_0x25() {
         expectedConsecutiveLines = List.of(
@@ -64,11 +71,21 @@ public class LoadAndStoreInstructionsFloatCaseInstructionsTest extends MethodPre
                 "         7: fload         4",
                 "         9: fadd",
                 "        10: fstore        5",
-                "        12: return"
+                "        12: return",
+                "      LineNumberTable:",
+                "        line 38: 0",
+                "        line 39: 12",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      13     0    f1   F",
+                "            0      13     1    f2   F",
+                "            0      13     2    f3   F",
+                "            0      13     3    f4   F",
+                "            0      13     4    f5   F",
+                "           12       1     5   sum   F"
         );
     }
 
-    @Instruction(value = 0x0b, name = "fconst_0")
     @Instruction(value = 0x38, name = "fstore")
     @Instruction(value = 0x43, name = "fstore_0")
     @Instruction(value = 0x44, name = "fstore_1")
@@ -92,7 +109,21 @@ public class LoadAndStoreInstructionsFloatCaseInstructionsTest extends MethodPre
                 "         7: fstore_3",
                 "         8: fconst_0",
                 "         9: fstore        4",
-                "        11: return"
+                "        11: return",
+                "      LineNumberTable:",
+                "        line 52: 0",
+                "        line 53: 2",
+                "        line 54: 4",
+                "        line 55: 6",
+                "        line 56: 8",
+                "        line 57: 11",
+                "      LocalVariableTable:",
+                "        Start  Length  Slot  Name   Signature",
+                "            0      12     0    f1   F",
+                "            0      12     1    f2   F",
+                "            0      12     2    f3   F",
+                "            0      12     3    f4   F",
+                "            0      12     4    f5   F"
         );
     }
 }

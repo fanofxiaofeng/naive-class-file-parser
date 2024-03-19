@@ -7,23 +7,26 @@ import com.study.type.instruction.factory.*;
 
 import java.util.Optional;
 
-public abstract class AbstractCmd {
+public abstract class AbstractInstruction {
     private U1 ordinal;
+    protected int startIndex;
     protected String name;
 
-    public AbstractCmd(U1 ordinal) {
+    public AbstractInstruction(int startIndex, U1 ordinal) {
+        this.startIndex = startIndex;
         this.ordinal = ordinal;
     }
 
-    public static AbstractCmd build(CodeInputStream codeInputStream) {
+    public static AbstractInstruction build(CodeInputStream codeInputStream) {
+        int startIndex = codeInputStream.getIndex();
         U1 ordinal = codeInputStream.readU1();
         boolean isWide = (ordinal.toInt() == 0xc4);
         U1 realOrdinal = isWide ? (codeInputStream.readU1()) : ordinal;
-        CmdFactory cmdFactory = factory(realOrdinal.toInt());
-        return cmdFactory.build(isWide, realOrdinal, codeInputStream);
+        InstructionFactory cmdFactory = factory(realOrdinal.toInt());
+        return cmdFactory.build(startIndex, isWide, realOrdinal, codeInputStream);
     }
 
-    private static CmdFactory factory(int ordinal) {
+    private static InstructionFactory factory(int ordinal) {
         // todo: Please check whether the range is correct for each type
         if (ordinal >= 0x00 && ordinal <= 0x14) {
             // CommandType.constants;
@@ -55,11 +58,6 @@ public abstract class AbstractCmd {
         return Optional.empty();
     }
 
-    @Deprecated
-    public String desc(int index) {
-        return String.format("%10s: %s", index, name);
-    }
-
     public Optional<String> detail(ConstantPool constantPool) {
         return Optional.empty();
     }
@@ -68,6 +66,10 @@ public abstract class AbstractCmd {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
     }
 
     enum CommandType {

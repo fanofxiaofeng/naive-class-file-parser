@@ -20,11 +20,8 @@ public class BootstrapMethodsAttributePresenter extends AbstractAttributePresent
 
     @Override
     public void doPresent() {
+        presentHeaderLine();
         int size = attribute.getBootstrapMethods().size();
-        printStreamWrapper.printlnWithIndentLevel(
-                result.getConstantPool().desc(attribute.getAttributeNameIndex()) + ":",
-                baseIndentLevel
-        );
         IntStream.range(0, size).forEach(index -> {
             BootstrapMethodsAttribute.BootstrapMethod bootstrapMethod = attribute.getBootstrapMethods().get(index);
             printHeaderLine(index, bootstrapMethod);

@@ -2,6 +2,7 @@ package com.test.generator;
 
 import com.test.annotations.GeneratedBy;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
         this(pathname, true);
     }
 
-    private String getOutputClassName() {
+    private String generateOutputClassName() {
         if (useAutomaticOutputFileName) {
             int lastIndex = pathname.lastIndexOf("/");
             return StringUtils.capitalize(pathname.substring(lastIndex + 1)) + "TestSuite";
@@ -47,7 +48,7 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
     }
 
     @Override
-    public String generate() throws FileNotFoundException {
+    public Optional<String> generate() throws FileNotFoundException {
         File specifiedDirectory = new File(pathname);
         if (!specifiedDirectory.exists()) {
             logger.error("Path: {} does not exist, please check!", pathname);
@@ -59,14 +60,31 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
         }
 
         File[] files = specifiedDirectory.listFiles();
-        assert files != null;
-        List<File> testFilesInSpecifiedDirectory = Arrays.stream(files).filter(File::isFile).filter(e -> e.getName().endsWith("Test.java")).sorted().toList();
-        List<File> subDirectories = Arrays.stream(files).filter(File::isDirectory).toList();
+        Assert.assertNotNull(files);
+
+        List<File> testFilesInSpecifiedDirectory =
+                Arrays.stream(files).
+                        filter(File::isFile).
+                        filter(e -> e.getName().endsWith("Test.java")).
+                        sorted().
+                        toList();
+
+        List<File> subDirectories =
+                Arrays.stream(files).
+                        filter(File::isDirectory).
+                        toList();
+
         List<String> strings = new ArrayList<>(subDirectories.size());
         for (File subDirectory : subDirectories) {
-            String suiteNameInSubDirectory = new SuiteGeneratorImpl(String.format("%s/%s", pathname, subDirectory.getName())).generate();
-            logger.info("suiteNameInSubDirectory: {}", suiteNameInSubDirectory);
-            strings.add(suiteNameInSubDirectory);
+            Optional<String> optionalSuiteNameInSubDirectory = new SuiteGeneratorImpl(String.format("%s/%s", pathname, subDirectory.getName())).generate();
+            if (optionalSuiteNameInSubDirectory.isPresent()) {
+                logger.info("suiteNameInSubDirectory: {}", optionalSuiteNameInSubDirectory.get());
+                strings.add(optionalSuiteNameInSubDirectory.get());
+            }
+        }
+        if (testFilesInSpecifiedDirectory.isEmpty() && strings.isEmpty()) {
+            // No need to generate test suite in the specified directory.
+            return Optional.empty();
         }
 //        for (File f : filesInSpecifiedDirectory) {
 //            if (f.getName().endsWith("TestSuite.java")) {
@@ -105,7 +123,7 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
         builder.append(String.format("})%n"));
         builder.append(String.format("@RunWith(Suite.class)%n"));
 
-        String outputClassName = getOutputClassName();
+        String outputClassName = generateOutputClassName();
         builder.append(String.format("public class %s {%n", outputClassName));
         builder.append(String.format("}%n"));
         System.out.println(builder);
@@ -113,11 +131,12 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
         try (PrintStream printStream = new PrintStream(outputFileName)) {
             printStream.print(builder);
         }
-        return outputFileName;
+        return Optional.of(outputFileName);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException {
-        new SuiteGeneratorImpl("src/test/java/com/test/instruction/specific", true).generate();
+//        new SuiteGeneratorImpl("src/test/java/com/test/instruction/", true).generate();
+        new SuiteGeneratorImpl("src/test/java/com/test/method/", true).generate();
 //        new SuiteGeneratorImpl("src/test/java/com/test/cfa", true).generate();
     }
 }

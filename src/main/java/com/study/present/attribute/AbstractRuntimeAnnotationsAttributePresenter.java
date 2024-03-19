@@ -2,7 +2,6 @@ package com.study.present.attribute;
 
 import com.study.parser.ParseResult;
 import com.study.present.AnnotationPresenter;
-import com.study.type.ConstantPool;
 import com.study.type.info.attribute.AbstractRuntimeAnnotationsAttribute;
 import com.study.type.info.attribute.Annotation;
 import com.study.util.PrintStreamWrapper;
@@ -33,13 +32,5 @@ public sealed abstract class AbstractRuntimeAnnotationsAttributePresenter
                 index,
                 baseIndentLevel + 1
         ).present());
-    }
-
-    private void presentHeaderLine() {
-        ConstantPool constantPool = result.getConstantPool();
-        // The content should be
-        // "RuntimeVisibleAnnotations:" or "RuntimeInvisibleAnnotations:"
-        String headerLine = constantPool.desc(attribute.getAttributeNameIndex()) + ":";
-        printStreamWrapper.printlnWithIndentLevel(headerLine, baseIndentLevel);
     }
 }

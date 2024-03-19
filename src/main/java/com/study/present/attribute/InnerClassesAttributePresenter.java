@@ -123,10 +123,4 @@ public class InnerClassesAttributePresenter extends AbstractAttributePresenter<I
                 forEach(accessFlag -> descriptions.add(accessFlag.getSimpleName()));
         return String.join(" ", descriptions);
     }
-
-
-    private void presentHeaderLine() {
-        String attributeName = result.getConstantPool().desc(attribute.getAttributeNameIndex());
-        printStreamWrapper.printlnWithIndentLevel(String.format("%s:", attributeName), baseIndentLevel);
-    }
 }

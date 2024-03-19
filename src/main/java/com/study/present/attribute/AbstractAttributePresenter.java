@@ -6,7 +6,7 @@ import com.study.present.Presenter;
 import com.study.type.info.attribute.*;
 import com.study.util.PrintStreamWrapper;
 
-public abstract class AbstractAttributePresenter<T> extends AbstractPresenter {
+public abstract class AbstractAttributePresenter<T extends AttributeInfo> extends AbstractPresenter {
 
     protected T attribute;
 
@@ -72,7 +72,18 @@ public abstract class AbstractAttributePresenter<T> extends AbstractPresenter {
         if (attribute instanceof NestMembersAttribute specified) {
             return new NestMembersAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
         }
+        if (attribute instanceof LineNumberTableAttribute specified) {
+            return new LineNumberTableAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
+        if (attribute instanceof AbstractLocalVariableBasedTableAttribute specified) {
+            return new LocalVariableBasedAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
 
         return () -> 0;
+    }
+
+    protected void presentHeaderLine() {
+        String attributeName = result.getConstantPool().desc(attribute.getAttributeNameIndex());
+        printStreamWrapper.printlnWithIndentLevel(attributeName + ":", baseIndentLevel);
     }
 }

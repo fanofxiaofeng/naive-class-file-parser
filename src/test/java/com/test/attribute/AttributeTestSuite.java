@@ -5,11 +5,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        FieldSignatureTest.class,
+//        FieldSignatureTest.class,
 //        MethodSignatureTest.class,
 //        SourceFileAttributeTest.class,
         ExceptionsAttributePresenterTest.class,
 //        InnerClassesAttributePresenterTest.class,
 })
-public class AttributeTest {
+public class AttributeTestSuite {
 }

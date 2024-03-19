@@ -82,7 +82,7 @@ public abstract class AbstractTestGenerator<T> implements TestGenerator {
 
     }
 
-    protected abstract void visitTestMethods(List<T> filteredLines);
+    protected abstract void visitTestMethods(List<T> filteredLines) throws NoSuchMethodException;
 
     protected abstract void visitBeforeClassMethod();
 

@@ -25,7 +25,7 @@ public class AttributeInfo {
         U2 attributeNameIndex = rawAttributeInfo.attributeNameIndex;
         String name = constantPool.get(attributeNameIndex).desc();
 
-        System.out.println(String.format("属性 %s 将会被创建(length: %s)", name, rawAttributeInfo.getInfoStream().length()));
+        System.out.printf("属性 %s 将会被创建(length: %s)%n", name, rawAttributeInfo.getInfoStream().length());
         return switch (name) {
             case "InnerClasses" -> new InnerClassesAttributeParser(rawAttributeInfo).parse();
             case "Deprecated" -> new DeprecatedAttributeParser(rawAttributeInfo).parse();
@@ -33,9 +33,10 @@ public class AttributeInfo {
             case "SourceFile" -> new SourceFileAttributeParser(rawAttributeInfo).parse();
             case "ConstantValue" -> new ConstantValueAttributeParser(rawAttributeInfo).parse();
             case "Code" -> new CodeAttributeParser(constantPool, rawAttributeInfo).parse();
-            case "LineNumberTable" -> new LineNumberTableAttribute(rawAttributeInfo);
+            case "LineNumberTable" -> new LineNumberTableAttributeParser(rawAttributeInfo).parse();
             case "RuntimeVisibleAnnotations" -> new RuntimeVisibleAnnotationsAttributeParser(rawAttributeInfo).parse();
-            case "LocalVariableTable" -> new LocalVariableTableAttribute(rawAttributeInfo);
+            case "LocalVariableTable" -> new LocalVariableTableAttributeParser(rawAttributeInfo).parse();
+            case "LocalVariableTypeTable" -> new LocalVariableTypeTableAttributeParser(rawAttributeInfo).parse();
             case "StackMapTable" -> new StackMapTableAttribute(rawAttributeInfo);
             case "Signature" -> new SignatureAttributeParser(rawAttributeInfo).parse();
             default -> rawAttributeInfo;
@@ -48,30 +49,15 @@ public class AttributeInfo {
         return convert(constantPool, rawAttributeInfo);
     }
 
-
     public String describe(ConstantPool constantPool) {
         return "to be implemented...";
 //        throw new UnsupportedOperationException();
-    }
-
-    // todo
-    @Deprecated
-    public String describe(int indent) {
-//        return new StringBuilder().
-//                append(constantPool.get(attributeNameIndex).desc()).
-//                append(":").append("[请修改实现逻辑]").append('\n').
-//                toString();
-        return "todo...";
     }
 
     protected StringBuilder withIndent(int indent) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" ".repeat(Math.max(0, indent)));
         return stringBuilder;
-    }
-
-    protected String indentedString(int indent) {
-        return withIndent(indent).toString();
     }
 
     protected String buildName(ConstantPool constantPool) {

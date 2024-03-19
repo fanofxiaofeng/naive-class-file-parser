@@ -79,16 +79,16 @@ public class MethodSignature implements Signature {
         return throwsSignatureList;
     }
 
-    public String buildParameterDescriptorsForCornerCases(boolean varargs, boolean enumConstructor) {
-        if (!varargs && !enumConstructor) {
+    public String buildParameterDescriptorsForCornerCases(boolean varargs) {
+        if (!varargs) {
             return buildParameterDescriptorsDesc();
         }
 
         int parameterCount = javaTypeSignatureList.size();
-        List<JavaTypeSignature> parameterSignatureList =
-                enumConstructor ?
-                        javaTypeSignatureList.subList(2, parameterCount) :
-                        javaTypeSignatureList;
+        List<JavaTypeSignature> parameterSignatureList = javaTypeSignatureList;
+//                enumConstructor ?
+//                        javaTypeSignatureList.subList(2, parameterCount) :
+//                        javaTypeSignatureList;
 
         StringJoiner joiner = new StringJoiner(", ");
         if (varargs) {

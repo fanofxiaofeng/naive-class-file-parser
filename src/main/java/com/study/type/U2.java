@@ -2,9 +2,10 @@ package com.study.type;
 
 import java.util.Iterator;
 
-public class U2 extends AbstractU implements Iterable<Integer> {
+public final class U2 extends AbstractU implements Iterable<Integer> {
 
     public U2(int a, int b) {
+        rangeCheck(a, b);
         fillDetail(a, b);
     }
 

@@ -1,6 +1,8 @@
 package com.test.cases.method.instruction;
 
 import com.test.util.GeneratedClassClassLoader;
+import com.test.util.InstructionUtils;
+import com.test.util.WideDecoratedInstructionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,15 +19,33 @@ public interface InstructionAnalyzer {
             LoadAndStoreInstructionsLongCase.class,
             LoadAndStoreInstructionsObjectCase.class,
             LoadAndStoreInstructionsWideCase.class,
-            StackInstructionsCase.class
+            OperandStackManagementInstructionsCase.class,
+            TypeConversionInstructionsCase.class,
+            ObjectCreationAndManipulationInstructionsCase.class,
+            ControlTransferInstructionsCase.class,
+            TableSwitchInstructionCase.class,
+            LookupSwitchInstructionCase.class,
+            MethodInvocationAndReturnInstructionsCase.class,
+            InvokeInterfaceInstructionCase.class,
+            ThrowingExceptionsInstructionCase.class,
+            SynchronizationInstructionsCase.class
     );
 
     static Set<Class<?>> find() throws ClassNotFoundException {
         Set<Class<?>> result = new HashSet<>(classes);
-        Class<?> c = new GeneratedClassClassLoader().loadClass("com.generated.cases.method.instruction.DupX2Case");
-        result.add(c);
-        c = new GeneratedClassClassLoader().loadClass("com.generated.cases.method.instruction.Dup2Case");
-        result.add(c);
+        ClassLoader classLoader = new GeneratedClassClassLoader();
+
+        List<String> specifiedClassNames = List.of(
+                "com.generated.cases.method.instruction.DupX2Case",
+                "com.generated.cases.method.instruction.Dup2Case",
+                "com.generated.cases.method.instruction.Dup2X1Case",
+                "com.generated.cases.method.instruction.Dup2X2Case",
+                "com.generated.cases.method.instruction.SwapCase"
+        );
+        for (String className : specifiedClassNames) {
+            result.add(classLoader.loadClass(className));
+        }
+
         return result;
     }
 
@@ -34,15 +54,7 @@ public interface InstructionAnalyzer {
 
         Map<Integer, WideDecoratedInstruction> instructionMap = new HashMap<>();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(WideDecoratedInstructionHolder.class)) {
-                WideDecoratedInstructionHolder instructionHolder = method.getAnnotation(WideDecoratedInstructionHolder.class);
-                for (WideDecoratedInstruction instruction : instructionHolder.value()) {
-                    instructionMap.put(instruction.value(), instruction);
-                }
-            } else if (method.isAnnotationPresent(WideDecoratedInstruction.class)) {
-                WideDecoratedInstruction instruction = method.getAnnotation(WideDecoratedInstruction.class);
-                instructionMap.put(instruction.value(), instruction);
-            }
+            instructionMap.putAll(WideDecoratedInstructionUtils.analyze(method));
         }
 
         return instructionMap;
@@ -53,15 +65,7 @@ public interface InstructionAnalyzer {
 
         Map<Integer, Instruction> instructionMap = new HashMap<>();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(InstructionHolder.class)) {
-                InstructionHolder instructionHolder = method.getAnnotation(InstructionHolder.class);
-                for (Instruction instruction : instructionHolder.value()) {
-                    instructionMap.put(instruction.value(), instruction);
-                }
-            } else if (method.isAnnotationPresent(Instruction.class)) {
-                Instruction instruction = method.getAnnotation(Instruction.class);
-                instructionMap.put(instruction.value(), instruction);
-            }
+            instructionMap.putAll(InstructionUtils.analyze(method));
         }
 
         return instructionMap;
