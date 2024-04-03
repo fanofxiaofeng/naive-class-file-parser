@@ -58,7 +58,14 @@ public class SynchronizationInstructionsCaseInstructionsTest extends MethodPrese
                 "      LocalVariableTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      22     0  this   Lcom/test/cases/method/instruction/SynchronizationInstructionsCase;",
-                "           21       1     1     b   I"
+                "           21       1     1     b   I",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 13",
+                "          locals = [ class com/test/cases/method/instruction/SynchronizationInstructionsCase, class java/lang/Object ]",
+                "          stack = [ class java/lang/Throwable ]",
+                "        frame_type = 250 /* chop */",
+                "          offset_delta = 4"
         );
     }
 }

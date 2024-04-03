@@ -135,8 +135,8 @@ public class SuiteGeneratorImpl implements SuiteGenerator {
     }
 
     public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException {
-//        new SuiteGeneratorImpl("src/test/java/com/test/instruction/", true).generate();
-        new SuiteGeneratorImpl("src/test/java/com/test/method/", true).generate();
+        new SuiteGeneratorImpl("src/test/java/com/test/instruction/", true).generate();
+//        new SuiteGeneratorImpl("src/test/java/com/test/method/", true).generate();
 //        new SuiteGeneratorImpl("src/test/java/com/test/cfa", true).generate();
     }
 }

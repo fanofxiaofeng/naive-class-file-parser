@@ -1,13 +1,15 @@
 package com.study.type.info.frame;
 
-public abstract class StackMapFrame {
-    public abstract String desc();
+import com.study.type.U1;
 
-    public boolean hasDetail() {
-        return false;
+public abstract class StackMapFrame {
+    private final U1 frameType;
+
+    protected StackMapFrame(U1 frameType) {
+        this.frameType = frameType;
     }
 
-    public String[] detail() {
-        return new String[0];
+    public U1 getFrameType() {
+        return frameType;
     }
 }

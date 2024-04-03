@@ -1,6 +1,9 @@
 package com.study.type;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.function.Supplier;
 
 public final class U2 extends AbstractU implements Iterable<Integer> {
 
@@ -37,6 +40,14 @@ public final class U2 extends AbstractU implements Iterable<Integer> {
                 return ++current;
             }
         };
+    }
+
+    public <U> List<U> mapToList(Supplier<? extends U> supplier) {
+        List<U> result = new ArrayList<>(this.toInt());
+        for (int i : this) {
+            result.add(supplier.get());
+        }
+        return result;
     }
 }
 

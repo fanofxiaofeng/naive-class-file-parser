@@ -1,16 +1,16 @@
 package com.study.parser;
 
-import com.study.io.BasicInputStream;
+import com.study.io.ContentReader;
 import com.study.type.ConstantPool;
 import com.study.type.info.MethodInfo;
 
 public class MethodsParser extends RelationParser<MethodInfo> {
 
-    public MethodsParser(BasicInputStream basicInputStream, ConstantPool constantPool) {
+    public MethodsParser(ContentReader contentReader, ConstantPool constantPool) {
         super(
-                basicInputStream,
+                contentReader,
                 constantPool,
-                () -> new MethodInfoParser(basicInputStream, constantPool)
+                () -> new MethodInfoParser(contentReader, constantPool)
         );
     }
 

@@ -20,6 +20,11 @@ public class RawAttributeInfo extends AttributeInfo {
         this.infoStream = new U1InputStream(info);
     }
 
+    public RawAttributeInfo(U1InputStream u1InputStream) {
+        super(u1InputStream.readU2(), u1InputStream.readU4());
+        this.infoStream = new U1InputStream(u1InputStream.readU1Array(attributeLength.toInt()));
+    }
+
     public U1InputStream getInfoStream() {
         return infoStream;
     }

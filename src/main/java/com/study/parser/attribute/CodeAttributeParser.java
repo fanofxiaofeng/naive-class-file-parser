@@ -1,6 +1,7 @@
 package com.study.parser.attribute;
 
 import com.study.io.U1InputStream;
+import com.study.parser.AttributeInfoParser;
 import com.study.parser.Parser;
 import com.study.type.ConstantPool;
 import com.study.type.U1;
@@ -8,18 +9,15 @@ import com.study.type.U2;
 import com.study.type.U4;
 import com.study.type.info.attribute.AttributeInfo;
 import com.study.type.info.attribute.CodeAttribute;
-import com.study.type.info.attribute.RawAttributeInfo;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class CodeAttributeParser extends AttributeParser<CodeAttribute> {
 
     private final ConstantPool constantPool;
 
-    public CodeAttributeParser(ConstantPool constantPool, RawAttributeInfo rawAttributeInfo) {
-        super(rawAttributeInfo);
+    public CodeAttributeParser(ConstantPool constantPool, U2 attributeNameIndex, U4 attributeLength, U1InputStream infoStream) {
+        super(attributeNameIndex, attributeLength, infoStream);
         this.constantPool = constantPool;
     }
 
@@ -48,17 +46,14 @@ public class CodeAttributeParser extends AttributeParser<CodeAttribute> {
         U4 codeLength = infoStream.readU4();
         List<U1> code = infoStream.readU1List(codeLength.toInt());
         U2 exceptionTableLength = infoStream.readU2();
-        List<CodeAttribute.ExceptionTable> exceptionTableList = new ArrayList<>(exceptionTableLength.toInt());
         ExceptionTableParser exceptionTableParser = new ExceptionTableParser(infoStream);
-        IntStream.range(0, exceptionTableLength.toInt()).
-                forEach(e -> exceptionTableList.add(exceptionTableParser.parse()));
+        List<CodeAttribute.ExceptionTable> exceptionTableList =
+                exceptionTableLength.mapToList(exceptionTableParser::parse);
 
         U2 attributesCount = infoStream.readU2();
-        List<AttributeInfo> attributes = new ArrayList<>();
-        attributesCount.forEach(e -> attributes.add(AttributeInfo.build(constantPool, infoStream)));
+        List<AttributeInfo> attributes = attributesCount.mapToList(() -> new AttributeInfoParser(infoStream, constantPool).parse());
         return new CodeAttribute(attributeNameIndex, attributeLength, maxStack, maxLocals, code, exceptionTableList, attributes);
     }
-
 
     private record ExceptionTableParser(U1InputStream u1InputStream) implements Parser<CodeAttribute.ExceptionTable> {
 

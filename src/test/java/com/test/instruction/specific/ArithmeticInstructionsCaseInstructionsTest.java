@@ -579,7 +579,31 @@ public class ArithmeticInstructionsCaseInstructionsTest extends MethodPresenterT
                 "           33      54     3  ans2   Z",
                 "           50      37     4  ans3   Z",
                 "           68      19     5  ans4   Z",
-                "           86       1     6  ans5   Z"
+                "           86       1     6  ans5   Z",
+                "      StackMapTable: number_of_entries = 10",
+                "        frame_type = 15 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 14",
+                "          locals = [ int ]",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 14",
+                "          locals = [ int ]",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 16",
+                "          locals = [ int ]",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 16",
+                "          locals = [ int ]",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 }

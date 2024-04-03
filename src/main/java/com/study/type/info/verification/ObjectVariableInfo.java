@@ -1,5 +1,6 @@
 package com.study.type.info.verification;
 
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 
@@ -13,7 +14,7 @@ public class ObjectVariableInfo extends VerificationTypeInfo {
     }
 
     @Override
-    public String desc() {
-        return "class " + constantPool.get(cPoolIndex.toInt()).detail();
+    public String desc(ConstantPool constantPool) {
+        return "class " + constantPool.detail(cPoolIndex);
     }
 }

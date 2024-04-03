@@ -20,11 +20,7 @@ public final class ConstantInteger extends LeafCpInfo {
 
     @Override
     public String desc() {
-        long value = bytes.toLong();
-        if (value > Integer.MAX_VALUE) {
-            value -= 0x100000000L;
-        }
-        return desc((int) value);
+        return desc(bytes.toSignedInt());
     }
 
     private String desc(int value) {

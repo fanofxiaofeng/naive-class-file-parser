@@ -6,7 +6,7 @@ import com.study.type.U2;
 import com.study.type.constant.leaf.ConstantUtf8;
 
 /**
- * 格式参考
+ * Format example:
  * <p>
  * #12 = String             #37            // ~~
  */

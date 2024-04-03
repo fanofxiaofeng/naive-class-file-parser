@@ -70,7 +70,16 @@ public class LookupSwitchInstructionCaseInstructionsTest extends MethodPresenter
                 "            0     135     0  this   Lcom/test/cases/method/instruction/LookupSwitchInstructionCase;",
                 "            0     135     1 number1   I",
                 "            0     135     2 number2   I",
-                "          134       1     3   ans   I"
+                "          134       1     3   ans   I",
+                "      StackMapTable: number_of_entries = 6",
+                "        frame_type = 251 /* same_frame_extended */",
+                "          offset_delta = 116",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 }

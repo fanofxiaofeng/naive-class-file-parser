@@ -162,6 +162,11 @@ public class InstructionTestGenerator extends MemberTestGenerator {
                 while (peekingIterator.hasNext() && isNum(peekingIterator.peek().stripLeading().split(" +")[0])) {
                     result.add(peekingIterator.next());
                 }
+            } else if (peek.startsWith("      StackMapTable:")) {
+                result.add(peekingIterator.next());
+                while (peekingIterator.hasNext() && peekingIterator.peek().startsWith("        ")) {
+                    result.add(peekingIterator.next());
+                }
             } else {
                 break;
             }
@@ -310,22 +315,23 @@ public class InstructionTestGenerator extends MemberTestGenerator {
                 Object.class,
 //                Character.class,
                 Number.class,
-                Integer.class,
+//                Integer.class,
 //                Long.class,
-//                Float.class,
-//                Double.class,
+                Float.class,
+                Double.class,
 //                Math.class,
 //                String.class,
-//                Class.class
+//                Class.class,
                 Enum.class,
                 List.class,
 //                ArrayList.class,
 //                LinkedList.class,
-//                Map.class,
+                Map.class,
 //                HashMap.class,
 //                LinkedHashMap.class,
 //                TreeMap.class,
-//                EnumSet.class
+                EnumSet.class,
+                Optional.class,
                 Stream.class
 
 //                CodeCase.class
@@ -379,6 +385,6 @@ public class InstructionTestGenerator extends MemberTestGenerator {
         AbstractTestGenerator.overrideExistingFile = true;
 
         generateStandardTest();
-        generateSpecificTest();
+//        generateSpecificTest();
     }
 }

@@ -35,13 +35,13 @@ public class ThreeInvokeInstructionPresenter extends AbstractInstructionPresente
         ConstantMemberRef constantMemberRef = constantPool.get(instruction.combine(), ConstantMemberRef.class);
         U2 classIndex = constantMemberRef.getClassIndex();
 
+        String type = constantMemberRef instanceof ConstantMethodref ? "Method" : "InterfaceMethod";
         if (constantPool.detail(result.getThisClass()).equals(constantPool.detail(classIndex))) {
             if (!(constantMemberRef instanceof ConstantMethodref) && !(constantMemberRef instanceof ConstantInterfaceMethodref)) {
                 throw new IllegalArgumentException(String.format("constantMemberRef belongs to class: %s!", constantMemberRef.getClass().getCanonicalName()));
             }
-            String type = constantMemberRef instanceof ConstantMethodref ? "Method" : "InterfaceMethod";
             return String.format("%s %s", type, constantPool.detail(constantMemberRef.getNameAndTypeIndex()));
         }
-        return String.format("Method %s", constantPool.detail(instruction.combine()));
+        return String.format("%s %s", type, constantPool.detail(instruction.combine()));
     }
 }

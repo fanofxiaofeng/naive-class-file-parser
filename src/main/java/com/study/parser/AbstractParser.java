@@ -1,16 +1,16 @@
 package com.study.parser;
 
-import com.study.io.BasicInputStream;
+import com.study.io.ContentReader;
 
 public abstract class AbstractParser<T> implements Parser<T> {
 
-    protected final BasicInputStream basicInputStream;
+    protected final ContentReader contentReader;
 
-    protected AbstractParser(BasicInputStream basicInputStream) {
-        this.basicInputStream = basicInputStream;
+    protected AbstractParser(ContentReader contentReader) {
+        this.contentReader = contentReader;
     }
 
     protected int parseCount() {
-        return basicInputStream.readU2().toInt();
+        return contentReader.readU2().toInt();
     }
 }

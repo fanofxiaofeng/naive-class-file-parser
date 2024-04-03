@@ -1,5 +1,6 @@
 package com.study.type.info.verification;
 
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 
 public class IntegerVariableInfo extends VerificationTypeInfo {
@@ -10,7 +11,7 @@ public class IntegerVariableInfo extends VerificationTypeInfo {
     }
 
     @Override
-    public String desc() {
+    public String desc(ConstantPool constantPool) {
         return "int";
     }
 }

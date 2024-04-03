@@ -82,7 +82,11 @@ public class ObjectInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      11     0  this   Ljava/lang/Object;",
-                "            0      11     1   obj   Ljava/lang/Object;"
+                "            0      11     1   obj   Ljava/lang/Object;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 9 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 
@@ -252,6 +256,19 @@ public class ObjectInstructionsTest extends MethodPresenterTestBase {
                 "            0      50     0  this   Ljava/lang/Object;",
                 "            0      50     1 timeoutMillis   J",
                 "            4      46     3  comp   J",
+                "      StackMapTable: number_of_entries = 4",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 16",
+                "          locals = [ class java/lang/Object, long, long ]",
+                "          stack = [ class java/lang/InterruptedException ]",
+                "        frame_type = 253 /* append */",
+                "          offset_delta = 20",
+                "          locals = [ class java/lang/InterruptedException, class java/lang/Thread ]",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 2",
+                "          locals = [ class java/lang/Object, long, long ]",
+                "          stack = [ class java/lang/Throwable ]",
+                "        frame_type = 8 /* same */",
                 "    Exceptions:",
                 "      throws java.lang.InterruptedException"
         );
@@ -343,6 +360,11 @@ public class ObjectInstructionsTest extends MethodPresenterTestBase {
                 "            0      58     0  this   Ljava/lang/Object;",
                 "            0      58     1 timeoutMillis   J",
                 "            0      58     3 nanos   I",
+                "      StackMapTable: number_of_entries = 4",
+                "        frame_type = 16 /* same */",
+                "        frame_type = 9 /* same */",
+                "        frame_type = 9 /* same */",
+                "        frame_type = 15 /* same */",
                 "    Exceptions:",
                 "      throws java.lang.InterruptedException"
         );

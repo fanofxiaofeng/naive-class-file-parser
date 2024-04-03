@@ -162,7 +162,11 @@ public class EnumInstructionsTest extends MethodPresenterTestBase {
                 "            0      11     1 other   Ljava/lang/Object;",
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
-                "            0      11     0  this   Ljava/lang/Enum<TE;>;"
+                "            0      11     0  this   Ljava/lang/Enum<TE;>;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 9 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 
@@ -207,7 +211,11 @@ public class EnumInstructionsTest extends MethodPresenterTestBase {
                 "            5      16     1    hc   I",
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
-                "            0      21     0  this   Ljava/lang/Enum<TE;>;"
+                "            0      21     0  this   Ljava/lang/Enum<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 19",
+                "          locals = [ int ]"
         );
     }
 
@@ -306,6 +314,10 @@ public class EnumInstructionsTest extends MethodPresenterTestBase {
                 "            0      44     1     o   TE;",
                 "            2      42     2 other   Ljava/lang/Enum<*>;",
                 "            4      40     3  self   Ljava/lang/Enum<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 253 /* append */",
+                "          offset_delta = 34",
+                "          locals = [ class java/lang/Enum, class java/lang/Enum ]",
                 "    Signature: #143                         // (TE;)I"
         );
     }
@@ -355,6 +367,12 @@ public class EnumInstructionsTest extends MethodPresenterTestBase {
                 "            0      22     0  this   Ljava/lang/Enum<TE;>;",
                 "            5      17     1 clazz   Ljava/lang/Class<*>;",
                 "           10      12     2 zuper   Ljava/lang/Class<*>;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 253 /* append */",
+                "          offset_delta = 20",
+                "          locals = [ class java/lang/Class, class java/lang/Class ]",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ class java/lang/Class ]",
                 "    Signature: #148                         // ()Ljava/lang/Class<TE;>;"
         );
     }
@@ -467,6 +485,11 @@ public class EnumInstructionsTest extends MethodPresenterTestBase {
                 "        Start  Length  Slot  Name   Signature",
                 "            0      73     0 enumClass   Ljava/lang/Class<TT;>;",
                 "           14      59     2 result   TT;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 20",
+                "          locals = [ class java/lang/Enum ]",
+                "        frame_type = 13 /* same */",
                 "    Signature: #156                         // <T:Ljava/lang/Enum<TT;>;>(Ljava/lang/Class<TT;>;Ljava/lang/String;)TT;"
         );
     }

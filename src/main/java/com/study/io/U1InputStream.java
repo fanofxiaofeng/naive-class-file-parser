@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class U1InputStream {
-    private U1[] data;
+public class U1InputStream implements ContentReader {
+    private final U1[] data;
     private int index;
 
     public U1InputStream(U1[] data) {
@@ -18,16 +18,19 @@ public class U1InputStream {
         this.data = data;
     }
 
+    @Override
     public U1 readU1() {
         return data[index++];
     }
 
+    @Override
     public U2 readU2() {
         U1 a = readU1();
         U1 b = readU1();
         return new U2(a, b);
     }
 
+    @Override
     public U4 readU4() {
         U1 a = readU1();
         U1 b = readU1();
@@ -36,6 +39,12 @@ public class U1InputStream {
         return new U4(a, b, c, d);
     }
 
+    @Override
+    public List<U2> readU2List(U2 size) {
+        return readU2List(size.toInt());
+    }
+
+    @Override
     public U1[] readU1Array(int length) {
         System.out.println(length);
         U1[] u1s = new U1[length];

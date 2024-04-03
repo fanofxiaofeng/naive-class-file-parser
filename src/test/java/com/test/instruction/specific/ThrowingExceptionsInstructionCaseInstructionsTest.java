@@ -57,6 +57,10 @@ public class ThrowingExceptionsInstructionCaseInstructionsTest extends MethodPre
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      23     1     c   Ljava/lang/Class<*>;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 76 /* same_locals_1_stack_item */",
+                "          stack = [ class java/lang/NoSuchMethodException ]",
+                "        frame_type = 9 /* same */",
                 "    Signature: #60                          // (Ljava/lang/Class<*>;)V"
         );
     }

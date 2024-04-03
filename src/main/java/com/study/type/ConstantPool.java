@@ -7,15 +7,16 @@ import com.study.util.ConstantPoolUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
 
     private final int count;
 
-    private final CpInfo[] items;
+    private final List<CpInfo> items;
 
     public CpInfo get(int i) {
-        return items[i];
+        return items.get(i);
     }
 
     public CpInfo get(U2 u2) {
@@ -40,7 +41,7 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
         return count;
     }
 
-    public ConstantPool(int count, CpInfo[] items) {
+    public ConstantPool(int count, List<CpInfo> items) {
         this.count = count;
         this.items = items;
     }
@@ -52,11 +53,11 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
 
             @Override
             public boolean hasNext() {
-                return nextIndex() < items.length;
+                return nextIndex() < items.size();
             }
 
             private int nextIndex() {
-                if (ConstantPoolUtils.occupyOneSlot(items[currentIndex])) {
+                if (ConstantPoolUtils.occupyOneSlot(items.get(currentIndex))) {
                     return currentIndex + 1;
                 }
                 return currentIndex + 2;
@@ -66,7 +67,7 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
             public Pair<Integer, CpInfo> next() {
                 int nextIndex = nextIndex();
                 currentIndex = nextIndex;
-                return Pair.of(nextIndex, items[nextIndex]);
+                return Pair.of(nextIndex, items.get(nextIndex));
             }
         };
     }

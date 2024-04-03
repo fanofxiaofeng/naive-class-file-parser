@@ -1,15 +1,17 @@
 package com.study.parser;
 
-import com.study.io.BasicInputStream;
+import com.study.io.ContentReader;
 import com.study.type.ConstantPool;
 import com.study.type.constant.CpInfo;
 import com.study.type.constant.leaf.ConstantDouble;
 import com.study.type.constant.leaf.ConstantLong;
 
+import java.util.Arrays;
+
 public class ConstantPoolParser extends AbstractParser<ConstantPool> {
 
-    protected ConstantPoolParser(BasicInputStream basicInputStream) {
-        super(basicInputStream);
+    protected ConstantPoolParser(ContentReader contentReader) {
+        super(contentReader);
     }
 
     @Override
@@ -17,7 +19,7 @@ public class ConstantPoolParser extends AbstractParser<ConstantPool> {
         int count = parseCount();
 
         CpInfo[] items = new CpInfo[count];
-        Parser<CpInfo> cpInfoParser = new CpInfoParser(basicInputStream);
+        Parser<CpInfo> cpInfoParser = new CpInfoParser(contentReader);
         for (int i = 1; i < count; i++) {
             items[i] = cpInfoParser.parse();
             if (!occupyOneSlot(items[i])) {
@@ -25,12 +27,7 @@ public class ConstantPoolParser extends AbstractParser<ConstantPool> {
             }
         }
 
-        ConstantPool constantPool = new ConstantPool(count, items);
-
-        // todo: remove the next line
-        ConstantPoolHolder.setConstantPool(constantPool);
-
-        return constantPool;
+        return new ConstantPool(count, Arrays.asList(items));
     }
 
     private boolean occupyOneSlot(CpInfo constant) {

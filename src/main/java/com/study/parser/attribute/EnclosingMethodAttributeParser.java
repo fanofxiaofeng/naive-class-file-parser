@@ -1,12 +1,13 @@
 package com.study.parser.attribute;
 
+import com.study.io.U1InputStream;
 import com.study.type.U2;
+import com.study.type.U4;
 import com.study.type.info.attribute.EnclosingMethodAttribute;
-import com.study.type.info.attribute.RawAttributeInfo;
 
 public class EnclosingMethodAttributeParser extends AttributeParser<EnclosingMethodAttribute> {
-    public EnclosingMethodAttributeParser(RawAttributeInfo rawAttributeInfo) {
-        super(rawAttributeInfo);
+    public EnclosingMethodAttributeParser(U2 attributeNameIndex, U4 attributeLength, U1InputStream infoStream) {
+        super(attributeNameIndex, attributeLength, infoStream);
     }
 
     @Override

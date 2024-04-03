@@ -18,4 +18,10 @@ public abstract class AttributeParser<T extends AttributeInfo> implements Parser
         this.attributeLength = rawAttributeInfo.getAttributeLength();
         this.infoStream = rawAttributeInfo.getInfoStream();
     }
+
+    protected AttributeParser(U2 attributeNameIndex, U4 attributeLength, U1InputStream infoStream) {
+        this.attributeNameIndex = attributeNameIndex;
+        this.attributeLength = attributeLength;
+        this.infoStream = infoStream;
+    }
 }

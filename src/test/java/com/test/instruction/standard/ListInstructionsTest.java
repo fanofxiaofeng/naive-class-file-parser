@@ -194,6 +194,11 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "            0      43     0  this   Ljava/util/List<TE;>;",
                 "            0      43     1 operator   Ljava/util/function/UnaryOperator<TE;>;",
                 "           12      31     2    li   Ljava/util/ListIterator<TE;>;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 252 /* append */",
+                "          offset_delta = 12",
+                "          locals = [ class java/util/ListIterator ]",
+                "        frame_type = 29 /* same */",
                 "    Signature: #155                         // (Ljava/util/function/UnaryOperator<TE;>;)V"
         );
     }
@@ -279,6 +284,13 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "            0      66     0  this   Ljava/util/List<TE;>;",
                 "            0      66     1     c   Ljava/util/Comparator<-TE;>;",
                 "           19      47     3     i   Ljava/util/ListIterator<TE;>;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 30",
+                "          locals = [ class java/util/List, class java/util/Comparator, class \"[Ljava/lang/Object;\", class java/util/ListIterator, class \"[Ljava/lang/Object;\", int, int ]",
+                "          stack = []",
+                "        frame_type = 248 /* chop */",
+                "          offset_delta = 34",
                 "    Signature: #168                         // (Ljava/util/Comparator<-TE;>;)V"
         );
     }
@@ -437,6 +449,8 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      23     0  this   Ljava/util/List<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 16 /* same */",
                 "    Signature: #186                         // ()Ljava/util/Spliterator<TE;>;"
         );
     }
@@ -545,6 +559,8 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      25     0  this   Ljava/util/List<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 17 /* same */",
                 "    Signature: #192                         // ()TE;"
         );
     }
@@ -591,6 +607,8 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      32     0  this   Ljava/util/List<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 17 /* same */",
                 "    Signature: #192                         // ()TE;"
         );
     }
@@ -633,6 +651,8 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      25     0  this   Ljava/util/List<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 17 /* same */",
                 "    Signature: #192                         // ()TE;"
         );
     }
@@ -679,6 +699,8 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      32     0  this   Ljava/util/List<TE;>;",
+                "      StackMapTable: number_of_entries = 1",
+                "        frame_type = 17 /* same */",
                 "    Signature: #192                         // ()TE;"
         );
     }
@@ -1477,6 +1499,11 @@ public class ListInstructionsTest extends MethodPresenterTestBase {
                 "        Start  Length  Slot  Name   Signature",
                 "           32       2     1  list   Ljava/util/List<TE;>;",
                 "            0      64     0 elements   [TE;",
+                "      StackMapTable: number_of_entries = 4",
+                "        frame_type = 28 /* same */",
+                "        frame_type = 5 /* same */",
+                "        frame_type = 10 /* same */",
+                "        frame_type = 13 /* same */",
                 "    Signature: #231                         // <E:Ljava/lang/Object;>([TE;)Ljava/util/List<TE;>;"
         );
     }

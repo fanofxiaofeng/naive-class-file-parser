@@ -754,6 +754,10 @@ public class StreamInstructionsTest extends MethodPresenterTestBase {
                 "      LocalVariableTypeTable:",
                 "        Start  Length  Slot  Name   Signature",
                 "            0      23     0     t   TT;",
+                "      StackMapTable: number_of_entries = 2",
+                "        frame_type = 10 /* same */",
+                "        frame_type = 75 /* same_locals_1_stack_item */",
+                "          stack = [ class java/util/stream/Stream ]",
                 "    Signature: #286                         // <T:Ljava/lang/Object;>(TT;)Ljava/util/stream/Stream<TT;>;"
         );
     }
@@ -1020,6 +1024,17 @@ public class StreamInstructionsTest extends MethodPresenterTestBase {
                 "            0      73     1     b   Ljava/util/stream/Stream<+TT;>;",
                 "           30      43     2 split   Ljava/util/Spliterator<TT;>;",
                 "           58      15     3 stream   Ljava/util/stream/Stream<TT;>;",
+                "      StackMapTable: number_of_entries = 3",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 49",
+                "          locals = [ class java/util/stream/Stream, class java/util/stream/Stream, class java/util/Spliterator ]",
+                "          stack = [ class java/util/Spliterator ]",
+                "        frame_type = 67 /* same_locals_1_stack_item */",
+                "          stack = [ class java/util/Spliterator ]",
+                "        frame_type = 255 /* full_frame */",
+                "          offset_delta = 0",
+                "          locals = [ class java/util/stream/Stream, class java/util/stream/Stream, class java/util/Spliterator ]",
+                "          stack = [ class java/util/Spliterator, int ]",
                 "    Signature: #320                         // <T:Ljava/lang/Object;>(Ljava/util/stream/Stream<+TT;>;Ljava/util/stream/Stream<+TT;>;)Ljava/util/stream/Stream<TT;>;"
         );
     }

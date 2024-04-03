@@ -6,45 +6,25 @@ import com.study.type.U2;
 import com.study.type.info.verification.VerificationTypeInfo;
 import com.study.type.info.verification.VerificationTypeInfoFactory;
 
-import java.util.StringJoiner;
-
 public class AppendFrame extends StackMapFrame {
-    private U1 frameType;//APPEND; /* 252-254 */
-    private U2 offsetDelta;
-    private VerificationTypeInfo[] locals;
+    private final U2 offsetDelta;
+    private final VerificationTypeInfo[] locals;
     //[frame_type - 251]// ;
 
     AppendFrame(U1 frameType, U1InputStream stream) {
-        this.frameType = frameType;
+        super(frameType);
         this.offsetDelta = stream.readU2();
-        this.locals = new VerificationTypeInfo[this.frameType.toInt() - 251];
+        this.locals = new VerificationTypeInfo[this.getFrameType().toInt() - 251];
         for (int i = 0; i < this.locals.length; i++) {
             this.locals[i] = VerificationTypeInfoFactory.build(stream);
         }
     }
 
-    @Override
-    public String desc() {
-        return String.format("frame_type = %d /* append */", frameType.toInt());
+    public U2 getOffsetDelta() {
+        return offsetDelta;
     }
 
-    @Override
-    public boolean hasDetail() {
-        return true;
-    }
-
-    @Override
-    public String[] detail() {
-        String[] detail = new String[2];
-
-        detail[0] = String.format("offset_delta = %d", offsetDelta.toInt());
-
-        StringJoiner joiner = new StringJoiner(", ");
-        for (VerificationTypeInfo local : this.locals) {
-            joiner.add(local.desc());
-        }
-        detail[1] = String.format("locals = [ %s ]", joiner.toString());
-
-        return detail;
+    public VerificationTypeInfo[] getLocals() {
+        return locals;
     }
 }

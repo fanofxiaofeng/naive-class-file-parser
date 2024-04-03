@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BasicInputStream extends InputStream {
+public class BasicInputStream extends InputStream implements ContentReader {
     private final InputStream inputStream;
 
     public BasicInputStream(InputStream inputStream) {
@@ -35,6 +35,7 @@ public class BasicInputStream extends InputStream {
         }
     }
 
+    @Override
     public U4 readU4() {
         int a = read();
         int b = read();
@@ -43,23 +44,31 @@ public class BasicInputStream extends InputStream {
         return new U4(a, b, c, d);
     }
 
+    @Override
     public U2 readU2() {
         int a = read();
         int b = read();
         return new U2(a, b);
     }
 
+    @Override
     public U1 readU1() {
         int a = read();
         return new U1(a);
     }
 
+    @Override
     public U1[] readU1Array(int length) {
         U1[] u1s = new U1[length];
         for (int i = 0; i < length; i++) {
             u1s[i] = readU1();
         }
         return u1s;
+    }
+
+    @Override
+    public List<U2> readU2List(U2 size) {
+        return readU2List(size.toInt());
     }
 
     public List<U2> readU2List(int length) {

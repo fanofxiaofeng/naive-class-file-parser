@@ -78,6 +78,9 @@ public abstract class AbstractAttributePresenter<T extends AttributeInfo> extend
         if (attribute instanceof AbstractLocalVariableBasedTableAttribute specified) {
             return new LocalVariableBasedAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
         }
+        if (attribute instanceof StackMapTableAttribute specified) {
+            return new StackMapAttributePresenter(result, printStreamWrapper, specified, baseIndentLevel);
+        }
 
         return () -> 0;
     }

@@ -1,6 +1,6 @@
 package com.study.parser;
 
-import com.study.io.BasicInputStream;
+import com.study.io.ContentReader;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 
@@ -21,11 +21,11 @@ public abstract class RelationParser<C> extends AbstractParser<ItemsContainer<C>
     private final Parser<C> childParser;
 
     protected RelationParser(
-            BasicInputStream basicInputStream,
+            ContentReader contentReader,
             ConstantPool constantPool,
             Supplier<Parser<C>> childParserSupplier
     ) {
-        super(basicInputStream);
+        super(contentReader);
         this.constantPool = constantPool;
         this.childParser = childParserSupplier.get();
     }

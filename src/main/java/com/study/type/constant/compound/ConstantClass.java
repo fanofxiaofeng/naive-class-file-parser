@@ -6,7 +6,7 @@ import com.study.type.U2;
 import com.study.type.constant.leaf.ConstantUtf8;
 
 /**
- * Format
+ * Format example:
  * <p>
  * #5 = Class              #36            // java/lang/Object
  * #36 = Utf8               java/lang/Object
@@ -29,7 +29,7 @@ public class ConstantClass extends CompoundCpInfo {
 
     @Override
     public String detail(ConstantPool constantPool) {
-        String detail = constantPool.get(nameIndex).desc().replace('.', '/');
+        String detail = constantPool.desc(nameIndex).replace('.', '/');
         if (detail.startsWith("[")) {
             return String.format("\"%s\"", detail);
         }

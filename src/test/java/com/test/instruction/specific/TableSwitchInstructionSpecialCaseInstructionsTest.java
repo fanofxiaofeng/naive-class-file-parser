@@ -184,7 +184,23 @@ public class TableSwitchInstructionSpecialCaseInstructionsTest extends MethodPre
                 "        Start  Length  Slot  Name   Signature",
                 "            0     504     0  this   Lcom/test/cases/method/instruction/TableSwitchInstructionSpecialCase;",
                 "            0     504     1 number   I",
-                "          503       1     2 answer   I"
+                "          503       1     2 answer   I",
+                "      StackMapTable: number_of_entries = 13",
+                "        frame_type = 251 /* same_frame_extended */",
+                "          offset_delta = 452",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 }

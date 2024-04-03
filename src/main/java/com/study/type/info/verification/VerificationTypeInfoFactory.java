@@ -1,12 +1,12 @@
 package com.study.type.info.verification;
 
-import com.study.io.U1InputStream;
+import com.study.io.ContentReader;
 import com.study.type.U1;
 import com.study.type.U2;
 
 public class VerificationTypeInfoFactory {
-    public static VerificationTypeInfo build(U1InputStream stream) {
-        U1 tag = stream.readU1();
+    public static VerificationTypeInfo build(ContentReader contentReader) {
+        U1 tag = contentReader.readU1();
         switch (tag.toInt()) {
             case TopVariableInfo.TAG_VALUE -> {
                 return new TopVariableInfo();
@@ -17,11 +17,11 @@ public class VerificationTypeInfoFactory {
             case FloatVariableInfo.TAG_VALUE -> {
                 return new FloatVariableInfo();
             }
-            case LongVariableInfo.TAG_VALUE -> {
-                return new LongVariableInfo();
-            }
             case DoubleVariableInfo.TAG_VALUE -> {
                 return new DoubleVariableInfo();
+            }
+            case LongVariableInfo.TAG_VALUE -> {
+                return new LongVariableInfo();
             }
             case NullVariableInfo.TAG_VALUE -> {
                 return new NullVariableInfo();
@@ -30,14 +30,14 @@ public class VerificationTypeInfoFactory {
                 return new UninitializedThisVariableInfo();
             }
             case ObjectVariableInfo.TAG_VALUE -> {
-                U2 cPoolIndex = stream.readU2();
+                U2 cPoolIndex = contentReader.readU2();
                 return new ObjectVariableInfo(cPoolIndex);
             }
             case UninitializedVariableInfo.TAG_VALUE -> {
-                U2 offset = stream.readU2();
+                U2 offset = contentReader.readU2();
                 return new UninitializedVariableInfo(offset);
             }
-            default -> throw new RuntimeException("weird tag: " + tag);
+            default -> throw new RuntimeException("Unsupported tag: " + tag);
         }
     }
 }

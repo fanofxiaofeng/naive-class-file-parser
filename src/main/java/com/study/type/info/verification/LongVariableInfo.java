@@ -1,5 +1,6 @@
 package com.study.type.info.verification;
 
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 
 public class LongVariableInfo extends VerificationTypeInfo {
@@ -7,5 +8,10 @@ public class LongVariableInfo extends VerificationTypeInfo {
 
     LongVariableInfo() {
         this.tag = new U1(TAG_VALUE);
+    }
+
+    @Override
+    public String desc(ConstantPool constantPool) {
+        return "long";
     }
 }

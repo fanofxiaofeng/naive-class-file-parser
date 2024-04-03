@@ -1,5 +1,6 @@
 package com.study.type.info.verification;
 
+import com.study.type.ConstantPool;
 import com.study.type.U1;
 import com.study.type.U2;
 
@@ -11,5 +12,10 @@ public class UninitializedVariableInfo extends VerificationTypeInfo {
     public UninitializedVariableInfo(U2 offset) {
         this.tag = new U1(TAG_VALUE);
         this.offset = offset;
+    }
+
+    @Override
+    public String desc(ConstantPool constantPool) {
+        return "???";
     }
 }

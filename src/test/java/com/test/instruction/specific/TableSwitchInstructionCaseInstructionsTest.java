@@ -93,7 +93,15 @@ public class TableSwitchInstructionCaseInstructionsTest extends MethodPresenterT
                 "            0     187     0  this   Lcom/test/cases/method/instruction/TableSwitchInstructionCase;",
                 "            0     187     1 number1   I",
                 "            0     187     2 number2   I",
-                "          186       1     3   ans   I"
+                "          186       1     3   ans   I",
+                "      StackMapTable: number_of_entries = 5",
+                "        frame_type = 251 /* same_frame_extended */",
+                "          offset_delta = 172",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 }

@@ -134,7 +134,24 @@ public class LookupSwitchInstructionSpecialCaseInstructionsTest extends MethodPr
                 "        Start  Length  Slot  Name   Signature",
                 "            0     517     0  this   Lcom/test/cases/method/instruction/LookupSwitchInstructionSpecialCase;",
                 "            0     517     1 number   I",
-                "          516       1     2 answer   I"
+                "          516       1     2 answer   I",
+                "      StackMapTable: number_of_entries = 14",
+                "        frame_type = 251 /* same_frame_extended */",
+                "          offset_delta = 460",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 3 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 4 /* same */",
+                "        frame_type = 64 /* same_locals_1_stack_item */",
+                "          stack = [ int ]"
         );
     }
 }

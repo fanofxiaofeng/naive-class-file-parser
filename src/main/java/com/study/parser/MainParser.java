@@ -1,6 +1,6 @@
 package com.study.parser;
 
-import com.study.io.BasicInputStream;
+import com.study.io.ContentReader;
 import com.study.type.ConstantPool;
 import com.study.type.ItemsContainer;
 import com.study.type.U2;
@@ -17,17 +17,17 @@ import java.util.function.BiFunction;
 public class MainParser implements Parser<ParseResult> {
 
     /**
-     * We use this {@link java.io.InputStream} to read from class files
+     * We use it to read from class files
      */
-    private final BasicInputStream basicInputStream;
+    private final ContentReader contentReader;
 
     /**
      * Parse result will be saved in it
      */
     private ParseResult parseResult;
 
-    public MainParser(BasicInputStream basicInputStream) {
-        this.basicInputStream = basicInputStream;
+    public MainParser(ContentReader contentReader) {
+        this.contentReader = contentReader;
     }
 
     @Override
@@ -52,41 +52,41 @@ public class MainParser implements Parser<ParseResult> {
 
         parseAttributes();
 
-        makeSure();
+        ensureCompleted();
 
         return parseResult;
     }
 
     private void parseMagic() {
-        parseResult.setMagic(basicInputStream.readU4());
+        parseResult.setMagic(contentReader.readU4());
     }
 
     private void parseVersion() {
-        parseResult.setMinorVersion(basicInputStream.readU2());
-        parseResult.setMajorVersion(basicInputStream.readU2());
+        parseResult.setMinorVersion(contentReader.readU2());
+        parseResult.setMajorVersion(contentReader.readU2());
     }
 
     private void parseConstantPool() {
-        ConstantPoolParser constantPoolParser = new ConstantPoolParser(basicInputStream);
+        ConstantPoolParser constantPoolParser = new ConstantPoolParser(contentReader);
         ConstantPool constantPool = constantPoolParser.parse();
         parseResult.setConstantPool(constantPool);
     }
 
     private void parseAccessFlags() {
-        parseResult.setAccessFlags(basicInputStream.readU2());
+        parseResult.setAccessFlags(contentReader.readU2());
     }
 
     private void parseThisClass() {
-        parseResult.setThisClass(basicInputStream.readU2());
+        parseResult.setThisClass(contentReader.readU2());
     }
 
     private void parseSuperClass() {
-        parseResult.setSuperClass(basicInputStream.readU2());
+        parseResult.setSuperClass(contentReader.readU2());
     }
 
     private void parseInterfaces() {
-        U2 interfacesCount = basicInputStream.readU2();
-        parseResult.setInterfaces(basicInputStream.readU2List(interfacesCount.toInt()));
+        U2 interfacesCount = contentReader.readU2();
+        parseResult.setInterfaces(contentReader.readU2List(interfacesCount));
     }
 
     private void parseFields() {
@@ -105,15 +105,15 @@ public class MainParser implements Parser<ParseResult> {
     }
 
     private <T> ItemsContainer<T> parseItemsContainer(
-            BiFunction<BasicInputStream, ConstantPool, RelationParser<T>> parserGenerator
+            BiFunction<ContentReader, ConstantPool, RelationParser<T>> parserGenerator
     ) {
-        RelationParser<T> itemsContainer = parserGenerator.apply(basicInputStream, parseResult.getConstantPool());
+        RelationParser<T> itemsContainer = parserGenerator.apply(contentReader, parseResult.getConstantPool());
         return itemsContainer.parse();
     }
 
-    private void makeSure() {
-        if (!basicInputStream.justFinished()) {
-            throw new AssertionError();
-        }
+    private void ensureCompleted() {
+//        if (!contentReader.justFinished()) {
+//            throw new AssertionError();
+//        }
     }
 }

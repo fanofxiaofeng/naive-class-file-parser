@@ -1,13 +1,14 @@
 package com.study.parser.attribute;
 
+import com.study.io.U1InputStream;
 import com.study.type.U2;
+import com.study.type.U4;
 import com.study.type.info.attribute.ConstantValueAttribute;
-import com.study.type.info.attribute.RawAttributeInfo;
 
 public class ConstantValueAttributeParser extends AttributeParser<ConstantValueAttribute> {
 
-    public ConstantValueAttributeParser(RawAttributeInfo that) {
-        super(that);
+    public ConstantValueAttributeParser(U2 attributeNameIndex, U4 attributeLength, U1InputStream infoStream) {
+        super(attributeNameIndex, attributeLength, infoStream);
     }
 
     @Override
