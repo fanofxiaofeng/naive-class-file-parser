@@ -112,8 +112,5 @@ public class MainParser implements Parser<ParseResult> {
     }
 
     private void ensureCompleted() {
-//        if (!contentReader.justFinished()) {
-//            throw new AssertionError();
-//        }
     }
 }

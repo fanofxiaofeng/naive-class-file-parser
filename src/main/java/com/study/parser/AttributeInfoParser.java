@@ -30,7 +30,7 @@ public class AttributeInfoParser extends InfoHolderParser<AttributeInfo> {
     public AttributeInfo build(ConstantPool constantPool, U2 attributeNameIndex, U4 attributeLength, U1InputStream infoSteam) {
         String name = constantPool.get(attributeNameIndex).desc();
 
-        System.out.printf("属性 %s 将会被创建(length: %s)%n", name, attributeLength.toLong());
+        System.out.printf("%s 属性将会被创建(length: %s)%n", name, attributeLength.toLong());
 
         Supplier<AttributeParser<? extends AttributeInfo>> supplier =
                 () -> switch (name) {

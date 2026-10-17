@@ -24,7 +24,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.13</version>
+            <version>1.6.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
@@ -92,4 +92,30 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Swing GUI entry point:
+             mvn compile exec:java -Pgui
+             mvn compile exec:java -Pgui -Dexec.args="path/to/Something.class" -->
+        <profile>
+            <id>gui</id>
+            <!-- The default exec config passes ${thePath}; override it to empty so
+                 launching the GUI without -Dexec.args does not pass a bogus argument -->
+            <properties>
+                <thePath></thePath>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <configuration>
+                            <mainClass>com.study.ui.GuiMain</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

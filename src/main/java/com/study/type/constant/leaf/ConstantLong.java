@@ -6,7 +6,7 @@ import com.study.type.U4;
 /**
  * Format example:
  * #172 = Long               -4294967296l
- * Consider "-4294967296l" as the description (i.e. return value for {@link #desc()}) for this item
+ * Consider "-4294967296l" as the description (i.e., return value for {@link #desc()}) for this item
  */
 public final class ConstantLong extends LeafCpInfo {
     private final U4 highBytes;

@@ -12,7 +12,7 @@ import java.util.List;
  * Format example:
  * #19 = Utf8               Lcom/study/parser/Naive;
  * <p>
- * Consider "Lcom/study/parser/Naive;" as the description (i.e. return value for {@link #desc()}) for this item
+ * Consider "Lcom/study/parser/Naive;" as the description (i.e., return value for {@link #desc()}) for this item
  */
 public final class ConstantUtf8 extends LeafCpInfo {
     private final U2 length;

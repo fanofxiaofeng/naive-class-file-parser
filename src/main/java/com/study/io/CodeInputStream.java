@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Please refer to https://docs.oracle.com/javase/specs/jvms/se10/html/jvms-7.html
+ * Please refer to <a href="https://docs.oracle.com/javase/specs/jvms/se10/html/jvms-7.html">...</a>
  * constants = '''
  * '''
  * <p>

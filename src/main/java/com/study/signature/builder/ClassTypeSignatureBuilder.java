@@ -7,12 +7,17 @@ import com.study.signature.TypeArgument;
 import com.study.util.SignatureUtils;
 import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ClassTypeSignatureBuilder implements Builder<ClassTypeSignature> {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClassTypeSignatureBuilder.class);
+
     @Override
     public ClassTypeSignature build(PeekingIterator<Integer> peekingIterator) {
         // drop the initial 'L' character
@@ -58,7 +63,7 @@ public class ClassTypeSignatureBuilder implements Builder<ClassTypeSignature> {
                                     "codePoint: [%s] was fetched",
                                     SignatureUtils.convertToString(List.of(codePoint))
                             );
-                    System.out.println(message);
+                    logger.debug(message);
                     codePoints.add(codePoint);
                 }
             }
@@ -70,7 +75,7 @@ public class ClassTypeSignatureBuilder implements Builder<ClassTypeSignature> {
         int lastIndexForSlash = raw.lastIndexOf('/');
         if (lastIndexForSlash >= 0) {
             return Pair.of(
-                    // todo: needs test
+                    // TODO: needs test
                     raw.substring(0, lastIndexForSlash + 1),
                     raw.substring(lastIndexForSlash + 1)
             );

@@ -11,7 +11,7 @@ import java.io.PrintStream;
 public class ParseResultTest {
     @Test
     public void show() throws Exception {
-        FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/Toy.class");
+        FileInputStream inputStream = new FileInputStream("target/classes/com/study/parser/MainParser.class");
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
         ParseResult parseResult = new MainParser(basicInputStream).parse();
 //        parseResult.show(System.out);
@@ -23,7 +23,6 @@ public class ParseResultTest {
         BasicInputStream basicInputStream = new BasicInputStream(inputStream);
         ParseResult parseResult = new MainParser(basicInputStream).parse();
         PrintStream printStream = new PrintStream("scripts/result/output.txt");
-//        PrintStream printStream = new PrintStream(new File("/Users/jinyang/Desktop/study/naive-class-file-parser/scripts/result/output.txt"));
 //        parseResult.show(printStream);
     }
 

@@ -25,12 +25,11 @@ public class BasicInputStream extends InputStream implements ContentReader {
     public int read() {
         try {
             int r = inputStream.read();
-            if (r < 0 || r > 0xFF) {
+            if (r < 0) {
                 throw new RuntimeException("r is bad, r = " + r);
             }
             return r;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("IOException");
         }
     }

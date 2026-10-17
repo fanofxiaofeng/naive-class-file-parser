@@ -47,7 +47,7 @@ public sealed class AbstractU permits U1, U2, U4 {
 
     public boolean isOn(int mask) {
         int flags = toInt();
-        // todo: maybe < 0 (or <= 0) is OK? please check...
+        // TODO: maybe < 0 (or <= 0) is OK? please check...
         if (flags < 0 || mask <= 0) {
             throw new RuntimeException(String.format("bad case with flags: %d, mask: %d", flags, mask));
         }

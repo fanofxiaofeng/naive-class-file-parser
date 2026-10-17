@@ -7,7 +7,7 @@ import com.study.type.U4;
  * Format example:
  * #122 = Integer            -2147483647
  * <p>
- * Consider "-2147483647" as the description (i.e. return value for {@link #desc()}) for this item
+ * Consider "-2147483647" as the description (i.e., return value for {@link #desc()}) for this item
  */
 public final class ConstantInteger extends LeafCpInfo {
 
