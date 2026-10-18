@@ -80,7 +80,7 @@ public class ConstantPoolPanel extends JPanel {
         for (int i = 1; i < constantPool.getCount(); i++) {
             CpInfo cpInfo = constantPool.get(i);
             if (cpInfo == null) {
-                rows.add(CpRow.phantom(i, constantPool.get(i - 1)));
+                rows.add(CpRow.unusableSlot(i, constantPool.get(i - 1)));
                 continue;
             }
 
@@ -214,7 +214,7 @@ public class ConstantPoolPanel extends JPanel {
 
     private record CpRow(int index, CpInfo cpInfo, String tag, String description, String detail) {
 
-        static CpRow phantom(int index, CpInfo previous) {
+        static CpRow unusableSlot(int index, CpInfo previous) {
                 // the slot after a Long/Double is valid but unusable (JVMS §4.4.5)
                 String description = String.format("(unusable slot: second half of the %s at #%d)",
                         displayTag(previous), index - 1);

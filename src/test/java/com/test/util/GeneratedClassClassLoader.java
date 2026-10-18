@@ -1,6 +1,6 @@
 package com.test.util;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class GeneratedClassClassLoader extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         if (name.startsWith("com.generated.")) {
             byte[] bytes = getBytes(name);
-            return super.defineClass(StringUtils.removeEnd(name, ".class"), bytes, 0, bytes.length);
+            return super.defineClass(Strings.CS.removeEnd(name, ".class"), bytes, 0, bytes.length);
         }
 
         logger.error("You are probably using a wrong class loader for class: {}, please check", name);

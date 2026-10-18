@@ -44,7 +44,7 @@ There is no intermediate byte tree — parsers construct model objects directly.
   and `decoratedDetail(constantPool)` (references resolved to readable text).
 
 Slot semantics: `Long`/`Double` entries occupy **two** indices; `ConstantPoolParser`
-inserts a `null` phantom slot, and `ConstantPool implements Iterable<Pair<Integer, CpInfo>>`
+inserts a `null` unusable slot, and `ConstantPool implements Iterable<Pair<Integer, CpInfo>>`
 hides the gap handling from consumers. All `#N` indexes in the model are the real
 JVMS indexes, which is what makes GUI cross-reference jumping trivial.
 
@@ -109,8 +109,8 @@ under `type/info/frame` and `type/info/verification`.
 # CLI (writes scripts/result/output.txt, then diff against javap via scripts/all.sh)
 mvn compile exec:java -DthePath=SomeClass
 
-# GUI
-mvn compile exec:java -Pgui -Dexec.args="path/to/Some.class"
+# GUI (no CLI arguments; pick the .class file inside the GUI)
+mvn compile exec:java -Pgui
 ```
 
 ## Extension Points

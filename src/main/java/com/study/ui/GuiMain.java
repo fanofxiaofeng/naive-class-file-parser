@@ -2,8 +2,6 @@ package com.study.ui;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * GUI entry point.
@@ -11,8 +9,8 @@ import java.nio.file.Path;
  * Run with:
  * <pre>
  * mvn compile exec:java -Pgui
- * mvn compile exec:java -Pgui -Dexec.args="target/classes/com/study/parser/MainParser.class"
  * </pre>
+ * Then pick a {@code .class} file via File &gt; Open, or drag &amp; drop one onto the window.
  */
 public class GuiMain {
 
@@ -26,13 +24,6 @@ public class GuiMain {
 
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
-
-            if (args.length > 0) {
-                Path path = Path.of(args[0]);
-                if (Files.isRegularFile(path)) {
-                    frame.openFile(path);
-                }
-            }
         });
     }
 }

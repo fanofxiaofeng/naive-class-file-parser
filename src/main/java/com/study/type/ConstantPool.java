@@ -30,7 +30,7 @@ public class ConstantPool implements Iterable<Pair<Integer, CpInfo>> {
         }
 
         String message =
-                String.format("expectedClass is: %s, but real class is: %s, please check!",
+                String.format("expectedClass is: %s, but actual class is: %s, please check!",
                         expectedClass.getSimpleName(),
                         cpInfo.getClass().getSimpleName()
                 );

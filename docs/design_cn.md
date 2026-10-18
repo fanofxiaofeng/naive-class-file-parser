@@ -39,7 +39,7 @@ magic → 版本号 → 常量池 → 访问标志 → this/super → 接口 →
   `ConstantMethodHandle` 等），提供 `componentDesc(constantPool)`（原始 `#N` 引用）
   与 `decoratedDetail(constantPool)`（引用已解析为可读文本）。
 
-槽位语义：`Long`/`Double` 占**两个**索引；`ConstantPoolParser` 插入 `null` 幽灵槽，
+槽位语义：`Long`/`Double` 占**两个**索引；`ConstantPoolParser` 插入 `null` 不可用槽（JVMS 称其为 unusable），
 而 `ConstantPool implements Iterable<Pair<Integer, CpInfo>>` 对使用者屏蔽了这一差异。
 模型中所有 `#N` 索引都是真实的 JVMS 索引——这正是 GUI 交叉引用跳转能轻松实现的原因。
 
@@ -96,11 +96,11 @@ magic → 版本号 → 常量池 → 访问标志 → this/super → 接口 →
 ## 运行方式
 
 ```bash
-# CLI（输出到 scripts/result/output.txt，再用 scripts/all.sh 与 javap 对拍）
+# CLI（输出到 scripts/result/output.txt，再用 scripts/all.sh 与 javap 输出的结果进行对比）
 mvn compile exec:java -DthePath=SomeClass
 
-# GUI
-mvn compile exec:java -Pgui -Dexec.args="path/to/Some.class"
+# GUI（无命令行参数；启动后在界面中选择 .class 文件）
+mvn compile exec:java -Pgui
 ```
 
 ## 扩展点

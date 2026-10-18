@@ -82,7 +82,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>3.6.4</version>
                 <configuration>
                     <mainClass>com.study.parser.Main</mainClass>
                     <arguments>
@@ -96,22 +96,19 @@
     <profiles>
         <!-- Swing GUI entry point:
              mvn compile exec:java -Pgui
-             mvn compile exec:java -Pgui -Dexec.args="path/to/Something.class" -->
+             (no CLI arguments; pick a .class file via the GUI) -->
         <profile>
             <id>gui</id>
-            <!-- The default exec config passes ${thePath}; override it to empty so
-                 launching the GUI without -Dexec.args does not pass a bogus argument -->
-            <properties>
-                <thePath></thePath>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>3.6.4</version>
                         <configuration>
                             <mainClass>com.study.ui.GuiMain</mainClass>
+                            <!-- do not inherit the CLI's ${thePath} argument -->
+                            <arguments combine.self="override"/>
                         </configuration>
                     </plugin>
                 </plugins>

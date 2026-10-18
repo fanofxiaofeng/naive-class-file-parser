@@ -6,24 +6,20 @@ import com.study.type.ConstantPool;
 import com.study.type.U2;
 import org.apache.commons.lang3.tuple.Pair;
 import com.study.type.constant.CpInfo;
+import com.study.ui.support.AccessFlagsTable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -86,8 +82,6 @@ public class OverviewPanel extends JPanel {
                     "Is a module, not a class or interface.")
     ));
 
-    private static final Color ACTIVE_ROW_BACKGROUND = new Color(0xE8, 0xF5, 0xE9);
-
     public OverviewPanel(ParseResult result, Path file) {
         super(new BorderLayout());
 
@@ -145,18 +139,10 @@ public class OverviewPanel extends JPanel {
      * on the current class are highlighted.
      */
     private int addAccessFlagsTable(JPanel form, GridBagConstraints gbc, int row, int accessFlags) {
-        AccessFlagsTableModel tableModel = new AccessFlagsTableModel(accessFlags);
-        JTable table = new JTable(tableModel);
-        table.setDefaultRenderer(Object.class, new ActiveFlagRenderer(tableModel));
-        table.setRowSelectionAllowed(false);
-        table.setShowGrid(true);
-        table.setGridColor(table.getTableHeader().getBackground());
-        table.getColumnModel().getColumn(0).setPreferredWidth(160);
-        table.getColumnModel().getColumn(1).setPreferredWidth(60);
-        table.getColumnModel().getColumn(2).setPreferredWidth(45);
-        table.getColumnModel().getColumn(3).setPreferredWidth(520);
-        table.setPreferredScrollableViewportSize(
-                table.getPreferredSize());
+        List<AccessFlagsTable.FlagRow> rows = Arrays.stream(ClassAccessFlags.values())
+                .map(flag -> new AccessFlagsTable.FlagRow(flag.name(), flag.getFlag(), FLAG_MEANINGS.get(flag)))
+                .toList();
+        AccessFlagsTable table = new AccessFlagsTable(rows, accessFlags);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
@@ -229,74 +215,4 @@ public class OverviewPanel extends JPanel {
                 result.getConstantPool().getCount(), entryCount);
     }
 
-    /**
-     * All rows of JVMS Table 4.1-A, each flagged as set/unset for the current class.
-     */
-    private static class AccessFlagsTableModel extends AbstractTableModel {
-
-        private static final String[] COLUMNS = {"Flag name", "Value", "Set", "Interpretation"};
-
-        private final ClassAccessFlags[] flags = ClassAccessFlags.values();
-        private final int accessFlags;
-
-        private AccessFlagsTableModel(int accessFlags) {
-            this.accessFlags = accessFlags;
-        }
-
-        private boolean isSet(int rowIndex) {
-            return (accessFlags & flags[rowIndex].getFlag()) != 0;
-        }
-
-        @Override
-        public int getRowCount() {
-            return flags.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return COLUMNS.length;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return COLUMNS[column];
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            ClassAccessFlags flag = flags[rowIndex];
-            return switch (columnIndex) {
-                case 0 -> flag.name();
-                case 1 -> String.format("0x%04x", flag.getFlag());
-                case 2 -> isSet(rowIndex) ? "✓" : "";
-                case 3 -> FLAG_MEANINGS.get(flag);
-                default -> "";
-            };
-        }
-    }
-
-    /**
-     * Highlights rows whose flag is set: green background + bold text.
-     */
-    private static class ActiveFlagRenderer extends DefaultTableCellRenderer {
-
-        private final AccessFlagsTableModel tableModel;
-
-        private ActiveFlagRenderer(AccessFlagsTableModel tableModel) {
-            this.tableModel = tableModel;
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus,
-                                                       int row, int column) {
-            Component component = super.getTableCellRendererComponent(
-                    table, value, isSelected, hasFocus, row, column);
-            boolean active = tableModel.isSet(row);
-            component.setBackground(active ? ACTIVE_ROW_BACKGROUND : table.getBackground());
-            Font baseFont = table.getFont();
-            component.setFont(active ? baseFont.deriveFont(Font.BOLD) : baseFont);
-            return component;
-        }
-    }
 }
